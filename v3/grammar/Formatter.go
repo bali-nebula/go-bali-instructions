@@ -108,39 +108,6 @@ func (v *formatter_) ProcessSymbol(
 	v.appendString(symbol)
 }
 
-func (v *formatter_) PreprocessAction(
-	action ast.ActionLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessActionSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessAction(
-	action ast.ActionLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessArgument(
-	argument ast.ArgumentLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessArgumentSlot(
 	slot uint,
 ) {
@@ -148,47 +115,6 @@ func (v *formatter_) ProcessArgumentSlot(
 	default:
 		v.appendString(" ")
 	}
-}
-
-func (v *formatter_) PostprocessArgument(
-	argument ast.ArgumentLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessAssembly(
-	assembly ast.AssemblyLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessAssemblySlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessAssembly(
-	assembly ast.AssemblyLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessCall(
-	call ast.CallLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
 }
 
 func (v *formatter_) ProcessCallSlot(
@@ -200,70 +126,12 @@ func (v *formatter_) ProcessCallSlot(
 	}
 }
 
-func (v *formatter_) PostprocessCall(
-	call ast.CallLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessComponent(
-	component ast.ComponentLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessComponentSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessComponent(
-	component ast.ComponentLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessCondition(
-	condition ast.ConditionLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessConditionSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessCondition(
-	condition ast.ConditionLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) PreprocessConditionally(
 	conditionally ast.ConditionallyLike,
 	index uint,
 	count uint,
 ) {
-	// TBD - Add formatting of the rule.
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessConditionallySlot(
@@ -275,22 +143,6 @@ func (v *formatter_) ProcessConditionallySlot(
 	}
 }
 
-func (v *formatter_) PostprocessConditionally(
-	conditionally ast.ConditionallyLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessConstant(
-	constant ast.ConstantLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessConstantSlot(
 	slot uint,
 ) {
@@ -300,20 +152,12 @@ func (v *formatter_) ProcessConstantSlot(
 	}
 }
 
-func (v *formatter_) PostprocessConstant(
-	constant ast.ConstantLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) PreprocessContext(
 	context ast.ContextLike,
 	index uint,
 	count uint,
 ) {
-	// TBD - Add formatting of the rule.
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessContextSlot(
@@ -325,47 +169,6 @@ func (v *formatter_) ProcessContextSlot(
 	}
 }
 
-func (v *formatter_) PostprocessContext(
-	context ast.ContextLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessDestination(
-	destination ast.DestinationLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessDestinationSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessDestination(
-	destination ast.DestinationLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessDrop(
-	drop ast.DropLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessDropSlot(
 	slot uint,
 ) {
@@ -375,48 +178,7 @@ func (v *formatter_) ProcessDropSlot(
 	}
 }
 
-func (v *formatter_) PostprocessDrop(
-	drop ast.DropLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessHandler(
-	handler ast.HandlerLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessHandlerSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessHandler(
-	handler ast.HandlerLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessInstruction(
-	instruction ast.InstructionLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessInstructionSlot(
 	slot uint,
 ) {
 	switch slot {
@@ -430,65 +192,16 @@ func (v *formatter_) PostprocessInstruction(
 	index uint,
 	count uint,
 ) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessItem(
-	item ast.ItemLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessItemSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessItem(
-	item ast.ItemLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessJump(
-	jump ast.JumpLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
+	v.appendNewline()
 }
 
 func (v *formatter_) ProcessJumpSlot(
 	slot uint,
 ) {
 	switch slot {
-	default:
+	case 1, 2:
 		v.appendString(" ")
 	}
-}
-
-func (v *formatter_) PostprocessJump(
-	jump ast.JumpLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessLiteral(
-	literal ast.LiteralLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
 }
 
 func (v *formatter_) ProcessLiteralSlot(
@@ -500,22 +213,6 @@ func (v *formatter_) ProcessLiteralSlot(
 	}
 }
 
-func (v *formatter_) PostprocessLiteral(
-	literal ast.LiteralLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessLoad(
-	load ast.LoadLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessLoadSlot(
 	slot uint,
 ) {
@@ -523,47 +220,6 @@ func (v *formatter_) ProcessLoadSlot(
 	default:
 		v.appendString(" ")
 	}
-}
-
-func (v *formatter_) PostprocessLoad(
-	load ast.LoadLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessNoop(
-	noop ast.NoopLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessNoopSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessNoop(
-	noop ast.NoopLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessNote(
-	note ast.NoteLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
 }
 
 func (v *formatter_) ProcessNoteSlot(
@@ -575,29 +231,12 @@ func (v *formatter_) ProcessNoteSlot(
 	}
 }
 
-func (v *formatter_) PostprocessNote(
-	note ast.NoteLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) PreprocessPrefix(
 	prefix ast.PrefixLike,
 	index uint,
 	count uint,
 ) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessPrefixSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
+	v.appendNewline()
 }
 
 func (v *formatter_) PostprocessPrefix(
@@ -605,15 +244,7 @@ func (v *formatter_) PostprocessPrefix(
 	index uint,
 	count uint,
 ) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessPull(
-	pull ast.PullLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
+	v.appendNewline()
 }
 
 func (v *formatter_) ProcessPullSlot(
@@ -625,22 +256,6 @@ func (v *formatter_) ProcessPullSlot(
 	}
 }
 
-func (v *formatter_) PostprocessPull(
-	pull ast.PullLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessPush(
-	push ast.PushLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessPushSlot(
 	slot uint,
 ) {
@@ -648,22 +263,6 @@ func (v *formatter_) ProcessPushSlot(
 	default:
 		v.appendString(" ")
 	}
-}
-
-func (v *formatter_) PostprocessPush(
-	push ast.PushLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessSave(
-	save ast.SaveLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
 }
 
 func (v *formatter_) ProcessSaveSlot(
@@ -675,62 +274,13 @@ func (v *formatter_) ProcessSaveSlot(
 	}
 }
 
-func (v *formatter_) PostprocessSave(
-	save ast.SaveLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessSend(
-	send ast.SendLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
 func (v *formatter_) ProcessSendSlot(
 	slot uint,
 ) {
 	switch slot {
-	default:
+	case 1, 2, 3:
 		v.appendString(" ")
 	}
-}
-
-func (v *formatter_) PostprocessSend(
-	send ast.SendLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) PreprocessSource(
-	source ast.SourceLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
-}
-
-func (v *formatter_) ProcessSourceSlot(
-	slot uint,
-) {
-	switch slot {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PostprocessSource(
-	source ast.SourceLike,
-	index uint,
-	count uint,
-) {
-	// TBD - Add formatting of the rule.
 }
 
 const _indentation = "\t"
