@@ -238,12 +238,12 @@ func (v *parser_) parseAssembly() (
 	// Attempt to parse multiple Instruction rules.
 	var instructions = col.List[ast.InstructionLike]()
 instructionsLoop:
-	for count := 0; count < mat.MaxInt; count++ {
+	for count_ := 0; count_ < mat.MaxInt; count_++ {
 		var instruction ast.InstructionLike
 		instruction, token, ok = v.parseInstruction()
 		if !ok {
 			switch {
-			case count >= 0:
+			case count_ >= 0:
 				break instructionsLoop
 			case uti.IsDefined(tokens):
 				// This is not multiple Instruction rules.

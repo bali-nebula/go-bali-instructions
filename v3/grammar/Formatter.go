@@ -128,8 +128,8 @@ func (v *formatter_) ProcessCallSlot(
 
 func (v *formatter_) PreprocessConditionally(
 	conditionally ast.ConditionallyLike,
-	index uint,
-	count uint,
+	index_ uint,
+	count_ uint,
 ) {
 	v.appendString(" ")
 }
@@ -154,8 +154,8 @@ func (v *formatter_) ProcessConstantSlot(
 
 func (v *formatter_) PreprocessContext(
 	context ast.ContextLike,
-	index uint,
-	count uint,
+	index_ uint,
+	count_ uint,
 ) {
 	v.appendString(" ")
 }
@@ -189,8 +189,8 @@ func (v *formatter_) ProcessHandlerSlot(
 
 func (v *formatter_) PostprocessInstruction(
 	instruction ast.InstructionLike,
-	index uint,
-	count uint,
+	index_ uint,
+	count_ uint,
 ) {
 	v.appendNewline()
 }
@@ -233,16 +233,16 @@ func (v *formatter_) ProcessNoteSlot(
 
 func (v *formatter_) PreprocessPrefix(
 	prefix ast.PrefixLike,
-	index uint,
-	count uint,
+	index_ uint,
+	count_ uint,
 ) {
 	v.appendNewline()
 }
 
 func (v *formatter_) PostprocessPrefix(
 	prefix ast.PrefixLike,
-	index uint,
-	count uint,
+	index_ uint,
+	count_ uint,
 ) {
 	v.appendNewline()
 }
