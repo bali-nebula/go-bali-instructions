@@ -109,18 +109,20 @@ func (v *formatter_) ProcessSymbol(
 }
 
 func (v *formatter_) ProcessArgumentSlot(
-	slot uint,
+	argument ast.ArgumentLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessCallSlot(
-	slot uint,
+	call ast.CallLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
@@ -135,18 +137,20 @@ func (v *formatter_) PreprocessConditionally(
 }
 
 func (v *formatter_) ProcessConditionallySlot(
-	slot uint,
+	conditionally ast.ConditionallyLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessConstantSlot(
-	slot uint,
+	constant ast.ConstantLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
@@ -161,27 +165,30 @@ func (v *formatter_) PreprocessContext(
 }
 
 func (v *formatter_) ProcessContextSlot(
-	slot uint,
+	context ast.ContextLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessDropSlot(
-	slot uint,
+	drop ast.DropLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessHandlerSlot(
-	slot uint,
+	handler ast.HandlerLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
@@ -196,36 +203,40 @@ func (v *formatter_) PostprocessInstruction(
 }
 
 func (v *formatter_) ProcessJumpSlot(
-	slot uint,
+	jump ast.JumpLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	case 1, 2:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessLiteralSlot(
-	slot uint,
+	literal ast.LiteralLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessLoadSlot(
-	slot uint,
+	load ast.LoadLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessNoteSlot(
-	slot uint,
+	note ast.NoteLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
@@ -248,36 +259,40 @@ func (v *formatter_) PostprocessPrefix(
 }
 
 func (v *formatter_) ProcessPullSlot(
-	slot uint,
+	pull ast.PullLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessPushSlot(
-	slot uint,
+	push ast.PushLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessSaveSlot(
-	slot uint,
+	save ast.SaveLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	default:
 		v.appendString(" ")
 	}
 }
 
 func (v *formatter_) ProcessSendSlot(
-	slot uint,
+	send ast.SendLike,
+	slot_ uint,
 ) {
-	switch slot {
+	switch slot_ {
 	case 1, 2, 3:
 		v.appendString(" ")
 	}

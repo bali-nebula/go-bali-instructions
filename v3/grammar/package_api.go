@@ -302,324 +302,349 @@ type Methodical interface {
 		index_ uint,
 		count_ uint,
 	)
-	ProcessActionSlot(
-		slot uint,
-	)
 	PostprocessAction(
 		action ast.ActionLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessActionSlot(
+		action ast.ActionLike,
+		slot_ uint,
 	)
 	PreprocessArgument(
 		argument ast.ArgumentLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessArgumentSlot(
-		slot uint,
-	)
 	PostprocessArgument(
 		argument ast.ArgumentLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessArgumentSlot(
+		argument ast.ArgumentLike,
+		slot_ uint,
 	)
 	PreprocessAssembly(
 		assembly ast.AssemblyLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessAssemblySlot(
-		slot uint,
-	)
 	PostprocessAssembly(
 		assembly ast.AssemblyLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessAssemblySlot(
+		assembly ast.AssemblyLike,
+		slot_ uint,
 	)
 	PreprocessCall(
 		call ast.CallLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessCallSlot(
-		slot uint,
-	)
 	PostprocessCall(
 		call ast.CallLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessCallSlot(
+		call ast.CallLike,
+		slot_ uint,
 	)
 	PreprocessComponent(
 		component ast.ComponentLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessComponentSlot(
-		slot uint,
-	)
 	PostprocessComponent(
 		component ast.ComponentLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessComponentSlot(
+		component ast.ComponentLike,
+		slot_ uint,
 	)
 	PreprocessCondition(
 		condition ast.ConditionLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessConditionSlot(
-		slot uint,
-	)
 	PostprocessCondition(
 		condition ast.ConditionLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessConditionSlot(
+		condition ast.ConditionLike,
+		slot_ uint,
 	)
 	PreprocessConditionally(
 		conditionally ast.ConditionallyLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessConditionallySlot(
-		slot uint,
-	)
 	PostprocessConditionally(
 		conditionally ast.ConditionallyLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessConditionallySlot(
+		conditionally ast.ConditionallyLike,
+		slot_ uint,
 	)
 	PreprocessConstant(
 		constant ast.ConstantLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessConstantSlot(
-		slot uint,
-	)
 	PostprocessConstant(
 		constant ast.ConstantLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessConstantSlot(
+		constant ast.ConstantLike,
+		slot_ uint,
 	)
 	PreprocessContext(
 		context ast.ContextLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessContextSlot(
-		slot uint,
-	)
 	PostprocessContext(
 		context ast.ContextLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessContextSlot(
+		context ast.ContextLike,
+		slot_ uint,
 	)
 	PreprocessDestination(
 		destination ast.DestinationLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessDestinationSlot(
-		slot uint,
-	)
 	PostprocessDestination(
 		destination ast.DestinationLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessDestinationSlot(
+		destination ast.DestinationLike,
+		slot_ uint,
 	)
 	PreprocessDrop(
 		drop ast.DropLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessDropSlot(
-		slot uint,
-	)
 	PostprocessDrop(
 		drop ast.DropLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessDropSlot(
+		drop ast.DropLike,
+		slot_ uint,
 	)
 	PreprocessHandler(
 		handler ast.HandlerLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessHandlerSlot(
-		slot uint,
-	)
 	PostprocessHandler(
 		handler ast.HandlerLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessHandlerSlot(
+		handler ast.HandlerLike,
+		slot_ uint,
 	)
 	PreprocessInstruction(
 		instruction ast.InstructionLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessInstructionSlot(
-		slot uint,
-	)
 	PostprocessInstruction(
 		instruction ast.InstructionLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessInstructionSlot(
+		instruction ast.InstructionLike,
+		slot_ uint,
 	)
 	PreprocessItem(
 		item ast.ItemLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessItemSlot(
-		slot uint,
-	)
 	PostprocessItem(
 		item ast.ItemLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessItemSlot(
+		item ast.ItemLike,
+		slot_ uint,
 	)
 	PreprocessJump(
 		jump ast.JumpLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessJumpSlot(
-		slot uint,
-	)
 	PostprocessJump(
 		jump ast.JumpLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessJumpSlot(
+		jump ast.JumpLike,
+		slot_ uint,
 	)
 	PreprocessLiteral(
 		literal ast.LiteralLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessLiteralSlot(
-		slot uint,
-	)
 	PostprocessLiteral(
 		literal ast.LiteralLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessLiteralSlot(
+		literal ast.LiteralLike,
+		slot_ uint,
 	)
 	PreprocessLoad(
 		load ast.LoadLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessLoadSlot(
-		slot uint,
-	)
 	PostprocessLoad(
 		load ast.LoadLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessLoadSlot(
+		load ast.LoadLike,
+		slot_ uint,
 	)
 	PreprocessNoop(
 		noop ast.NoopLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessNoopSlot(
-		slot uint,
-	)
 	PostprocessNoop(
 		noop ast.NoopLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessNoopSlot(
+		noop ast.NoopLike,
+		slot_ uint,
 	)
 	PreprocessNote(
 		note ast.NoteLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessNoteSlot(
-		slot uint,
-	)
 	PostprocessNote(
 		note ast.NoteLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessNoteSlot(
+		note ast.NoteLike,
+		slot_ uint,
 	)
 	PreprocessPrefix(
 		prefix ast.PrefixLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessPrefixSlot(
-		slot uint,
-	)
 	PostprocessPrefix(
 		prefix ast.PrefixLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessPrefixSlot(
+		prefix ast.PrefixLike,
+		slot_ uint,
 	)
 	PreprocessPull(
 		pull ast.PullLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessPullSlot(
-		slot uint,
-	)
 	PostprocessPull(
 		pull ast.PullLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessPullSlot(
+		pull ast.PullLike,
+		slot_ uint,
 	)
 	PreprocessPush(
 		push ast.PushLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessPushSlot(
-		slot uint,
-	)
 	PostprocessPush(
 		push ast.PushLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessPushSlot(
+		push ast.PushLike,
+		slot_ uint,
 	)
 	PreprocessSave(
 		save ast.SaveLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessSaveSlot(
-		slot uint,
-	)
 	PostprocessSave(
 		save ast.SaveLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessSaveSlot(
+		save ast.SaveLike,
+		slot_ uint,
 	)
 	PreprocessSend(
 		send ast.SendLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessSendSlot(
-		slot uint,
-	)
 	PostprocessSend(
 		send ast.SendLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessSendSlot(
+		send ast.SendLike,
+		slot_ uint,
 	)
 	PreprocessSource(
 		source ast.SourceLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessSourceSlot(
-		slot uint,
-	)
 	PostprocessSource(
 		source ast.SourceLike,
 		index_ uint,
 		count_ uint,
+	)
+	ProcessSourceSlot(
+		source ast.SourceLike,
+		slot_ uint,
 	)
 }
