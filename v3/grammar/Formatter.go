@@ -112,10 +112,7 @@ func (v *formatter_) ProcessArgumentSlot(
 	argument ast.ArgumentLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessCallSlot(
@@ -123,9 +120,24 @@ func (v *formatter_) ProcessCallSlot(
 	slot_ uint,
 ) {
 	switch slot_ {
-	default:
+	case 1:
 		v.appendString(" ")
 	}
+}
+
+func (v *formatter_) PreprocessCardinality(
+	cardinality ast.CardinalityLike,
+	index_ uint,
+	count_ uint,
+) {
+	v.appendString(" ")
+}
+
+func (v *formatter_) ProcessCardinalitySlot(
+	cardinality ast.CardinalityLike,
+	slot_ uint,
+) {
+	v.appendString(" ")
 }
 
 func (v *formatter_) PreprocessConditionally(
@@ -140,58 +152,28 @@ func (v *formatter_) ProcessConditionallySlot(
 	conditionally ast.ConditionallyLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessConstantSlot(
 	constant ast.ConstantLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
-}
-
-func (v *formatter_) PreprocessContext(
-	context ast.ContextLike,
-	index_ uint,
-	count_ uint,
-) {
 	v.appendString(" ")
-}
-
-func (v *formatter_) ProcessContextSlot(
-	context ast.ContextLike,
-	slot_ uint,
-) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
 }
 
 func (v *formatter_) ProcessDropSlot(
 	drop ast.DropLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessHandlerSlot(
 	handler ast.HandlerLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) PostprocessInstruction(
@@ -216,30 +198,36 @@ func (v *formatter_) ProcessLiteralSlot(
 	literal ast.LiteralLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessLoadSlot(
 	load ast.LoadLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessNoteSlot(
 	note ast.NoteLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
+}
+
+func (v *formatter_) PreprocessParameterized(
+	parameterized ast.ParameterizedLike,
+	index_ uint,
+	count_ uint,
+) {
+	v.appendString(" ")
+}
+
+func (v *formatter_) ProcessParameterizedSlot(
+	parameterized ast.ParameterizedLike,
+	slot_ uint,
+) {
+	v.appendString(" ")
 }
 
 func (v *formatter_) PreprocessPrefix(
@@ -262,30 +250,21 @@ func (v *formatter_) ProcessPullSlot(
 	pull ast.PullLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessPushSlot(
 	push ast.PushLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessSaveSlot(
 	save ast.SaveLike,
 	slot_ uint,
 ) {
-	switch slot_ {
-	default:
-		v.appendString(" ")
-	}
+	v.appendString(" ")
 }
 
 func (v *formatter_) ProcessSendSlot(
@@ -298,7 +277,7 @@ func (v *formatter_) ProcessSendSlot(
 	}
 }
 
-const _indentation = "\t"
+const _indentation = "    "
 
 // PROTECTED INTERFACE
 

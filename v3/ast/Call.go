@@ -34,34 +34,21 @@ func CallClass() CallClassLike {
 // Constructor Methods
 
 func (c *callClass_) Call(
-	delimiter1 string,
+	delimiter string,
 	symbol string,
-	delimiter2 string,
-	count string,
-	delimiter3 string,
+	optionalCardinality CardinalityLike,
 ) CallLike {
-	if uti.IsUndefined(delimiter1) {
-		panic("The \"delimiter1\" attribute is required by this class.")
+	if uti.IsUndefined(delimiter) {
+		panic("The \"delimiter\" attribute is required by this class.")
 	}
 	if uti.IsUndefined(symbol) {
 		panic("The \"symbol\" attribute is required by this class.")
 	}
-	if uti.IsUndefined(delimiter2) {
-		panic("The \"delimiter2\" attribute is required by this class.")
-	}
-	if uti.IsUndefined(count) {
-		panic("The \"count\" attribute is required by this class.")
-	}
-	if uti.IsUndefined(delimiter3) {
-		panic("The \"delimiter3\" attribute is required by this class.")
-	}
 	var instance = &call_{
 		// Initialize the instance attributes.
-		delimiter1_: delimiter1,
-		symbol_:     symbol,
-		delimiter2_: delimiter2,
-		count_:      count,
-		delimiter3_: delimiter3,
+		delimiter_:           delimiter,
+		symbol_:              symbol,
+		optionalCardinality_: optionalCardinality,
 	}
 	return instance
 }
@@ -76,24 +63,16 @@ func (v *call_) GetClass() CallClassLike {
 
 // Attribute Methods
 
-func (v *call_) GetDelimiter1() string {
-	return v.delimiter1_
+func (v *call_) GetDelimiter() string {
+	return v.delimiter_
 }
 
 func (v *call_) GetSymbol() string {
 	return v.symbol_
 }
 
-func (v *call_) GetDelimiter2() string {
-	return v.delimiter2_
-}
-
-func (v *call_) GetCount() string {
-	return v.count_
-}
-
-func (v *call_) GetDelimiter3() string {
-	return v.delimiter3_
+func (v *call_) GetOptionalCardinality() CardinalityLike {
+	return v.optionalCardinality_
 }
 
 // PROTECTED INTERFACE
@@ -102,11 +81,9 @@ func (v *call_) GetDelimiter3() string {
 
 type call_ struct {
 	// Declare the instance attributes.
-	delimiter1_ string
-	symbol_     string
-	delimiter2_ string
-	count_      string
-	delimiter3_ string
+	delimiter_           string
+	symbol_              string
+	optionalCardinality_ CardinalityLike
 }
 
 // Class Structure

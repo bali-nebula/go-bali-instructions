@@ -35,18 +35,18 @@ func PullClass() PullClassLike {
 
 func (c *pullClass_) Pull(
 	delimiter string,
-	item ItemLike,
+	value ValueLike,
 ) PullLike {
 	if uti.IsUndefined(delimiter) {
 		panic("The \"delimiter\" attribute is required by this class.")
 	}
-	if uti.IsUndefined(item) {
-		panic("The \"item\" attribute is required by this class.")
+	if uti.IsUndefined(value) {
+		panic("The \"value\" attribute is required by this class.")
 	}
 	var instance = &pull_{
 		// Initialize the instance attributes.
 		delimiter_: delimiter,
-		item_:      item,
+		value_:     value,
 	}
 	return instance
 }
@@ -65,8 +65,8 @@ func (v *pull_) GetDelimiter() string {
 	return v.delimiter_
 }
 
-func (v *pull_) GetItem() ItemLike {
-	return v.item_
+func (v *pull_) GetValue() ValueLike {
+	return v.value_
 }
 
 // PROTECTED INTERFACE
@@ -76,7 +76,7 @@ func (v *pull_) GetItem() ItemLike {
 type pull_ struct {
 	// Declare the instance attributes.
 	delimiter_ string
-	item_      ItemLike
+	value_     ValueLike
 }
 
 // Class Structure

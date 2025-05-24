@@ -27,38 +27,26 @@ import (
 
 // Access Function
 
-func SendClass() SendClassLike {
-	return sendClass()
+func ParameterizedClass() ParameterizedClassLike {
+	return parameterizedClass()
 }
 
 // Constructor Methods
 
-func (c *sendClass_) Send(
+func (c *parameterizedClass_) Parameterized(
 	delimiter1 string,
-	symbol string,
 	delimiter2 string,
-	destination DestinationLike,
-	optionalParameterized ParameterizedLike,
-) SendLike {
+) ParameterizedLike {
 	if uti.IsUndefined(delimiter1) {
 		panic("The \"delimiter1\" attribute is required by this class.")
-	}
-	if uti.IsUndefined(symbol) {
-		panic("The \"symbol\" attribute is required by this class.")
 	}
 	if uti.IsUndefined(delimiter2) {
 		panic("The \"delimiter2\" attribute is required by this class.")
 	}
-	if uti.IsUndefined(destination) {
-		panic("The \"destination\" attribute is required by this class.")
-	}
-	var instance = &send_{
+	var instance = &parameterized_{
 		// Initialize the instance attributes.
-		delimiter1_:            delimiter1,
-		symbol_:                symbol,
-		delimiter2_:            delimiter2,
-		destination_:           destination,
-		optionalParameterized_: optionalParameterized,
+		delimiter1_: delimiter1,
+		delimiter2_: delimiter2,
 	}
 	return instance
 }
@@ -67,57 +55,42 @@ func (c *sendClass_) Send(
 
 // Principal Methods
 
-func (v *send_) GetClass() SendClassLike {
-	return sendClass()
+func (v *parameterized_) GetClass() ParameterizedClassLike {
+	return parameterizedClass()
 }
 
 // Attribute Methods
 
-func (v *send_) GetDelimiter1() string {
+func (v *parameterized_) GetDelimiter1() string {
 	return v.delimiter1_
 }
 
-func (v *send_) GetSymbol() string {
-	return v.symbol_
-}
-
-func (v *send_) GetDelimiter2() string {
+func (v *parameterized_) GetDelimiter2() string {
 	return v.delimiter2_
-}
-
-func (v *send_) GetDestination() DestinationLike {
-	return v.destination_
-}
-
-func (v *send_) GetOptionalParameterized() ParameterizedLike {
-	return v.optionalParameterized_
 }
 
 // PROTECTED INTERFACE
 
 // Instance Structure
 
-type send_ struct {
+type parameterized_ struct {
 	// Declare the instance attributes.
-	delimiter1_            string
-	symbol_                string
-	delimiter2_            string
-	destination_           DestinationLike
-	optionalParameterized_ ParameterizedLike
+	delimiter1_ string
+	delimiter2_ string
 }
 
 // Class Structure
 
-type sendClass_ struct {
+type parameterizedClass_ struct {
 	// Declare the class constants.
 }
 
 // Class Reference
 
-func sendClass() *sendClass_ {
-	return sendClassReference_
+func parameterizedClass() *parameterizedClass_ {
+	return parameterizedClassReference_
 }
 
-var sendClassReference_ = &sendClass_{
+var parameterizedClassReference_ = &parameterizedClass_{
 	// Initialize the class constants.
 }

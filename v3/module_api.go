@@ -43,27 +43,28 @@ type (
 	ArgumentClassLike      = ast.ArgumentClassLike
 	AssemblyClassLike      = ast.AssemblyClassLike
 	CallClassLike          = ast.CallClassLike
+	CardinalityClassLike   = ast.CardinalityClassLike
 	ComponentClassLike     = ast.ComponentClassLike
 	ConditionClassLike     = ast.ConditionClassLike
 	ConditionallyClassLike = ast.ConditionallyClassLike
 	ConstantClassLike      = ast.ConstantClassLike
-	ContextClassLike       = ast.ContextClassLike
 	DestinationClassLike   = ast.DestinationClassLike
 	DropClassLike          = ast.DropClassLike
 	HandlerClassLike       = ast.HandlerClassLike
 	InstructionClassLike   = ast.InstructionClassLike
-	ItemClassLike          = ast.ItemClassLike
 	JumpClassLike          = ast.JumpClassLike
 	LiteralClassLike       = ast.LiteralClassLike
 	LoadClassLike          = ast.LoadClassLike
 	NoopClassLike          = ast.NoopClassLike
 	NoteClassLike          = ast.NoteClassLike
+	ParameterizedClassLike = ast.ParameterizedClassLike
 	PrefixClassLike        = ast.PrefixClassLike
 	PullClassLike          = ast.PullClassLike
 	PushClassLike          = ast.PushClassLike
 	SaveClassLike          = ast.SaveClassLike
 	SendClassLike          = ast.SendClassLike
 	SourceClassLike        = ast.SourceClassLike
+	ValueClassLike         = ast.ValueClassLike
 )
 
 type (
@@ -71,27 +72,28 @@ type (
 	ArgumentLike      = ast.ArgumentLike
 	AssemblyLike      = ast.AssemblyLike
 	CallLike          = ast.CallLike
+	CardinalityLike   = ast.CardinalityLike
 	ComponentLike     = ast.ComponentLike
 	ConditionLike     = ast.ConditionLike
 	ConditionallyLike = ast.ConditionallyLike
 	ConstantLike      = ast.ConstantLike
-	ContextLike       = ast.ContextLike
 	DestinationLike   = ast.DestinationLike
 	DropLike          = ast.DropLike
 	HandlerLike       = ast.HandlerLike
 	InstructionLike   = ast.InstructionLike
-	ItemLike          = ast.ItemLike
 	JumpLike          = ast.JumpLike
 	LiteralLike       = ast.LiteralLike
 	LoadLike          = ast.LoadLike
 	NoopLike          = ast.NoopLike
 	NoteLike          = ast.NoteLike
+	ParameterizedLike = ast.ParameterizedLike
 	PrefixLike        = ast.PrefixLike
 	PullLike          = ast.PullLike
 	PushLike          = ast.PushLike
 	SaveLike          = ast.SaveLike
 	SendLike          = ast.SendLike
 	SourceLike        = ast.SourceLike
+	ValueLike         = ast.ValueLike
 )
 
 // Grammar
@@ -183,18 +185,30 @@ func CallClass() CallClassLike {
 }
 
 func Call(
-	delimiter1 string,
+	delimiter string,
 	symbol string,
-	delimiter2 string,
-	count string,
-	delimiter3 string,
+	optionalCardinality ast.CardinalityLike,
 ) CallLike {
 	return CallClass().Call(
-		delimiter1,
+		delimiter,
 		symbol,
-		delimiter2,
+		optionalCardinality,
+	)
+}
+
+func CardinalityClass() CardinalityClassLike {
+	return ast.CardinalityClass()
+}
+
+func Cardinality(
+	delimiter1 string,
+	count string,
+	delimiter2 string,
+) CardinalityLike {
+	return CardinalityClass().Cardinality(
+		delimiter1,
 		count,
-		delimiter3,
+		delimiter2,
 	)
 }
 
@@ -247,20 +261,6 @@ func Constant(
 	return ConstantClass().Constant(
 		delimiter,
 		symbol,
-	)
-}
-
-func ContextClass() ContextClassLike {
-	return ast.ContextClass()
-}
-
-func Context(
-	delimiter1 string,
-	delimiter2 string,
-) ContextLike {
-	return ContextClass().Context(
-		delimiter1,
-		delimiter2,
 	)
 }
 
@@ -317,18 +317,6 @@ func Instruction(
 	return InstructionClass().Instruction(
 		optionalPrefix,
 		action,
-	)
-}
-
-func ItemClass() ItemClassLike {
-	return ast.ItemClass()
-}
-
-func Item(
-	any_ any,
-) ItemLike {
-	return ItemClass().Item(
-		any_,
 	)
 }
 
@@ -406,6 +394,20 @@ func Note(
 	)
 }
 
+func ParameterizedClass() ParameterizedClassLike {
+	return ast.ParameterizedClass()
+}
+
+func Parameterized(
+	delimiter1 string,
+	delimiter2 string,
+) ParameterizedLike {
+	return ParameterizedClass().Parameterized(
+		delimiter1,
+		delimiter2,
+	)
+}
+
 func PrefixClass() PrefixClassLike {
 	return ast.PrefixClass()
 }
@@ -426,11 +428,11 @@ func PullClass() PullClassLike {
 
 func Pull(
 	delimiter string,
-	item ast.ItemLike,
+	value ast.ValueLike,
 ) PullLike {
 	return PullClass().Pull(
 		delimiter,
-		item,
+		value,
 	)
 }
 
@@ -473,14 +475,14 @@ func Send(
 	symbol string,
 	delimiter2 string,
 	destination ast.DestinationLike,
-	optionalContext ast.ContextLike,
+	optionalParameterized ast.ParameterizedLike,
 ) SendLike {
 	return SendClass().Send(
 		delimiter1,
 		symbol,
 		delimiter2,
 		destination,
-		optionalContext,
+		optionalParameterized,
 	)
 }
 
@@ -492,6 +494,18 @@ func Source(
 	any_ any,
 ) SourceLike {
 	return SourceClass().Source(
+		any_,
+	)
+}
+
+func ValueClass() ValueClassLike {
+	return ast.ValueClass()
+}
+
+func Value(
+	any_ any,
+) ValueLike {
+	return ValueClass().Value(
 		any_,
 	)
 }

@@ -276,8 +276,8 @@ func (v *parser_) parseCall() (
 	var tokens = col.List[TokenLike]()
 
 	// Attempt to parse a single "CALL" literal.
-	var delimiter1 string
-	delimiter1, token, ok = v.parseDelimiter("CALL")
+	var delimiter string
+	delimiter, token, ok = v.parseDelimiter("CALL")
 	if !ok {
 		if uti.IsDefined(tokens) {
 			// This is not a single Call rule.
@@ -311,17 +311,43 @@ func (v *parser_) parseCall() (
 		tokens.AppendValue(token)
 	}
 
+	// Attempt to parse an optional Cardinality rule.
+	var optionalCardinality ast.CardinalityLike
+	optionalCardinality, _, ok = v.parseCardinality()
+	if ok {
+		// No additional put backs allowed at this point.
+		tokens = nil
+	}
+
+	// Found a single Call rule.
+	ok = true
+	v.remove(tokens)
+	call = ast.CallClass().Call(
+		delimiter,
+		symbol,
+		optionalCardinality,
+	)
+	return
+}
+
+func (v *parser_) parseCardinality() (
+	cardinality ast.CardinalityLike,
+	token TokenLike,
+	ok bool,
+) {
+	var tokens = col.List[TokenLike]()
+
 	// Attempt to parse a single "WITH" literal.
-	var delimiter2 string
-	delimiter2, token, ok = v.parseDelimiter("WITH")
+	var delimiter1 string
+	delimiter1, token, ok = v.parseDelimiter("WITH")
 	if !ok {
 		if uti.IsDefined(tokens) {
-			// This is not a single Call rule.
+			// This is not a single Cardinality rule.
 			v.putBack(tokens)
 			return
 		} else {
 			// Found a syntax error.
-			var message = v.formatError("$Call", token)
+			var message = v.formatError("$Cardinality", token)
 			panic(message)
 		}
 	}
@@ -339,7 +365,7 @@ func (v *parser_) parseCall() (
 			return
 		} else {
 			// Found a syntax error.
-			var message = v.formatError("$Call", token)
+			var message = v.formatError("$Cardinality", token)
 			panic(message)
 		}
 	}
@@ -348,16 +374,16 @@ func (v *parser_) parseCall() (
 	}
 
 	// Attempt to parse a single "ARGUMENTS" literal.
-	var delimiter3 string
-	delimiter3, token, ok = v.parseDelimiter("ARGUMENTS")
+	var delimiter2 string
+	delimiter2, token, ok = v.parseDelimiter("ARGUMENTS")
 	if !ok {
 		if uti.IsDefined(tokens) {
-			// This is not a single Call rule.
+			// This is not a single Cardinality rule.
 			v.putBack(tokens)
 			return
 		} else {
 			// Found a syntax error.
-			var message = v.formatError("$Call", token)
+			var message = v.formatError("$Cardinality", token)
 			panic(message)
 		}
 	}
@@ -365,15 +391,13 @@ func (v *parser_) parseCall() (
 		tokens.AppendValue(token)
 	}
 
-	// Found a single Call rule.
+	// Found a single Cardinality rule.
 	ok = true
 	v.remove(tokens)
-	call = ast.CallClass().Call(
+	cardinality = ast.CardinalityClass().Cardinality(
 		delimiter1,
-		symbol,
-		delimiter2,
 		count,
-		delimiter3,
+		delimiter2,
 	)
 	return
 }
@@ -559,59 +583,6 @@ func (v *parser_) parseConstant() (
 	constant = ast.ConstantClass().Constant(
 		delimiter,
 		symbol,
-	)
-	return
-}
-
-func (v *parser_) parseContext() (
-	context ast.ContextLike,
-	token TokenLike,
-	ok bool,
-) {
-	var tokens = col.List[TokenLike]()
-
-	// Attempt to parse a single "WITH" literal.
-	var delimiter1 string
-	delimiter1, token, ok = v.parseDelimiter("WITH")
-	if !ok {
-		if uti.IsDefined(tokens) {
-			// This is not a single Context rule.
-			v.putBack(tokens)
-			return
-		} else {
-			// Found a syntax error.
-			var message = v.formatError("$Context", token)
-			panic(message)
-		}
-	}
-	if uti.IsDefined(tokens) {
-		tokens.AppendValue(token)
-	}
-
-	// Attempt to parse a single "ARGUMENTS" literal.
-	var delimiter2 string
-	delimiter2, token, ok = v.parseDelimiter("ARGUMENTS")
-	if !ok {
-		if uti.IsDefined(tokens) {
-			// This is not a single Context rule.
-			v.putBack(tokens)
-			return
-		} else {
-			// Found a syntax error.
-			var message = v.formatError("$Context", token)
-			panic(message)
-		}
-	}
-	if uti.IsDefined(tokens) {
-		tokens.AppendValue(token)
-	}
-
-	// Found a single Context rule.
-	ok = true
-	v.remove(tokens)
-	context = ast.ContextClass().Context(
-		delimiter1,
-		delimiter2,
 	)
 	return
 }
@@ -808,49 +779,6 @@ func (v *parser_) parseInstruction() (
 		optionalPrefix,
 		action,
 	)
-	return
-}
-
-func (v *parser_) parseItem() (
-	item ast.ItemLike,
-	token TokenLike,
-	ok bool,
-) {
-	var delimiter string
-
-	// Attempt to parse a single "HANDLER" delimiter.
-	delimiter, token, ok = v.parseDelimiter("HANDLER")
-	if ok {
-		// Found a single "HANDLER" delimiter.
-		item = ast.ItemClass().Item(delimiter)
-		return
-	}
-
-	// Attempt to parse a single "COMPONENT" delimiter.
-	delimiter, token, ok = v.parseDelimiter("COMPONENT")
-	if ok {
-		// Found a single "COMPONENT" delimiter.
-		item = ast.ItemClass().Item(delimiter)
-		return
-	}
-
-	// Attempt to parse a single "RESULT" delimiter.
-	delimiter, token, ok = v.parseDelimiter("RESULT")
-	if ok {
-		// Found a single "RESULT" delimiter.
-		item = ast.ItemClass().Item(delimiter)
-		return
-	}
-
-	// Attempt to parse a single "EXCEPTION" delimiter.
-	delimiter, token, ok = v.parseDelimiter("EXCEPTION")
-	if ok {
-		// Found a single "EXCEPTION" delimiter.
-		item = ast.ItemClass().Item(delimiter)
-		return
-	}
-
-	// This is not a single Item rule.
 	return
 }
 
@@ -1146,6 +1074,59 @@ func (v *parser_) parseNote() (
 	return
 }
 
+func (v *parser_) parseParameterized() (
+	parameterized ast.ParameterizedLike,
+	token TokenLike,
+	ok bool,
+) {
+	var tokens = col.List[TokenLike]()
+
+	// Attempt to parse a single "WITH" literal.
+	var delimiter1 string
+	delimiter1, token, ok = v.parseDelimiter("WITH")
+	if !ok {
+		if uti.IsDefined(tokens) {
+			// This is not a single Parameterized rule.
+			v.putBack(tokens)
+			return
+		} else {
+			// Found a syntax error.
+			var message = v.formatError("$Parameterized", token)
+			panic(message)
+		}
+	}
+	if uti.IsDefined(tokens) {
+		tokens.AppendValue(token)
+	}
+
+	// Attempt to parse a single "ARGUMENTS" literal.
+	var delimiter2 string
+	delimiter2, token, ok = v.parseDelimiter("ARGUMENTS")
+	if !ok {
+		if uti.IsDefined(tokens) {
+			// This is not a single Parameterized rule.
+			v.putBack(tokens)
+			return
+		} else {
+			// Found a syntax error.
+			var message = v.formatError("$Parameterized", token)
+			panic(message)
+		}
+	}
+	if uti.IsDefined(tokens) {
+		tokens.AppendValue(token)
+	}
+
+	// Found a single Parameterized rule.
+	ok = true
+	v.remove(tokens)
+	parameterized = ast.ParameterizedClass().Parameterized(
+		delimiter1,
+		delimiter2,
+	)
+	return
+}
+
 func (v *parser_) parsePrefix() (
 	prefix ast.PrefixLike,
 	token TokenLike,
@@ -1224,9 +1205,9 @@ func (v *parser_) parsePull() (
 		tokens.AppendValue(token)
 	}
 
-	// Attempt to parse a single Item rule.
-	var item ast.ItemLike
-	item, token, ok = v.parseItem()
+	// Attempt to parse a single Value rule.
+	var value ast.ValueLike
+	value, token, ok = v.parseValue()
 	switch {
 	case ok:
 		// Found a multiexpression token.
@@ -1234,7 +1215,7 @@ func (v *parser_) parsePull() (
 			tokens.AppendValue(token)
 		}
 	case uti.IsDefined(tokens):
-		// This is not a single Item rule.
+		// This is not a single Value rule.
 		v.putBack(tokens)
 		return
 	default:
@@ -1248,7 +1229,7 @@ func (v *parser_) parsePull() (
 	v.remove(tokens)
 	pull = ast.PullClass().Pull(
 		delimiter,
-		item,
+		value,
 	)
 	return
 }
@@ -1458,9 +1439,9 @@ func (v *parser_) parseSend() (
 		panic(message)
 	}
 
-	// Attempt to parse an optional Context rule.
-	var optionalContext ast.ContextLike
-	optionalContext, _, ok = v.parseContext()
+	// Attempt to parse an optional Parameterized rule.
+	var optionalParameterized ast.ParameterizedLike
+	optionalParameterized, _, ok = v.parseParameterized()
 	if ok {
 		// No additional put backs allowed at this point.
 		tokens = nil
@@ -1474,7 +1455,7 @@ func (v *parser_) parseSend() (
 		symbol,
 		delimiter2,
 		destination,
-		optionalContext,
+		optionalParameterized,
 	)
 	return
 }
@@ -1521,6 +1502,49 @@ func (v *parser_) parseSource() (
 	}
 
 	// This is not a single Source rule.
+	return
+}
+
+func (v *parser_) parseValue() (
+	value ast.ValueLike,
+	token TokenLike,
+	ok bool,
+) {
+	var delimiter string
+
+	// Attempt to parse a single "HANDLER" delimiter.
+	delimiter, token, ok = v.parseDelimiter("HANDLER")
+	if ok {
+		// Found a single "HANDLER" delimiter.
+		value = ast.ValueClass().Value(delimiter)
+		return
+	}
+
+	// Attempt to parse a single "COMPONENT" delimiter.
+	delimiter, token, ok = v.parseDelimiter("COMPONENT")
+	if ok {
+		// Found a single "COMPONENT" delimiter.
+		value = ast.ValueClass().Value(delimiter)
+		return
+	}
+
+	// Attempt to parse a single "RESULT" delimiter.
+	delimiter, token, ok = v.parseDelimiter("RESULT")
+	if ok {
+		// Found a single "RESULT" delimiter.
+		value = ast.ValueClass().Value(delimiter)
+		return
+	}
+
+	// Attempt to parse a single "EXCEPTION" delimiter.
+	delimiter, token, ok = v.parseDelimiter("EXCEPTION")
+	if ok {
+		// Found a single "EXCEPTION" delimiter.
+		value = ast.ValueClass().Value(delimiter)
+		return
+	}
+
+	// This is not a single Value rule.
 	return
 }
 
@@ -1731,8 +1755,8 @@ var parserClassReference_ = &parserClass_{
 			"$Literal":  `"LITERAL" quoted`,
 			"$Constant": `"CONSTANT" symbol`,
 			"$Argument": `"ARGUMENT" symbol`,
-			"$Pull":     `"PULL" Item`,
-			"$Item": `
+			"$Pull":     `"PULL" Value`,
+			"$Value": `
     "HANDLER"
     "COMPONENT"
     "RESULT"
@@ -1745,12 +1769,13 @@ var parserClassReference_ = &parserClass_{
     "DOCUMENT"
     "CONTRACT"
     "MESSAGE"`,
-			"$Call": `"CALL" symbol "WITH" count "ARGUMENTS"  ! The count is in the range [0..3].`,
-			"$Send": `"SEND" symbol "TO" Destination Context?`,
+			"$Call":        `"CALL" symbol Cardinality?`,
+			"$Cardinality": `"WITH" count "ARGUMENTS"  ! The count is in the range [1..3].`,
+			"$Send":        `"SEND" symbol "TO" Destination Parameterized?`,
 			"$Destination": `
     "COMPONENT"
     "DOCUMENT"`,
-			"$Context": `"WITH" "ARGUMENTS"`,
+			"$Parameterized": `"WITH" "ARGUMENTS"`,
 		},
 	),
 }

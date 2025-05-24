@@ -90,12 +90,24 @@ supported by each concrete call-like class.
 type CallClassLike interface {
 	// Constructor Methods
 	Call(
-		delimiter1 string,
+		delimiter string,
 		symbol string,
-		delimiter2 string,
-		count string,
-		delimiter3 string,
+		optionalCardinality CardinalityLike,
 	) CallLike
+}
+
+/*
+CardinalityClassLike is a class interface that declares the
+complete set of class constructors, constants and functions that must be
+supported by each concrete cardinality-like class.
+*/
+type CardinalityClassLike interface {
+	// Constructor Methods
+	Cardinality(
+		delimiter1 string,
+		count string,
+		delimiter2 string,
+	) CardinalityLike
 }
 
 /*
@@ -149,19 +161,6 @@ type ConstantClassLike interface {
 }
 
 /*
-ContextClassLike is a class interface that declares the
-complete set of class constructors, constants and functions that must be
-supported by each concrete context-like class.
-*/
-type ContextClassLike interface {
-	// Constructor Methods
-	Context(
-		delimiter1 string,
-		delimiter2 string,
-	) ContextLike
-}
-
-/*
 DestinationClassLike is a class interface that declares the
 complete set of class constructors, constants and functions that must be
 supported by each concrete destination-like class.
@@ -211,18 +210,6 @@ type InstructionClassLike interface {
 		optionalPrefix PrefixLike,
 		action ActionLike,
 	) InstructionLike
-}
-
-/*
-ItemClassLike is a class interface that declares the
-complete set of class constructors, constants and functions that must be
-supported by each concrete item-like class.
-*/
-type ItemClassLike interface {
-	// Constructor Methods
-	Item(
-		any_ any,
-	) ItemLike
 }
 
 /*
@@ -293,6 +280,19 @@ type NoteClassLike interface {
 }
 
 /*
+ParameterizedClassLike is a class interface that declares the
+complete set of class constructors, constants and functions that must be
+supported by each concrete parameterized-like class.
+*/
+type ParameterizedClassLike interface {
+	// Constructor Methods
+	Parameterized(
+		delimiter1 string,
+		delimiter2 string,
+	) ParameterizedLike
+}
+
+/*
 PrefixClassLike is a class interface that declares the
 complete set of class constructors, constants and functions that must be
 supported by each concrete prefix-like class.
@@ -314,7 +314,7 @@ type PullClassLike interface {
 	// Constructor Methods
 	Pull(
 		delimiter string,
-		item ItemLike,
+		value ValueLike,
 	) PullLike
 }
 
@@ -357,7 +357,7 @@ type SendClassLike interface {
 		symbol string,
 		delimiter2 string,
 		destination DestinationLike,
-		optionalContext ContextLike,
+		optionalParameterized ParameterizedLike,
 	) SendLike
 }
 
@@ -371,6 +371,18 @@ type SourceClassLike interface {
 	Source(
 		any_ any,
 	) SourceLike
+}
+
+/*
+ValueClassLike is a class interface that declares the
+complete set of class constructors, constants and functions that must be
+supported by each concrete value-like class.
+*/
+type ValueClassLike interface {
+	// Constructor Methods
+	Value(
+		any_ any,
+	) ValueLike
 }
 
 // INSTANCE DECLARATIONS
@@ -425,11 +437,24 @@ type CallLike interface {
 	GetClass() CallClassLike
 
 	// Attribute Methods
-	GetDelimiter1() string
+	GetDelimiter() string
 	GetSymbol() string
-	GetDelimiter2() string
+	GetOptionalCardinality() CardinalityLike
+}
+
+/*
+CardinalityLike is an instance interface that declares the
+complete set of principal, attribute and aspect methods that must be supported
+by each instance of a concrete cardinality-like class.
+*/
+type CardinalityLike interface {
+	// Principal Methods
+	GetClass() CardinalityClassLike
+
+	// Attribute Methods
+	GetDelimiter1() string
 	GetCount() string
-	GetDelimiter3() string
+	GetDelimiter2() string
 }
 
 /*
@@ -487,20 +512,6 @@ type ConstantLike interface {
 }
 
 /*
-ContextLike is an instance interface that declares the
-complete set of principal, attribute and aspect methods that must be supported
-by each instance of a concrete context-like class.
-*/
-type ContextLike interface {
-	// Principal Methods
-	GetClass() ContextClassLike
-
-	// Attribute Methods
-	GetDelimiter1() string
-	GetDelimiter2() string
-}
-
-/*
 DestinationLike is an instance interface that declares the
 complete set of principal, attribute and aspect methods that must be supported
 by each instance of a concrete destination-like class.
@@ -554,19 +565,6 @@ type InstructionLike interface {
 	// Attribute Methods
 	GetOptionalPrefix() PrefixLike
 	GetAction() ActionLike
-}
-
-/*
-ItemLike is an instance interface that declares the
-complete set of principal, attribute and aspect methods that must be supported
-by each instance of a concrete item-like class.
-*/
-type ItemLike interface {
-	// Principal Methods
-	GetClass() ItemClassLike
-
-	// Attribute Methods
-	GetAny() any
 }
 
 /*
@@ -642,6 +640,20 @@ type NoteLike interface {
 }
 
 /*
+ParameterizedLike is an instance interface that declares the
+complete set of principal, attribute and aspect methods that must be supported
+by each instance of a concrete parameterized-like class.
+*/
+type ParameterizedLike interface {
+	// Principal Methods
+	GetClass() ParameterizedClassLike
+
+	// Attribute Methods
+	GetDelimiter1() string
+	GetDelimiter2() string
+}
+
+/*
 PrefixLike is an instance interface that declares the
 complete set of principal, attribute and aspect methods that must be supported
 by each instance of a concrete prefix-like class.
@@ -666,7 +678,7 @@ type PullLike interface {
 
 	// Attribute Methods
 	GetDelimiter() string
-	GetItem() ItemLike
+	GetValue() ValueLike
 }
 
 /*
@@ -712,7 +724,7 @@ type SendLike interface {
 	GetSymbol() string
 	GetDelimiter2() string
 	GetDestination() DestinationLike
-	GetOptionalContext() ContextLike
+	GetOptionalParameterized() ParameterizedLike
 }
 
 /*
@@ -723,6 +735,19 @@ by each instance of a concrete source-like class.
 type SourceLike interface {
 	// Principal Methods
 	GetClass() SourceClassLike
+
+	// Attribute Methods
+	GetAny() any
+}
+
+/*
+ValueLike is an instance interface that declares the
+complete set of principal, attribute and aspect methods that must be supported
+by each instance of a concrete value-like class.
+*/
+type ValueLike interface {
+	// Principal Methods
+	GetClass() ValueClassLike
 
 	// Attribute Methods
 	GetAny() any

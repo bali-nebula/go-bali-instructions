@@ -27,25 +27,30 @@ import (
 
 // Access Function
 
-func ContextClass() ContextClassLike {
-	return contextClass()
+func CardinalityClass() CardinalityClassLike {
+	return cardinalityClass()
 }
 
 // Constructor Methods
 
-func (c *contextClass_) Context(
+func (c *cardinalityClass_) Cardinality(
 	delimiter1 string,
+	count string,
 	delimiter2 string,
-) ContextLike {
+) CardinalityLike {
 	if uti.IsUndefined(delimiter1) {
 		panic("The \"delimiter1\" attribute is required by this class.")
+	}
+	if uti.IsUndefined(count) {
+		panic("The \"count\" attribute is required by this class.")
 	}
 	if uti.IsUndefined(delimiter2) {
 		panic("The \"delimiter2\" attribute is required by this class.")
 	}
-	var instance = &context_{
+	var instance = &cardinality_{
 		// Initialize the instance attributes.
 		delimiter1_: delimiter1,
+		count_:      count,
 		delimiter2_: delimiter2,
 	}
 	return instance
@@ -55,17 +60,21 @@ func (c *contextClass_) Context(
 
 // Principal Methods
 
-func (v *context_) GetClass() ContextClassLike {
-	return contextClass()
+func (v *cardinality_) GetClass() CardinalityClassLike {
+	return cardinalityClass()
 }
 
 // Attribute Methods
 
-func (v *context_) GetDelimiter1() string {
+func (v *cardinality_) GetDelimiter1() string {
 	return v.delimiter1_
 }
 
-func (v *context_) GetDelimiter2() string {
+func (v *cardinality_) GetCount() string {
+	return v.count_
+}
+
+func (v *cardinality_) GetDelimiter2() string {
 	return v.delimiter2_
 }
 
@@ -73,24 +82,25 @@ func (v *context_) GetDelimiter2() string {
 
 // Instance Structure
 
-type context_ struct {
+type cardinality_ struct {
 	// Declare the instance attributes.
 	delimiter1_ string
+	count_      string
 	delimiter2_ string
 }
 
 // Class Structure
 
-type contextClass_ struct {
+type cardinalityClass_ struct {
 	// Declare the class constants.
 }
 
 // Class Reference
 
-func contextClass() *contextClass_ {
-	return contextClassReference_
+func cardinalityClass() *cardinalityClass_ {
+	return cardinalityClassReference_
 }
 
-var contextClassReference_ = &contextClass_{
+var cardinalityClassReference_ = &cardinalityClass_{
 	// Initialize the class constants.
 }

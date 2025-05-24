@@ -27,19 +27,19 @@ import (
 
 // Access Function
 
-func ItemClass() ItemClassLike {
-	return itemClass()
+func ValueClass() ValueClassLike {
+	return valueClass()
 }
 
 // Constructor Methods
 
-func (c *itemClass_) Item(
+func (c *valueClass_) Value(
 	any_ any,
-) ItemLike {
+) ValueLike {
 	if uti.IsUndefined(any_) {
 		panic("The \"any\" attribute is required by this class.")
 	}
-	var instance = &item_{
+	var instance = &value_{
 		// Initialize the instance attributes.
 		any_: any_,
 	}
@@ -50,13 +50,13 @@ func (c *itemClass_) Item(
 
 // Principal Methods
 
-func (v *item_) GetClass() ItemClassLike {
-	return itemClass()
+func (v *value_) GetClass() ValueClassLike {
+	return valueClass()
 }
 
 // Attribute Methods
 
-func (v *item_) GetAny() any {
+func (v *value_) GetAny() any {
 	return v.any_
 }
 
@@ -64,23 +64,23 @@ func (v *item_) GetAny() any {
 
 // Instance Structure
 
-type item_ struct {
+type value_ struct {
 	// Declare the instance attributes.
 	any_ any
 }
 
 // Class Structure
 
-type itemClass_ struct {
+type valueClass_ struct {
 	// Declare the class constants.
 }
 
 // Class Reference
 
-func itemClass() *itemClass_ {
-	return itemClassReference_
+func valueClass() *valueClass_ {
+	return valueClassReference_
 }
 
-var itemClassReference_ = &itemClass_{
+var valueClassReference_ = &valueClass_{
 	// Initialize the class constants.
 }

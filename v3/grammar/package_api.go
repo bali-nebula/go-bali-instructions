@@ -353,6 +353,20 @@ type Methodical interface {
 		call ast.CallLike,
 		slot_ uint,
 	)
+	PreprocessCardinality(
+		cardinality ast.CardinalityLike,
+		index_ uint,
+		count_ uint,
+	)
+	PostprocessCardinality(
+		cardinality ast.CardinalityLike,
+		index_ uint,
+		count_ uint,
+	)
+	ProcessCardinalitySlot(
+		cardinality ast.CardinalityLike,
+		slot_ uint,
+	)
 	PreprocessComponent(
 		component ast.ComponentLike,
 		index_ uint,
@@ -409,20 +423,6 @@ type Methodical interface {
 		constant ast.ConstantLike,
 		slot_ uint,
 	)
-	PreprocessContext(
-		context ast.ContextLike,
-		index_ uint,
-		count_ uint,
-	)
-	PostprocessContext(
-		context ast.ContextLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessContextSlot(
-		context ast.ContextLike,
-		slot_ uint,
-	)
 	PreprocessDestination(
 		destination ast.DestinationLike,
 		index_ uint,
@@ -477,20 +477,6 @@ type Methodical interface {
 	)
 	ProcessInstructionSlot(
 		instruction ast.InstructionLike,
-		slot_ uint,
-	)
-	PreprocessItem(
-		item ast.ItemLike,
-		index_ uint,
-		count_ uint,
-	)
-	PostprocessItem(
-		item ast.ItemLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessItemSlot(
-		item ast.ItemLike,
 		slot_ uint,
 	)
 	PreprocessJump(
@@ -561,6 +547,20 @@ type Methodical interface {
 	)
 	ProcessNoteSlot(
 		note ast.NoteLike,
+		slot_ uint,
+	)
+	PreprocessParameterized(
+		parameterized ast.ParameterizedLike,
+		index_ uint,
+		count_ uint,
+	)
+	PostprocessParameterized(
+		parameterized ast.ParameterizedLike,
+		index_ uint,
+		count_ uint,
+	)
+	ProcessParameterizedSlot(
+		parameterized ast.ParameterizedLike,
 		slot_ uint,
 	)
 	PreprocessPrefix(
@@ -645,6 +645,20 @@ type Methodical interface {
 	)
 	ProcessSourceSlot(
 		source ast.SourceLike,
+		slot_ uint,
+	)
+	PreprocessValue(
+		value ast.ValueLike,
+		index_ uint,
+		count_ uint,
+	)
+	PostprocessValue(
+		value ast.ValueLike,
+		index_ uint,
+		count_ uint,
+	)
+	ProcessValueSlot(
+		value ast.ValueLike,
 		slot_ uint,
 	)
 }

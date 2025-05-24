@@ -244,8 +244,8 @@ func (v *visitor_) visitAssembly(
 func (v *visitor_) visitCall(
 	call ast.CallLike,
 ) {
-	var delimiter1 = call.GetDelimiter1()
-	v.processor_.ProcessDelimiter(delimiter1)
+	var delimiter = call.GetDelimiter()
+	v.processor_.ProcessDelimiter(delimiter)
 	// Visit slot 1 between terms.
 	v.processor_.ProcessCallSlot(
 		call,
@@ -260,24 +260,43 @@ func (v *visitor_) visitCall(
 		2,
 	)
 
-	var delimiter2 = call.GetDelimiter2()
-	v.processor_.ProcessDelimiter(delimiter2)
-	// Visit slot 3 between terms.
-	v.processor_.ProcessCallSlot(
-		call,
-		3,
+	var optionalCardinality = call.GetOptionalCardinality()
+	if uti.IsDefined(optionalCardinality) {
+		v.processor_.PreprocessCardinality(
+			optionalCardinality,
+			1,
+			1,
+		)
+		v.visitCardinality(optionalCardinality)
+		v.processor_.PostprocessCardinality(
+			optionalCardinality,
+			1,
+			1,
+		)
+	}
+}
+
+func (v *visitor_) visitCardinality(
+	cardinality ast.CardinalityLike,
+) {
+	var delimiter1 = cardinality.GetDelimiter1()
+	v.processor_.ProcessDelimiter(delimiter1)
+	// Visit slot 1 between terms.
+	v.processor_.ProcessCardinalitySlot(
+		cardinality,
+		1,
 	)
 
-	var count = call.GetCount()
+	var count = cardinality.GetCount()
 	v.processor_.ProcessCount(count)
-	// Visit slot 4 between terms.
-	v.processor_.ProcessCallSlot(
-		call,
-		4,
+	// Visit slot 2 between terms.
+	v.processor_.ProcessCardinalitySlot(
+		cardinality,
+		2,
 	)
 
-	var delimiter3 = call.GetDelimiter3()
-	v.processor_.ProcessDelimiter(delimiter3)
+	var delimiter2 = cardinality.GetDelimiter2()
+	v.processor_.ProcessDelimiter(delimiter2)
 }
 
 func (v *visitor_) visitComponent(
@@ -350,21 +369,6 @@ func (v *visitor_) visitConstant(
 
 	var symbol = constant.GetSymbol()
 	v.processor_.ProcessSymbol(symbol)
-}
-
-func (v *visitor_) visitContext(
-	context ast.ContextLike,
-) {
-	var delimiter1 = context.GetDelimiter1()
-	v.processor_.ProcessDelimiter(delimiter1)
-	// Visit slot 1 between terms.
-	v.processor_.ProcessContextSlot(
-		context,
-		1,
-	)
-
-	var delimiter2 = context.GetDelimiter2()
-	v.processor_.ProcessDelimiter(delimiter2)
 }
 
 func (v *visitor_) visitDestination(
@@ -463,23 +467,6 @@ func (v *visitor_) visitInstruction(
 		1,
 		1,
 	)
-}
-
-func (v *visitor_) visitItem(
-	item ast.ItemLike,
-) {
-	// Visit the possible item literal values.
-	var actual = item.GetAny().(string)
-	switch actual {
-	case "HANDLER":
-		v.processor_.ProcessDelimiter("HANDLER")
-	case "COMPONENT":
-		v.processor_.ProcessDelimiter("COMPONENT")
-	case "RESULT":
-		v.processor_.ProcessDelimiter("RESULT")
-	case "EXCEPTION":
-		v.processor_.ProcessDelimiter("EXCEPTION")
-	}
 }
 
 func (v *visitor_) visitJump(
@@ -595,6 +582,21 @@ func (v *visitor_) visitNote(
 	v.processor_.ProcessExplanation(explanation)
 }
 
+func (v *visitor_) visitParameterized(
+	parameterized ast.ParameterizedLike,
+) {
+	var delimiter1 = parameterized.GetDelimiter1()
+	v.processor_.ProcessDelimiter(delimiter1)
+	// Visit slot 1 between terms.
+	v.processor_.ProcessParameterizedSlot(
+		parameterized,
+		1,
+	)
+
+	var delimiter2 = parameterized.GetDelimiter2()
+	v.processor_.ProcessDelimiter(delimiter2)
+}
+
 func (v *visitor_) visitPrefix(
 	prefix ast.PrefixLike,
 ) {
@@ -621,15 +623,15 @@ func (v *visitor_) visitPull(
 		1,
 	)
 
-	var item = pull.GetItem()
-	v.processor_.PreprocessItem(
-		item,
+	var value = pull.GetValue()
+	v.processor_.PreprocessValue(
+		value,
 		1,
 		1,
 	)
-	v.visitItem(item)
-	v.processor_.PostprocessItem(
-		item,
+	v.visitValue(value)
+	v.processor_.PostprocessValue(
+		value,
 		1,
 		1,
 	)
@@ -738,16 +740,16 @@ func (v *visitor_) visitSend(
 		4,
 	)
 
-	var optionalContext = send.GetOptionalContext()
-	if uti.IsDefined(optionalContext) {
-		v.processor_.PreprocessContext(
-			optionalContext,
+	var optionalParameterized = send.GetOptionalParameterized()
+	if uti.IsDefined(optionalParameterized) {
+		v.processor_.PreprocessParameterized(
+			optionalParameterized,
 			1,
 			1,
 		)
-		v.visitContext(optionalContext)
-		v.processor_.PostprocessContext(
-			optionalContext,
+		v.visitParameterized(optionalParameterized)
+		v.processor_.PostprocessParameterized(
+			optionalParameterized,
 			1,
 			1,
 		)
@@ -807,6 +809,23 @@ func (v *visitor_) visitSource(
 			1,
 			1,
 		)
+	}
+}
+
+func (v *visitor_) visitValue(
+	value ast.ValueLike,
+) {
+	// Visit the possible value literal values.
+	var actual = value.GetAny().(string)
+	switch actual {
+	case "HANDLER":
+		v.processor_.ProcessDelimiter("HANDLER")
+	case "COMPONENT":
+		v.processor_.ProcessDelimiter("COMPONENT")
+	case "RESULT":
+		v.processor_.ProcessDelimiter("RESULT")
+	case "EXCEPTION":
+		v.processor_.ProcessDelimiter("EXCEPTION")
 	}
 }
 

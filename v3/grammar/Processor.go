@@ -170,6 +170,26 @@ func (v *processor_) ProcessCallSlot(
 ) {
 }
 
+func (v *processor_) PreprocessCardinality(
+	cardinality ast.CardinalityLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) PostprocessCardinality(
+	cardinality ast.CardinalityLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) ProcessCardinalitySlot(
+	cardinality ast.CardinalityLike,
+	slot_ uint,
+) {
+}
+
 func (v *processor_) PreprocessComponent(
 	component ast.ComponentLike,
 	index_ uint,
@@ -250,26 +270,6 @@ func (v *processor_) ProcessConstantSlot(
 ) {
 }
 
-func (v *processor_) PreprocessContext(
-	context ast.ContextLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PostprocessContext(
-	context ast.ContextLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessContextSlot(
-	context ast.ContextLike,
-	slot_ uint,
-) {
-}
-
 func (v *processor_) PreprocessDestination(
 	destination ast.DestinationLike,
 	index_ uint,
@@ -346,26 +346,6 @@ func (v *processor_) PostprocessInstruction(
 
 func (v *processor_) ProcessInstructionSlot(
 	instruction ast.InstructionLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PreprocessItem(
-	item ast.ItemLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PostprocessItem(
-	item ast.ItemLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessItemSlot(
-	item ast.ItemLike,
 	slot_ uint,
 ) {
 }
@@ -466,6 +446,26 @@ func (v *processor_) PostprocessNote(
 
 func (v *processor_) ProcessNoteSlot(
 	note ast.NoteLike,
+	slot_ uint,
+) {
+}
+
+func (v *processor_) PreprocessParameterized(
+	parameterized ast.ParameterizedLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) PostprocessParameterized(
+	parameterized ast.ParameterizedLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) ProcessParameterizedSlot(
+	parameterized ast.ParameterizedLike,
 	slot_ uint,
 ) {
 }
@@ -586,6 +586,26 @@ func (v *processor_) PostprocessSource(
 
 func (v *processor_) ProcessSourceSlot(
 	source ast.SourceLike,
+	slot_ uint,
+) {
+}
+
+func (v *processor_) PreprocessValue(
+	value ast.ValueLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) PostprocessValue(
+	value ast.ValueLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) ProcessValueSlot(
+	value ast.ValueLike,
 	slot_ uint,
 ) {
 }

@@ -289,7 +289,7 @@ const (
 	identifier_  = "(?:(" + lower_ + "|" + upper_ + ")(" + digit_ + "|" + lower_ + "|" + upper_ + ")*)"
 	index_       = "(?:[1-9]" + digit_ + "*)"
 	label_       = "(?:((?:" + index_ + ")\\.)+(?:" + identifier_ + "))"
-	count_       = "(?:[0-3])"
+	count_       = "(?:[1-3])"
 	quoted_      = "(?:`(\\\\`|" + any_ + "|" + eol_ + ")*?`)"
 	symbol_      = "(?:\\$(?:" + identifier_ + ")(-(?:" + index_ + "))?)"
 )
