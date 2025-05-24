@@ -117,7 +117,7 @@ $label: (index '.')+ identifier
 
 $count: ['1'..'3']  ! This must be after label since a label begins with a number.
 
-$quoted: '`' ("\\`" | ANY | EOL)* '`'
+$quoted: '`' ("\\`" | ANY | EOL)* '`'  ! Chooses the shortest possible match.
 
 $symbol: '$' identifier ('-' index)?
 
