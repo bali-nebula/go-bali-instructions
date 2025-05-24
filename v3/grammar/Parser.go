@@ -1770,7 +1770,7 @@ var parserClassReference_ = &parserClass_{
     "CONTRACT"
     "MESSAGE"`,
 			"$Call":        `"CALL" symbol Cardinality?`,
-			"$Cardinality": `"WITH" count "ARGUMENTS"  ! The count is in the range [1..3].`,
+			"$Cardinality": `"WITH" count "ARGUMENTS"  ! The argument count is in the range [1..3].`,
 			"$Send":        `"SEND" symbol "TO" Destination Parameterized?`,
 			"$Destination": `
     "COMPONENT"
