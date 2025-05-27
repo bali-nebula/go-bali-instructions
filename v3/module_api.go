@@ -173,7 +173,7 @@ func AssemblyClass() AssemblyClassLike {
 }
 
 func Assembly(
-	instructions col.Sequential[ast.InstructionLike],
+	instructions col.ListLike[ast.InstructionLike],
 ) AssemblyLike {
 	return AssemblyClass().Assembly(
 		instructions,

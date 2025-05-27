@@ -35,7 +35,7 @@ func AssemblyClass() AssemblyClassLike {
 // Constructor Methods
 
 func (c *assemblyClass_) Assembly(
-	instructions col.Sequential[InstructionLike],
+	instructions col.ListLike[InstructionLike],
 ) AssemblyLike {
 	if uti.IsUndefined(instructions) {
 		panic("The \"instructions\" attribute is required by this class.")
@@ -57,7 +57,7 @@ func (v *assembly_) GetClass() AssemblyClassLike {
 
 // Attribute Methods
 
-func (v *assembly_) GetInstructions() col.Sequential[InstructionLike] {
+func (v *assembly_) GetInstructions() col.ListLike[InstructionLike] {
 	return v.instructions_
 }
 
@@ -67,7 +67,7 @@ func (v *assembly_) GetInstructions() col.Sequential[InstructionLike] {
 
 type assembly_ struct {
 	// Declare the instance attributes.
-	instructions_ col.Sequential[InstructionLike]
+	instructions_ col.ListLike[InstructionLike]
 }
 
 // Class Structure

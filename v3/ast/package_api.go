@@ -78,7 +78,7 @@ supported by each concrete assembly-like class.
 type AssemblyClassLike interface {
 	// Constructor Methods
 	Assembly(
-		instructions col.Sequential[InstructionLike],
+		instructions col.ListLike[InstructionLike],
 	) AssemblyLike
 }
 
@@ -424,7 +424,7 @@ type AssemblyLike interface {
 	GetClass() AssemblyClassLike
 
 	// Attribute Methods
-	GetInstructions() col.Sequential[InstructionLike]
+	GetInstructions() col.ListLike[InstructionLike]
 }
 
 /*
