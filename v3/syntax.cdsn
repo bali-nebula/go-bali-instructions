@@ -107,15 +107,15 @@ $Parameterized: "WITH" "ARGUMENTS"
 │                            EXPRESSION DEFINITIONS                            │
 └──────────────────────────────────────────────────────────────────────────────┘
 <!
+$label: (index '.')+ identifier  ! This must be declared before count.
+
+$count: ['1'..'3']
+
 $explanation: "--" ~[CONTROL]*
 
 $identifier: (LOWER | UPPER) (DIGIT | LOWER | UPPER)*
 
 $index: ['1'..'9'] DIGIT*
-
-$label: (index '.')+ identifier
-
-$count: ['1'..'3']  ! This must be after label since a label begins with a number.
 
 $quoted: '`' ("\\`" | ANY | EOL)* '`'  ! Chooses the shortest possible match.
 
