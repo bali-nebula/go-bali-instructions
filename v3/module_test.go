@@ -15,8 +15,8 @@ package module_test
 import (
 	fmt "fmt"
 	not "github.com/bali-nebula/go-bali-instructions/v3"
+	uti "github.com/craterdog/go-missing-utilities/v7"
 	ass "github.com/stretchr/testify/assert"
-	osx "os"
 	tes "testing"
 )
 
@@ -28,11 +28,7 @@ func TestRoundTrips(t *tes.T) {
 	fmt.Println("Round Trip Tests:")
 	for _, assemblyFile := range assemblyFiles {
 		fmt.Printf("   %v\n", assemblyFile)
-		var bytes, err = osx.ReadFile(assemblyFile)
-		if err != nil {
-			panic(err)
-		}
-		var source = string(bytes)
+		var source = uti.ReadFile(assemblyFile)
 		var assembly = not.ParseSource(source)
 		not.ValidateAssembly(assembly)
 		var actual = not.FormatAssembly(assembly)
