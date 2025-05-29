@@ -147,7 +147,7 @@ func (v *scanner_) foundToken(
 		return false
 	}
 
-	// Check for false delimiter matches.
+	// Check for partial identifier matches.
 	var token = []rune(match)
 	var length = uint(len(token))
 	var previous = token[length-1]
@@ -282,14 +282,14 @@ const (
 	upper_   = "\\p{Lu}"
 
 	// Define the regular expressions for each token type.
+	count_       = "(?:[1-3])"
 	delimiter_   = "(?:WITH|VARIABLE|TO|SEND|SAVE|RESULT|PUSH|PULL|ON|NOTE|NOOP|NONE|MESSAGE|LOAD|LITERAL|JUMP|HANDLER|FALSE|EXCEPTION|EMPTY|DROP|DOCUMENT|CONTRACT|CONSTANT|COMPONENT|CALL|ARGUMENTS|ARGUMENT|:)"
-	newline_     = "(?:" + eol_ + ")"
-	space_       = "(?:[ \\t]+)"
 	explanation_ = "(?:--[^" + control_ + "]*)"
 	identifier_  = "(?:(" + lower_ + "|" + upper_ + ")(" + digit_ + "|" + lower_ + "|" + upper_ + ")*)"
 	index_       = "(?:[1-9]" + digit_ + "*)"
 	label_       = "(?:((?:" + index_ + ")\\.)+(?:" + identifier_ + "))"
-	count_       = "(?:[1-3])"
+	newline_     = "(?:" + eol_ + ")"
 	quoted_      = "(?:`(\\\\`|" + any_ + "|" + eol_ + ")*?`)"
+	space_       = "(?:[ \\t]+)"
 	symbol_      = "(?:\\$(?:" + identifier_ + ")(-(?:" + index_ + "))?)"
 )
