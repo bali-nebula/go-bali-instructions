@@ -236,7 +236,7 @@ var scannerClassReference_ = &scannerClass_{
 	// Initialize the class constants.
 	tokens_: col.CatalogFromMap[TokenType, string](
 		map[TokenType]string{
-			// Define identifiers for each type of token.
+			// Define token identifiers for each type of expression.
 			ErrorToken:       "error",
 			CountToken:       "count",
 			DelimiterToken:   "delimiter",
@@ -250,7 +250,7 @@ var scannerClassReference_ = &scannerClass_{
 	),
 	matchers_: col.CatalogFromMap[TokenType, *reg.Regexp](
 		map[TokenType]*reg.Regexp{
-			// Define pattern matchers for each type of token.
+			// Define pattern matchers for each type of expression.
 			CountToken:       reg.MustCompile("^" + count_),
 			DelimiterToken:   reg.MustCompile("^" + delimiter_),
 			ExplanationToken: reg.MustCompile("^" + explanation_),
@@ -267,8 +267,8 @@ var scannerClassReference_ = &scannerClass_{
 
 // NOTE:
 // These private constants define the regular expression sub-patterns that make
-// up the intrinsic types and token types.  Unfortunately there is no way to
-// make them private to the scanner class since they must be TRUE Go constants
+// up the intrinsic types and expression types.  Unfortunately there is no way
+// to make them private to the scanner class since they must be TRUE Go constants
 // to be used in this way.  We append an underscore to each name to lessen the
 // chance of a name collision with other private Go class constants in this
 // package.
@@ -281,7 +281,7 @@ const (
 	lower_   = "\\p{Ll}"
 	upper_   = "\\p{Lu}"
 
-	// Define the regular expressions for each token type.
+	// Define the regular expressions for each expression type.
 	count_       = "(?:[1-3])"
 	delimiter_   = "(?:WITH|VARIABLE|TO|SEND|SAVE|RESULT|PUSH|PULL|ON|NOTE|NOOP|NONE|MESSAGE|LOAD|LITERAL|JUMP|HANDLER|FALSE|EXCEPTION|EMPTY|DROP|DOCUMENT|CONTRACT|CONSTANT|COMPONENT|CALL|ARGUMENTS|ARGUMENT|:)"
 	explanation_ = "(?:--[^" + control_ + "]*)"
