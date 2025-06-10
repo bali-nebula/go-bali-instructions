@@ -36,7 +36,7 @@ on interfaces, not on each other.
 package ast
 
 import (
-	col "github.com/craterdog/go-collection-framework/v7"
+	com "github.com/craterdog/go-component-framework/v7"
 )
 
 // TYPE DECLARATIONS
@@ -78,7 +78,7 @@ supported by each concrete assembly-like class.
 type AssemblyClassLike interface {
 	// Constructor Methods
 	Assembly(
-		instructions col.ListLike[InstructionLike],
+		instructions com.ListLike[InstructionLike],
 	) AssemblyLike
 }
 
@@ -424,7 +424,7 @@ type AssemblyLike interface {
 	GetClass() AssemblyClassLike
 
 	// Attribute Methods
-	GetInstructions() col.ListLike[InstructionLike]
+	GetInstructions() com.ListLike[InstructionLike]
 }
 
 /*
