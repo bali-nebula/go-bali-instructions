@@ -31,7 +31,7 @@ package module
 import (
 	ast "github.com/bali-nebula/go-bali-instructions/v3/ast"
 	gra "github.com/bali-nebula/go-bali-instructions/v3/grammar"
-	com "github.com/craterdog/go-component-framework/v7"
+	fra "github.com/craterdog/go-component-framework/v7"
 )
 
 // TYPE ALIASES
@@ -173,7 +173,7 @@ func AssemblyClass() AssemblyClassLike {
 }
 
 func Assembly(
-	instructions com.ListLike[ast.InstructionLike],
+	instructions fra.ListLike[ast.InstructionLike],
 ) AssemblyLike {
 	return AssemblyClass().Assembly(
 		instructions,
@@ -542,7 +542,7 @@ func ScannerClass() ScannerClassLike {
 
 func Scanner(
 	source string,
-	tokens com.QueueLike[gra.TokenLike],
+	tokens fra.QueueLike[gra.TokenLike],
 ) ScannerLike {
 	return ScannerClass().Scanner(
 		source,

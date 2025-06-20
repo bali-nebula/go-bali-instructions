@@ -20,7 +20,7 @@
 package ast
 
 import (
-	com "github.com/craterdog/go-component-framework/v7"
+	fra "github.com/craterdog/go-component-framework/v7"
 	uti "github.com/craterdog/go-missing-utilities/v7"
 )
 
@@ -35,7 +35,7 @@ func AssemblyClass() AssemblyClassLike {
 // Constructor Methods
 
 func (c *assemblyClass_) Assembly(
-	instructions com.ListLike[InstructionLike],
+	instructions fra.ListLike[InstructionLike],
 ) AssemblyLike {
 	if uti.IsUndefined(instructions) {
 		panic("The \"instructions\" attribute is required by this class.")
@@ -57,7 +57,7 @@ func (v *assembly_) GetClass() AssemblyClassLike {
 
 // Attribute Methods
 
-func (v *assembly_) GetInstructions() com.ListLike[InstructionLike] {
+func (v *assembly_) GetInstructions() fra.ListLike[InstructionLike] {
 	return v.instructions_
 }
 
@@ -67,7 +67,7 @@ func (v *assembly_) GetInstructions() com.ListLike[InstructionLike] {
 
 type assembly_ struct {
 	// Declare the instance attributes.
-	instructions_ com.ListLike[InstructionLike]
+	instructions_ fra.ListLike[InstructionLike]
 }
 
 // Class Structure
