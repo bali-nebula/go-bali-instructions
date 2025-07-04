@@ -21,7 +21,7 @@ import (
 )
 
 var assemblyFiles = []string{
-	"./testdata/instructions.basm",
+	"./test/instructions.basm",
 }
 
 func TestRoundTrips(t *tes.T) {
