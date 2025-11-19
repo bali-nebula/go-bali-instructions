@@ -29,15 +29,15 @@ func CallClass() CallClassLike {
 
 func (c *callClass_) Call(
 	symbol string,
-	optionalCardinality Modifier,
+	cardinality Modifier,
 ) CallLike {
 	if uti.IsUndefined(symbol) {
 		panic("The \"symbol\" attribute is required by this class.")
 	}
 	var instance = &call_{
 		// Initialize the instance attributes.
-		symbol_:              symbol,
-		optionalCardinality_: optionalCardinality,
+		symbol_:      symbol,
+		cardinality_: cardinality,
 	}
 	return instance
 }
@@ -52,7 +52,7 @@ func (v *call_) GetClass() CallClassLike {
 
 func (v *call_) AsSource() string {
 	var source = "CALL " + v.symbol_
-	switch v.optionalCardinality_ {
+	switch v.cardinality_ {
 	case With0Arguments:
 	case With1Argument:
 		source += " WITH 1 ARGUMENT"
@@ -63,7 +63,7 @@ func (v *call_) AsSource() string {
 	default:
 		var message = fmt.Sprintf(
 			"An invalid cardinality was found: %v",
-			v.optionalCardinality_,
+			v.cardinality_,
 		)
 		panic(message)
 	}
@@ -76,8 +76,8 @@ func (v *call_) GetSymbol() string {
 	return v.symbol_
 }
 
-func (v *call_) GetOptionalCardinality() Modifier {
-	return v.optionalCardinality_
+func (v *call_) GetCardinality() Modifier {
+	return v.cardinality_
 }
 
 // PROTECTED INTERFACE
@@ -86,8 +86,8 @@ func (v *call_) GetOptionalCardinality() Modifier {
 
 type call_ struct {
 	// Declare the instance attributes.
-	symbol_              string
-	optionalCardinality_ Modifier
+	symbol_      string
+	cardinality_ Modifier
 }
 
 // Class Structure

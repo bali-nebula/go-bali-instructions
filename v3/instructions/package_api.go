@@ -117,7 +117,7 @@ type CallClassLike interface {
 	// Constructor Methods
 	Call(
 		symbol string,
-		optionalCardinality Modifier,
+		cardinality Modifier,
 	) CallLike
 }
 
@@ -332,7 +332,7 @@ type CallLike interface {
 
 	// Attribute Methods
 	GetSymbol() string
-	GetOptionalCardinality() Modifier
+	GetCardinality() Modifier
 }
 
 /*

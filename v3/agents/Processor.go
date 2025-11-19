@@ -13,9 +13,7 @@
 package agents
 
 import (
-	doc "github.com/bali-nebula/go-bali-documents/v3/documents"
-	com "github.com/craterdog/go-essential-composites/v8"
-	pri "github.com/craterdog/go-essential-primitives/v8"
+	ins "github.com/bali-nebula/go-bali-instructions/v3/instructions"
 )
 
 // CLASS INTERFACE
@@ -35,10 +33,6 @@ func (c *processorClass_) Processor() ProcessorLike {
 	return instance
 }
 
-// Constant Methods
-
-// Function Methods
-
 // INSTANCE INTERFACE
 
 // Principal Methods
@@ -47,1262 +41,395 @@ func (v *processor_) GetClass() ProcessorClassLike {
 	return processorClass()
 }
 
-// Attribute Methods
-
 // Methodical Methods
 
-func (v *processor_) ProcessAngle(
-	angle pri.AngleLike,
+func (v *processor_) ProcessDescription(
+	description string,
 ) {
 }
 
-func (v *processor_) ProcessAnnotation(
-	annotation string,
+func (v *processor_) ProcessLabel(
+	label string,
 ) {
 }
 
-func (v *processor_) ProcessAssignment(
-	assignment doc.Assignment,
+func (v *processor_) ProcessModifier(
+	modifier ins.Modifier,
 ) {
 }
 
-func (v *processor_) ProcessBinary(
-	binary pri.BinaryLike,
+func (v *processor_) ProcessPrefix(
+	prefix string,
 ) {
 }
 
-func (v *processor_) ProcessBoolean(
-	boolean pri.BooleanLike,
-) {
-}
-
-func (v *processor_) ProcessBracket(
-	bracket com.Bracket,
-) {
-}
-
-func (v *processor_) ProcessBytecode(
-	bytecode pri.BytecodeLike,
-) {
-}
-
-func (v *processor_) ProcessComment(
-	comment string,
-) {
-}
-
-func (v *processor_) ProcessDuration(
-	duration pri.DurationLike,
-) {
-}
-
-func (v *processor_) ProcessGlyph(
-	glyph pri.GlyphLike,
-) {
-}
-
-func (v *processor_) ProcessIdentifier(
-	identifier string,
-) {
-}
-
-func (v *processor_) ProcessInverse(
-	inverse doc.Inverse,
-) {
-}
-
-func (v *processor_) ProcessInvoke(
-	invoke doc.Invoke,
-) {
-}
-
-func (v *processor_) ProcessMoment(
-	moment pri.MomentLike,
-) {
-}
-
-func (v *processor_) ProcessName(
-	name pri.NameLike,
-) {
-}
-
-func (v *processor_) ProcessNarrative(
-	narrative pri.NarrativeLike,
-) {
-}
-
-func (v *processor_) ProcessNote(
-	note string,
-) {
-}
-
-func (v *processor_) ProcessNumber(
-	number pri.NumberLike,
-) {
-}
-
-func (v *processor_) ProcessOperator(
-	operator doc.Operator,
-) {
-}
-
-func (v *processor_) ProcessPattern(
-	pattern pri.PatternLike,
-) {
-}
-
-func (v *processor_) ProcessPercentage(
-	percentage pri.PercentageLike,
-) {
-}
-
-func (v *processor_) ProcessProbability(
-	probability pri.ProbabilityLike,
-) {
-}
-
-func (v *processor_) ProcessQuote(
-	quote pri.QuoteLike,
-) {
-}
-
-func (v *processor_) ProcessResource(
-	resource pri.ResourceLike,
+func (v *processor_) ProcessQuoted(
+	quoted string,
 ) {
 }
 
 func (v *processor_) ProcessSymbol(
-	symbol pri.SymbolLike,
+	symbol string,
 ) {
 }
 
-func (v *processor_) ProcessTag(
-	tag pri.TagLike,
-) {
-}
-
-func (v *processor_) ProcessVersion(
-	version pri.VersionLike,
-) {
-}
-
-func (v *processor_) PreprocessAcceptClause(
-	acceptClause doc.AcceptClauseLike,
+func (v *processor_) PreprocessAction(
+	action any,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessAcceptClauseSlot(
-	acceptClause doc.AcceptClauseLike,
+func (v *processor_) PostprocessAction(
+	action any,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) ProcessActionSlot(
+	action any,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessAcceptClause(
-	acceptClause doc.AcceptClauseLike,
+func (v *processor_) PreprocessArgument(
+	argument ins.ArgumentLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessArgument(
-	argument any,
+func (v *processor_) PostprocessArgument(
+	argument ins.ArgumentLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
 func (v *processor_) ProcessArgumentSlot(
-	argument any,
+	argument ins.ArgumentLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessArgument(
-	argument any,
+func (v *processor_) PreprocessAssembly(
+	assembly ins.AssemblyLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessAttributes(
-	attributes doc.AttributesLike,
+func (v *processor_) PostprocessAssembly(
+	assembly ins.AssemblyLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessAttributesSlot(
-	attributes doc.AttributesLike,
+func (v *processor_) ProcessAssemblySlot(
+	assembly ins.AssemblyLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessAttributes(
-	attributes doc.AttributesLike,
+func (v *processor_) PreprocessCall(
+	call ins.CallLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessBreakClause(
-	breakClause doc.BreakClauseLike,
+func (v *processor_) PostprocessCall(
+	call ins.CallLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessBreakClauseSlot(
-	breakClause doc.BreakClauseLike,
+func (v *processor_) ProcessCallSlot(
+	call ins.CallLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessBreakClause(
-	breakClause doc.BreakClauseLike,
+func (v *processor_) PreprocessConstant(
+	constant ins.ConstantLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessCheckoutClause(
-	checkoutClause doc.CheckoutClauseLike,
+func (v *processor_) PostprocessConstant(
+	constant ins.ConstantLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessCheckoutClauseSlot(
-	checkoutClause doc.CheckoutClauseLike,
+func (v *processor_) ProcessConstantSlot(
+	constant ins.ConstantLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessCheckoutClause(
-	checkoutClause doc.CheckoutClauseLike,
+func (v *processor_) PreprocessDrop(
+	drop ins.DropLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessComplement(
-	complement doc.ComplementLike,
+func (v *processor_) PostprocessDrop(
+	drop ins.DropLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessComplementSlot(
-	complement doc.ComplementLike,
+func (v *processor_) ProcessDropSlot(
+	drop ins.DropLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessComplement(
-	complement doc.ComplementLike,
+func (v *processor_) PreprocessHandler(
+	handler ins.HandlerLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessComposite(
-	composite doc.Composite,
+func (v *processor_) PostprocessHandler(
+	handler ins.HandlerLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessCompositeSlot(
-	composite doc.Composite,
+func (v *processor_) ProcessHandlerSlot(
+	handler ins.HandlerLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessComposite(
-	composite doc.Composite,
+func (v *processor_) PreprocessInstruction(
+	instruction ins.InstructionLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessContent(
-	content doc.ContentLike,
+func (v *processor_) PostprocessInstruction(
+	instruction ins.InstructionLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessContentSlot(
-	content doc.ContentLike,
+func (v *processor_) ProcessInstructionSlot(
+	instruction ins.InstructionLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessContent(
-	content doc.ContentLike,
+func (v *processor_) PreprocessJump(
+	jump ins.JumpLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessConstraint(
-	constraint doc.ConstraintLike,
+func (v *processor_) PostprocessJump(
+	jump ins.JumpLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessConstraintSlot(
-	constraint doc.ConstraintLike,
+func (v *processor_) ProcessJumpSlot(
+	jump ins.JumpLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessConstraint(
-	constraint doc.ConstraintLike,
+func (v *processor_) PreprocessLiteral(
+	literal ins.LiteralLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessContinueClause(
-	continueClause doc.ContinueClauseLike,
+func (v *processor_) PostprocessLiteral(
+	literal ins.LiteralLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessContinueClauseSlot(
-	continueClause doc.ContinueClauseLike,
+func (v *processor_) ProcessLiteralSlot(
+	literal ins.LiteralLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessContinueClause(
-	continueClause doc.ContinueClauseLike,
+func (v *processor_) PreprocessLoad(
+	load ins.LoadLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessDiscardClause(
-	discardClause doc.DiscardClauseLike,
+func (v *processor_) PostprocessLoad(
+	load ins.LoadLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessDiscardClauseSlot(
-	discardClause doc.DiscardClauseLike,
+func (v *processor_) ProcessLoadSlot(
+	load ins.LoadLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessDiscardClause(
-	discardClause doc.DiscardClauseLike,
+func (v *processor_) PreprocessNote(
+	note ins.NoteLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessDoClause(
-	doClause doc.DoClauseLike,
+func (v *processor_) PostprocessNote(
+	note ins.NoteLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessDoClauseSlot(
-	doClause doc.DoClauseLike,
+func (v *processor_) ProcessNoteSlot(
+	note ins.NoteLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessDoClause(
-	doClause doc.DoClauseLike,
+func (v *processor_) PreprocessPull(
+	pull ins.PullLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessDocument(
-	document doc.DocumentLike,
+func (v *processor_) PostprocessPull(
+	pull ins.PullLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessDocumentSlot(
-	document doc.DocumentLike,
+func (v *processor_) ProcessPullSlot(
+	pull ins.PullLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessDocument(
-	document doc.DocumentLike,
+func (v *processor_) PreprocessPush(
+	push ins.PushLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessEntity(
-	entity any,
+func (v *processor_) PostprocessPush(
+	push ins.PushLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessEntitySlot(
-	entity any,
+func (v *processor_) ProcessPushSlot(
+	push ins.PushLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessEntity(
-	entity any,
+func (v *processor_) PreprocessSave(
+	save ins.SaveLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessExpression(
-	expression doc.ExpressionLike,
+func (v *processor_) PostprocessSave(
+	save ins.SaveLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessExpressionSlot(
-	expression doc.ExpressionLike,
+func (v *processor_) ProcessSaveSlot(
+	save ins.SaveLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessExpression(
-	expression doc.ExpressionLike,
+func (v *processor_) PreprocessSend(
+	send ins.SendLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessFunction(
-	function doc.FunctionLike,
+func (v *processor_) PostprocessSend(
+	send ins.SendLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessFunctionSlot(
-	function doc.FunctionLike,
+func (v *processor_) ProcessSendSlot(
+	send ins.SendLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessFunction(
-	function doc.FunctionLike,
+func (v *processor_) PreprocessSkip(
+	skip ins.SkipLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessIfClause(
-	ifClause doc.IfClauseLike,
+func (v *processor_) PostprocessSkip(
+	skip ins.SkipLike,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessIfClauseSlot(
-	ifClause doc.IfClauseLike,
+func (v *processor_) ProcessSkipSlot(
+	skip ins.SkipLike,
 	slot_ uint,
 ) {
 }
 
-func (v *processor_) PostprocessIfClause(
-	ifClause doc.IfClauseLike,
+func (v *processor_) PreprocessSource(
+	source any,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) PreprocessIndex(
-	index any,
+func (v *processor_) PostprocessSource(
+	source any,
 	index_ uint,
 	count_ uint,
 ) {
 }
 
-func (v *processor_) ProcessIndexSlot(
-	index any,
+func (v *processor_) ProcessSourceSlot(
+	source any,
 	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessIndex(
-	index any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessInspectClause(
-	inspectClause doc.InspectClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessInspectClauseSlot(
-	inspectClause doc.InspectClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessInspectClause(
-	inspectClause doc.InspectClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessInversion(
-	inversion doc.InversionLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessInversionSlot(
-	inversion doc.InversionLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessInversion(
-	inversion doc.InversionLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessItems(
-	items doc.ItemsLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessItemsSlot(
-	items doc.ItemsLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessItems(
-	items doc.ItemsLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessLetClause(
-	letClause doc.LetClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessLetClauseSlot(
-	letClause doc.LetClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessLetClause(
-	letClause doc.LetClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessLine(
-	line any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessLineSlot(
-	line any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessLine(
-	line any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessLogical(
-	logical any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessLogicalSlot(
-	logical any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessLogical(
-	logical any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessMagnitude(
-	magnitude doc.MagnitudeLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessMagnitudeSlot(
-	magnitude doc.MagnitudeLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessMagnitude(
-	magnitude doc.MagnitudeLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessMainClause(
-	mainClause any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessMainClauseSlot(
-	mainClause any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessMainClause(
-	mainClause any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessMatchingClause(
-	matchingClause doc.MatchingClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessMatchingClauseSlot(
-	matchingClause doc.MatchingClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessMatchingClause(
-	matchingClause doc.MatchingClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessMetadata(
-	metadata any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessMetadataSlot(
-	metadata any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessMetadata(
-	metadata any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessMethod(
-	method doc.MethodLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessMethodSlot(
-	method doc.MethodLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessMethod(
-	method doc.MethodLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessNotarizeClause(
-	notarizeClause doc.NotarizeClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessNotarizeClauseSlot(
-	notarizeClause doc.NotarizeClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessNotarizeClause(
-	notarizeClause doc.NotarizeClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessNumerical(
-	numerical any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessNumericalSlot(
-	numerical any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessNumerical(
-	numerical any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessOnClause(
-	onClause doc.OnClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessOnClauseSlot(
-	onClause doc.OnClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessOnClause(
-	onClause doc.OnClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessGenerics(
-	generics doc.GenericsLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessGenericsSlot(
-	generics doc.GenericsLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessGenerics(
-	generics doc.GenericsLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessPrecedence(
-	precedence doc.PrecedenceLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessPrecedenceSlot(
-	precedence doc.PrecedenceLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessPrecedence(
-	precedence doc.PrecedenceLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessPredicate(
-	predicate doc.PredicateLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessPredicateSlot(
-	predicate doc.PredicateLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessPredicate(
-	predicate doc.PredicateLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessPrimitive(
-	primitive any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessPrimitiveSlot(
-	primitive any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessPrimitive(
-	primitive any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessProcedure(
-	procedure doc.ProcedureLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessProcedureSlot(
-	procedure doc.ProcedureLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessProcedure(
-	procedure doc.ProcedureLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessPublishClause(
-	publishClause doc.PublishClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessPublishClauseSlot(
-	publishClause doc.PublishClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessPublishClause(
-	publishClause doc.PublishClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessRange(
-	range_ doc.RangeLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessRangeSlot(
-	range_ doc.RangeLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessRange(
-	range_ doc.RangeLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessReceiveClause(
-	receiveClause doc.ReceiveClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessReceiveClauseSlot(
-	receiveClause doc.ReceiveClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessReceiveClause(
-	receiveClause doc.ReceiveClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessRecipient(
-	recipient any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessRecipientSlot(
-	recipient any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessRecipient(
-	recipient any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessReference(
-	reference any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessReferenceSlot(
-	reference any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessReference(
-	reference any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessReferent(
-	referent doc.ReferentLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessReferentSlot(
-	referent doc.ReferentLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessReferent(
-	referent doc.ReferentLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessRejectClause(
-	rejectClause doc.RejectClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessRejectClauseSlot(
-	rejectClause doc.RejectClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessRejectClause(
-	rejectClause doc.RejectClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessRetrieveClause(
-	retrieveClause doc.RetrieveClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessRetrieveClauseSlot(
-	retrieveClause doc.RetrieveClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessRetrieveClause(
-	retrieveClause doc.RetrieveClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessReturnClause(
-	returnClause doc.ReturnClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessReturnClauseSlot(
-	returnClause doc.ReturnClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessReturnClause(
-	returnClause doc.ReturnClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessReversible(
-	reversible any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessReversibleSlot(
-	reversible any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessReversible(
-	reversible any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessSaveClause(
-	saveClause doc.SaveClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessSaveClauseSlot(
-	saveClause doc.SaveClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessSaveClause(
-	saveClause doc.SaveClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessSelectClause(
-	selectClause doc.SelectClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessSelectClauseSlot(
-	selectClause doc.SelectClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessSelectClause(
-	selectClause doc.SelectClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessSendClause(
-	sendClause doc.SendClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessSendClauseSlot(
-	sendClause doc.SendClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessSendClause(
-	sendClause doc.SendClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessStatement(
-	statement doc.StatementLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessStatementSlot(
-	statement doc.StatementLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessStatement(
-	statement doc.StatementLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessSubcomponent(
-	subcomponent doc.SubcomponentLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessSubcomponentSlot(
-	subcomponent doc.SubcomponentLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessSubcomponent(
-	subcomponent doc.SubcomponentLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessSubject(
-	subject any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessSubjectSlot(
-	subject any,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessSubject(
-	subject any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessThrowClause(
-	throwClause doc.ThrowClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessThrowClauseSlot(
-	throwClause doc.ThrowClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessThrowClause(
-	throwClause doc.ThrowClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessWhileClause(
-	whileClause doc.WhileClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessWhileClauseSlot(
-	whileClause doc.WhileClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessWhileClause(
-	whileClause doc.WhileClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PreprocessWithClause(
-	withClause doc.WithClauseLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessWithClauseSlot(
-	withClause doc.WithClauseLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PostprocessWithClause(
-	withClause doc.WithClauseLike,
-	index_ uint,
-	count_ uint,
 ) {
 }
 

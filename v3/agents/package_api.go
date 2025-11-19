@@ -11,7 +11,7 @@
 */
 
 /*
-Package "agents" provides classes that act on Bali documents.
+Package "agents" provides classes that act on Bali Assembly Language™.
 
 This package follows the Crater Dog Technologies™ Go Coding Conventions located
 here:
@@ -25,10 +25,8 @@ on interfaces, not on each other.
 package agents
 
 import (
-	doc "github.com/bali-nebula/go-bali-documents/v3/documents"
-	not "github.com/bali-nebula/go-document-notation/v3"
-	com "github.com/craterdog/go-essential-composites/v8"
-	pri "github.com/craterdog/go-essential-primitives/v8"
+	lan "github.com/bali-nebula/go-assembly-language/v3"
+	ins "github.com/bali-nebula/go-bali-instructions/v3/instructions"
 )
 
 // TYPE DECLARATIONS
@@ -99,9 +97,9 @@ instance of a concrete deflator-like class.
 type DeflatorLike interface {
 	// Principal Methods
 	GetClass() DeflatorClassLike
-	DeflateDocument(
-		document doc.DocumentLike,
-	) not.DocumentLike
+	DeflateAssembly(
+		assembly ins.AssemblyLike,
+	) lan.AssemblyLike
 
 	// Aspect Interfaces
 	Methodical
@@ -115,12 +113,12 @@ instance of a concrete inflator-like class.
 type InflatorLike interface {
 	// Principal Methods
 	GetClass() InflatorClassLike
-	InflateDocument(
-		document not.DocumentLike,
-	) doc.DocumentLike
+	InflateAssembly(
+		assembly lan.AssemblyLike,
+	) ins.AssemblyLike
 
 	// Aspect Interfaces
-	not.Methodical
+	lan.Methodical
 }
 
 /*
@@ -144,8 +142,8 @@ instance of a concrete validator-like class.
 type ValidatorLike interface {
 	// Principal Methods
 	GetClass() ValidatorClassLike
-	ValidateDocument(
-		document doc.DocumentLike,
+	ValidateAssembly(
+		assembly ins.AssemblyLike,
 	)
 
 	// Aspect Interfaces
@@ -160,8 +158,8 @@ instance of a concrete visitor-like class.
 type VisitorLike interface {
 	// Principal Methods
 	GetClass() VisitorClassLike
-	VisitDocument(
-		document doc.DocumentLike,
+	VisitAssembly(
+		assembly ins.AssemblyLike,
 	)
 }
 
@@ -172,869 +170,274 @@ Methodical declares the set of method signatures that must be supported by
 all methodical processors.
 */
 type Methodical interface {
-	ProcessAngle(
-		angle pri.AngleLike,
+	ProcessDescription(
+		description string,
 	)
-	ProcessAnnotation(
-		annotation string,
+	ProcessLabel(
+		label string,
 	)
-	ProcessAssignment(
-		assignment doc.Assignment,
+	ProcessModifier(
+		modifier ins.Modifier,
 	)
-	ProcessBinary(
-		binary pri.BinaryLike,
+	ProcessPrefix(
+		prefix string,
 	)
-	ProcessBoolean(
-		boolean pri.BooleanLike,
-	)
-	ProcessBracket(
-		bracket com.Bracket,
-	)
-	ProcessBytecode(
-		bytecode pri.BytecodeLike,
-	)
-	ProcessComment(
-		comment string,
-	)
-	ProcessDuration(
-		duration pri.DurationLike,
-	)
-	ProcessGlyph(
-		glyph pri.GlyphLike,
-	)
-	ProcessIdentifier(
-		identifier string,
-	)
-	ProcessInverse(
-		inverse doc.Inverse,
-	)
-	ProcessInvoke(
-		invoke doc.Invoke,
-	)
-	ProcessMoment(
-		moment pri.MomentLike,
-	)
-	ProcessName(
-		name pri.NameLike,
-	)
-	ProcessNarrative(
-		narrative pri.NarrativeLike,
-	)
-	ProcessNote(
-		note string,
-	)
-	ProcessNumber(
-		number pri.NumberLike,
-	)
-	ProcessOperator(
-		operator doc.Operator,
-	)
-	ProcessPattern(
-		pattern pri.PatternLike,
-	)
-	ProcessPercentage(
-		percentage pri.PercentageLike,
-	)
-	ProcessProbability(
-		probability pri.ProbabilityLike,
-	)
-	ProcessQuote(
-		quote pri.QuoteLike,
-	)
-	ProcessResource(
-		resource pri.ResourceLike,
+	ProcessQuoted(
+		quoted string,
 	)
 	ProcessSymbol(
-		symbol pri.SymbolLike,
+		symbol string,
 	)
-	ProcessTag(
-		tag pri.TagLike,
-	)
-	ProcessVersion(
-		version pri.VersionLike,
-	)
-	PreprocessAcceptClause(
-		acceptClause doc.AcceptClauseLike,
+	PreprocessAction(
+		action any,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessAcceptClauseSlot(
-		acceptClause doc.AcceptClauseLike,
+	PostprocessAction(
+		action any,
+		index_ uint,
+		count_ uint,
+	)
+	ProcessActionSlot(
+		action any,
 		slot_ uint,
 	)
-	PostprocessAcceptClause(
-		acceptClause doc.AcceptClauseLike,
+	PreprocessArgument(
+		argument ins.ArgumentLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessArgument(
-		argument any,
+	PostprocessArgument(
+		argument ins.ArgumentLike,
 		index_ uint,
 		count_ uint,
 	)
 	ProcessArgumentSlot(
-		argument any,
+		argument ins.ArgumentLike,
 		slot_ uint,
 	)
-	PostprocessArgument(
-		argument any,
+	PreprocessAssembly(
+		assembly ins.AssemblyLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessAttributes(
-		attributes doc.AttributesLike,
+	PostprocessAssembly(
+		assembly ins.AssemblyLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessAttributesSlot(
-		attributes doc.AttributesLike,
+	ProcessAssemblySlot(
+		assembly ins.AssemblyLike,
 		slot_ uint,
 	)
-	PostprocessAttributes(
-		attributes doc.AttributesLike,
+	PreprocessCall(
+		call ins.CallLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessBreakClause(
-		breakClause doc.BreakClauseLike,
+	PostprocessCall(
+		call ins.CallLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessBreakClauseSlot(
-		breakClause doc.BreakClauseLike,
+	ProcessCallSlot(
+		call ins.CallLike,
 		slot_ uint,
 	)
-	PostprocessBreakClause(
-		breakClause doc.BreakClauseLike,
+	PreprocessConstant(
+		constant ins.ConstantLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessCheckoutClause(
-		checkoutClause doc.CheckoutClauseLike,
+	PostprocessConstant(
+		constant ins.ConstantLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessCheckoutClauseSlot(
-		checkoutClause doc.CheckoutClauseLike,
+	ProcessConstantSlot(
+		constant ins.ConstantLike,
 		slot_ uint,
 	)
-	PostprocessCheckoutClause(
-		checkoutClause doc.CheckoutClauseLike,
+	PreprocessDrop(
+		drop ins.DropLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessComplement(
-		complement doc.ComplementLike,
+	PostprocessDrop(
+		drop ins.DropLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessComplementSlot(
-		complement doc.ComplementLike,
+	ProcessDropSlot(
+		drop ins.DropLike,
 		slot_ uint,
 	)
-	PostprocessComplement(
-		complement doc.ComplementLike,
+	PreprocessHandler(
+		handler ins.HandlerLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessComposite(
-		composite doc.Composite,
+	PostprocessHandler(
+		handler ins.HandlerLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessCompositeSlot(
-		composite doc.Composite,
+	ProcessHandlerSlot(
+		handler ins.HandlerLike,
 		slot_ uint,
 	)
-	PostprocessComposite(
-		composite doc.Composite,
+	PreprocessInstruction(
+		instruction ins.InstructionLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessContent(
-		content doc.ContentLike,
+	PostprocessInstruction(
+		instruction ins.InstructionLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessContentSlot(
-		content doc.ContentLike,
+	ProcessInstructionSlot(
+		instruction ins.InstructionLike,
 		slot_ uint,
 	)
-	PostprocessContent(
-		content doc.ContentLike,
+	PreprocessJump(
+		jump ins.JumpLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessConstraint(
-		constraint doc.ConstraintLike,
+	PostprocessJump(
+		jump ins.JumpLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessConstraintSlot(
-		constraint doc.ConstraintLike,
+	ProcessJumpSlot(
+		jump ins.JumpLike,
 		slot_ uint,
 	)
-	PostprocessConstraint(
-		constraint doc.ConstraintLike,
+	PreprocessLiteral(
+		literal ins.LiteralLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessContinueClause(
-		continueClause doc.ContinueClauseLike,
+	PostprocessLiteral(
+		literal ins.LiteralLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessContinueClauseSlot(
-		continueClause doc.ContinueClauseLike,
+	ProcessLiteralSlot(
+		literal ins.LiteralLike,
 		slot_ uint,
 	)
-	PostprocessContinueClause(
-		continueClause doc.ContinueClauseLike,
+	PreprocessLoad(
+		load ins.LoadLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessDiscardClause(
-		discardClause doc.DiscardClauseLike,
+	PostprocessLoad(
+		load ins.LoadLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessDiscardClauseSlot(
-		discardClause doc.DiscardClauseLike,
+	ProcessLoadSlot(
+		load ins.LoadLike,
 		slot_ uint,
 	)
-	PostprocessDiscardClause(
-		discardClause doc.DiscardClauseLike,
+	PreprocessNote(
+		note ins.NoteLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessDoClause(
-		doClause doc.DoClauseLike,
+	PostprocessNote(
+		note ins.NoteLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessDoClauseSlot(
-		doClause doc.DoClauseLike,
+	ProcessNoteSlot(
+		note ins.NoteLike,
 		slot_ uint,
 	)
-	PostprocessDoClause(
-		doClause doc.DoClauseLike,
+	PreprocessPull(
+		pull ins.PullLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessDocument(
-		document doc.DocumentLike,
+	PostprocessPull(
+		pull ins.PullLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessDocumentSlot(
-		document doc.DocumentLike,
+	ProcessPullSlot(
+		pull ins.PullLike,
 		slot_ uint,
 	)
-	PostprocessDocument(
-		document doc.DocumentLike,
+	PreprocessPush(
+		push ins.PushLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessEntity(
-		entity any,
+	PostprocessPush(
+		push ins.PushLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessEntitySlot(
-		entity any,
+	ProcessPushSlot(
+		push ins.PushLike,
 		slot_ uint,
 	)
-	PostprocessEntity(
-		entity any,
+	PreprocessSave(
+		save ins.SaveLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessExpression(
-		expression doc.ExpressionLike,
+	PostprocessSave(
+		save ins.SaveLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessExpressionSlot(
-		expression doc.ExpressionLike,
+	ProcessSaveSlot(
+		save ins.SaveLike,
 		slot_ uint,
 	)
-	PostprocessExpression(
-		expression doc.ExpressionLike,
+	PreprocessSend(
+		send ins.SendLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessFunction(
-		function doc.FunctionLike,
+	PostprocessSend(
+		send ins.SendLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessFunctionSlot(
-		function doc.FunctionLike,
+	ProcessSendSlot(
+		send ins.SendLike,
 		slot_ uint,
 	)
-	PostprocessFunction(
-		function doc.FunctionLike,
+	PreprocessSkip(
+		skip ins.SkipLike,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessGenerics(
-		generics doc.GenericsLike,
+	PostprocessSkip(
+		skip ins.SkipLike,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessGenericsSlot(
-		generics doc.GenericsLike,
+	ProcessSkipSlot(
+		skip ins.SkipLike,
 		slot_ uint,
 	)
-	PostprocessGenerics(
-		generics doc.GenericsLike,
+	PreprocessSource(
+		source any,
 		index_ uint,
 		count_ uint,
 	)
-	PreprocessIfClause(
-		ifClause doc.IfClauseLike,
+	PostprocessSource(
+		source any,
 		index_ uint,
 		count_ uint,
 	)
-	ProcessIfClauseSlot(
-		ifClause doc.IfClauseLike,
+	ProcessSourceSlot(
+		source any,
 		slot_ uint,
-	)
-	PostprocessIfClause(
-		ifClause doc.IfClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessIndex(
-		index any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessIndexSlot(
-		index any,
-		slot_ uint,
-	)
-	PostprocessIndex(
-		index any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessInspectClause(
-		inspectClause doc.InspectClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessInspectClauseSlot(
-		inspectClause doc.InspectClauseLike,
-		slot_ uint,
-	)
-	PostprocessInspectClause(
-		inspectClause doc.InspectClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessInversion(
-		inversion doc.InversionLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessInversionSlot(
-		inversion doc.InversionLike,
-		slot_ uint,
-	)
-	PostprocessInversion(
-		inversion doc.InversionLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessItems(
-		items doc.ItemsLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessItemsSlot(
-		items doc.ItemsLike,
-		slot_ uint,
-	)
-	PostprocessItems(
-		items doc.ItemsLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessLetClause(
-		letClause doc.LetClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessLetClauseSlot(
-		letClause doc.LetClauseLike,
-		slot_ uint,
-	)
-	PostprocessLetClause(
-		letClause doc.LetClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessLine(
-		line any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessLineSlot(
-		line any,
-		slot_ uint,
-	)
-	PostprocessLine(
-		line any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessLogical(
-		logical any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessLogicalSlot(
-		logical any,
-		slot_ uint,
-	)
-	PostprocessLogical(
-		logical any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessMagnitude(
-		magnitude doc.MagnitudeLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessMagnitudeSlot(
-		magnitude doc.MagnitudeLike,
-		slot_ uint,
-	)
-	PostprocessMagnitude(
-		magnitude doc.MagnitudeLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessMainClause(
-		mainClause any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessMainClauseSlot(
-		mainClause any,
-		slot_ uint,
-	)
-	PostprocessMainClause(
-		mainClause any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessMatchingClause(
-		matchingClause doc.MatchingClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessMatchingClauseSlot(
-		matchingClause doc.MatchingClauseLike,
-		slot_ uint,
-	)
-	PostprocessMatchingClause(
-		matchingClause doc.MatchingClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessMetadata(
-		metadata any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessMetadataSlot(
-		metadata any,
-		slot_ uint,
-	)
-	PostprocessMetadata(
-		metadata any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessMethod(
-		method doc.MethodLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessMethodSlot(
-		method doc.MethodLike,
-		slot_ uint,
-	)
-	PostprocessMethod(
-		method doc.MethodLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessNotarizeClause(
-		notarizeClause doc.NotarizeClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessNotarizeClauseSlot(
-		notarizeClause doc.NotarizeClauseLike,
-		slot_ uint,
-	)
-	PostprocessNotarizeClause(
-		notarizeClause doc.NotarizeClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessNumerical(
-		numerical any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessNumericalSlot(
-		numerical any,
-		slot_ uint,
-	)
-	PostprocessNumerical(
-		numerical any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessOnClause(
-		onClause doc.OnClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessOnClauseSlot(
-		onClause doc.OnClauseLike,
-		slot_ uint,
-	)
-	PostprocessOnClause(
-		onClause doc.OnClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessPrecedence(
-		precedence doc.PrecedenceLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessPrecedenceSlot(
-		precedence doc.PrecedenceLike,
-		slot_ uint,
-	)
-	PostprocessPrecedence(
-		precedence doc.PrecedenceLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessPredicate(
-		predicate doc.PredicateLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessPredicateSlot(
-		predicate doc.PredicateLike,
-		slot_ uint,
-	)
-	PostprocessPredicate(
-		predicate doc.PredicateLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessPrimitive(
-		primitive any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessPrimitiveSlot(
-		primitive any,
-		slot_ uint,
-	)
-	PostprocessPrimitive(
-		primitive any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessProcedure(
-		procedure doc.ProcedureLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessProcedureSlot(
-		procedure doc.ProcedureLike,
-		slot_ uint,
-	)
-	PostprocessProcedure(
-		procedure doc.ProcedureLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessPublishClause(
-		publishClause doc.PublishClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessPublishClauseSlot(
-		publishClause doc.PublishClauseLike,
-		slot_ uint,
-	)
-	PostprocessPublishClause(
-		publishClause doc.PublishClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessRange(
-		range_ doc.RangeLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessRangeSlot(
-		range_ doc.RangeLike,
-		slot_ uint,
-	)
-	PostprocessRange(
-		range_ doc.RangeLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessReceiveClause(
-		receiveClause doc.ReceiveClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessReceiveClauseSlot(
-		receiveClause doc.ReceiveClauseLike,
-		slot_ uint,
-	)
-	PostprocessReceiveClause(
-		receiveClause doc.ReceiveClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessRecipient(
-		recipient any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessRecipientSlot(
-		recipient any,
-		slot_ uint,
-	)
-	PostprocessRecipient(
-		recipient any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessReference(
-		reference any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessReferenceSlot(
-		reference any,
-		slot_ uint,
-	)
-	PostprocessReference(
-		reference any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessReferent(
-		referent doc.ReferentLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessReferentSlot(
-		referent doc.ReferentLike,
-		slot_ uint,
-	)
-	PostprocessReferent(
-		referent doc.ReferentLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessRejectClause(
-		rejectClause doc.RejectClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessRejectClauseSlot(
-		rejectClause doc.RejectClauseLike,
-		slot_ uint,
-	)
-	PostprocessRejectClause(
-		rejectClause doc.RejectClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessRetrieveClause(
-		rejectClause doc.RetrieveClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessRetrieveClauseSlot(
-		rejectClause doc.RetrieveClauseLike,
-		slot_ uint,
-	)
-	PostprocessRetrieveClause(
-		rejectClause doc.RetrieveClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessReturnClause(
-		returnClause doc.ReturnClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessReturnClauseSlot(
-		returnClause doc.ReturnClauseLike,
-		slot_ uint,
-	)
-	PostprocessReturnClause(
-		returnClause doc.ReturnClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessReversible(
-		reversible any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessReversibleSlot(
-		reversible any,
-		slot_ uint,
-	)
-	PostprocessReversible(
-		reversible any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessSaveClause(
-		saveClause doc.SaveClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessSaveClauseSlot(
-		saveClause doc.SaveClauseLike,
-		slot_ uint,
-	)
-	PostprocessSaveClause(
-		saveClause doc.SaveClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessSelectClause(
-		selectClause doc.SelectClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessSelectClauseSlot(
-		selectClause doc.SelectClauseLike,
-		slot_ uint,
-	)
-	PostprocessSelectClause(
-		selectClause doc.SelectClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessSendClause(
-		sendClause doc.SendClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessSendClauseSlot(
-		sendClause doc.SendClauseLike,
-		slot_ uint,
-	)
-	PostprocessSendClause(
-		sendClause doc.SendClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessStatement(
-		statement doc.StatementLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessStatementSlot(
-		statement doc.StatementLike,
-		slot_ uint,
-	)
-	PostprocessStatement(
-		statement doc.StatementLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessSubcomponent(
-		subcomponent doc.SubcomponentLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessSubcomponentSlot(
-		subcomponent doc.SubcomponentLike,
-		slot_ uint,
-	)
-	PostprocessSubcomponent(
-		subcomponent doc.SubcomponentLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessSubject(
-		subject any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessSubjectSlot(
-		subject any,
-		slot_ uint,
-	)
-	PostprocessSubject(
-		subject any,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessThrowClause(
-		throwClause doc.ThrowClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessThrowClauseSlot(
-		throwClause doc.ThrowClauseLike,
-		slot_ uint,
-	)
-	PostprocessThrowClause(
-		throwClause doc.ThrowClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessWhileClause(
-		whileClause doc.WhileClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessWhileClauseSlot(
-		whileClause doc.WhileClauseLike,
-		slot_ uint,
-	)
-	PostprocessWhileClause(
-		whileClause doc.WhileClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	PreprocessWithClause(
-		withClause doc.WithClauseLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessWithClauseSlot(
-		withClause doc.WithClauseLike,
-		slot_ uint,
-	)
-	PostprocessWithClause(
-		withClause doc.WithClauseLike,
-		index_ uint,
-		count_ uint,
 	)
 }
