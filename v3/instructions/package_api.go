@@ -304,13 +304,28 @@ of a concrete assembly-like class.
 type AssemblyLike interface {
 	// Principal Methods
 	GetClass() AssemblyClassLike
-	AddLiteral(literal string)
-	AddConstant(constant string)
-	AddArgument(argument string)
-	AddVariable(variable string)
-	AddMessage(message string)
-	AddAddress(label string, address uint16)
-	AddInstruction(instruction InstructionLike)
+	AddLiteral(
+		literal string,
+	)
+	AddConstant(
+		constant string,
+	)
+	AddArgument(
+		argument string,
+	)
+	AddVariable(
+		variable string,
+	)
+	AddMessage(
+		message string,
+	)
+	AddAddress(
+		label string,
+		address uint16,
+	)
+	AddInstruction(
+		instruction InstructionLike,
+	)
 	GetLiterals() com.Accessible[string]
 	GetConstants() com.Accessible[string]
 	GetArguments() com.Accessible[string]

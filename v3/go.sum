@@ -1,5 +1,5 @@
-github.com/bali-nebula/go-assembly-language/v3 v3.29.0 h1:XPZU+6imo6dwnJgM6tx8z9Fw4R5UNJr3l7Nwe5ZUsVI=
-github.com/bali-nebula/go-assembly-language/v3 v3.29.0/go.mod h1:3JCq8GXZyJa4qiq4YN+jG1Zy+z/+h9N+3sopVvHFdsQ=
+github.com/bali-nebula/go-assembly-language/v3 v3.30.0 h1:W+HBD+cZnmiT4uxtjL6PWGtxxGP/m2NkSsdVRHQ/VoE=
+github.com/bali-nebula/go-assembly-language/v3 v3.30.0/go.mod h1:3JCq8GXZyJa4qiq4YN+jG1Zy+z/+h9N+3sopVvHFdsQ=
 github.com/bali-nebula/go-bali-documents/v3 v3.52.0 h1:wZ5zRqk6gttQO+JKVrtbKDu1vuMIHuI8W5QvyiCUFPA=
 github.com/bali-nebula/go-bali-documents/v3 v3.52.0/go.mod h1:ugvQvptrgC2/d5C/7C+AstkuFWlkcoJDZAAshGOgzb0=
 github.com/bali-nebula/go-document-notation/v3 v3.44.0 h1:OIkKXAlAy29CeBvGtCRdluJnwUbaxMXLe/pzPcVtW3k=
