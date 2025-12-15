@@ -31,6 +31,7 @@ For detailed documentation on this entire module refer to the wiki:
 package module
 
 import (
+	lan "github.com/bali-nebula/go-assembly-language/v3"
 	age "github.com/bali-nebula/go-bali-instructions/v3/agents"
 	ins "github.com/bali-nebula/go-bali-instructions/v3/instructions"
 )
@@ -387,3 +388,25 @@ func Skip() SkipLike {
 }
 
 // GLOBAL FUNCTIONS
+
+// Instructions
+
+func ParseAssembly(
+	source string,
+) AssemblyLike {
+	var inflator = Inflator()
+	var parser = lan.Parser()
+	var assembly = inflator.InflateAssembly(parser.ParseSource(source))
+	return assembly
+}
+
+func FormatAssembly(
+	assembly AssemblyLike,
+) string {
+	var deflator = Deflator()
+	var formatter = lan.Formatter()
+	var source = formatter.FormatAssembly(deflator.DeflateAssembly(assembly))
+	return source
+}
+
+// Agents
