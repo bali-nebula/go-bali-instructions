@@ -53,12 +53,12 @@ func (v *call_) GetClass() CallClassLike {
 func (v *call_) AsSource() string {
 	var source = "CALL " + v.symbol_
 	switch v.cardinality_ {
-	case With0Arguments:
-	case With1Argument:
+	case With0ArgumentsModifier:
+	case With1ArgumentModifier:
 		source += " WITH 1 ARGUMENT"
-	case With2Arguments:
+	case With2ArgumentsModifier:
 		source += " WITH 2 ARGUMENTS"
-	case With3Arguments:
+	case With3ArgumentsModifier:
 		source += " WITH 3 ARGUMENTS"
 	default:
 		var message = fmt.Sprintf(

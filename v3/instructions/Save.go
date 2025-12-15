@@ -56,13 +56,13 @@ func (v *save_) GetClass() SaveClassLike {
 func (v *save_) AsSource() string {
 	var source = "SAVE "
 	switch v.component_ {
-	case Draft:
+	case DraftModifier:
 		source += "DRAFT"
-	case Document:
+	case DocumentModifier:
 		source += "DOCUMENT"
-	case Message:
+	case MessageModifier:
 		source += "MESSAGE"
-	case Variable:
+	case VariableModifier:
 		source += "VARIABLE"
 	default:
 		var message = fmt.Sprintf(

@@ -138,13 +138,13 @@ func (v *inflator_) PostprocessCardinality(
 	var modifier = cardinality.GetAny().(string)
 	switch modifier {
 	case "WITH 3 ARGUMENTS":
-		v.stack_.AddValue(ins.With3Arguments)
+		v.stack_.AddValue(ins.With3ArgumentsModifier)
 	case "WITH 2 ARGUMENTS":
-		v.stack_.AddValue(ins.With2Arguments)
+		v.stack_.AddValue(ins.With2ArgumentsModifier)
 	case "WITH 1 ARGUMENT":
-		v.stack_.AddValue(ins.With1Argument)
+		v.stack_.AddValue(ins.With1ArgumentModifier)
 	default:
-		v.stack_.AddValue(ins.With0Arguments)
+		v.stack_.AddValue(ins.With0ArgumentsModifier)
 	}
 }
 
@@ -156,13 +156,13 @@ func (v *inflator_) PostprocessComponent(
 	var modifier = component.GetAny().(string)
 	switch modifier {
 	case "DRAFT":
-		v.stack_.AddValue(ins.Draft)
+		v.stack_.AddValue(ins.DraftModifier)
 	case "DOCUMENT":
-		v.stack_.AddValue(ins.Document)
+		v.stack_.AddValue(ins.DocumentModifier)
 	case "MESSAGE":
-		v.stack_.AddValue(ins.Message)
+		v.stack_.AddValue(ins.MessageModifier)
 	case "VARIABLE":
-		v.stack_.AddValue(ins.Variable)
+		v.stack_.AddValue(ins.VariableModifier)
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected component in a switch statement: %s",
@@ -180,13 +180,13 @@ func (v *inflator_) PostprocessConditionally(
 	var modifier = conditionally.GetAny().(string)
 	switch modifier {
 	case "ON EMPTY":
-		v.stack_.AddValue(ins.OnEmpty)
+		v.stack_.AddValue(ins.OnEmptyModifier)
 	case "ON FALSE":
-		v.stack_.AddValue(ins.OnFalse)
+		v.stack_.AddValue(ins.OnFalseModifier)
 	case "ON NONE":
-		v.stack_.AddValue(ins.OnNone)
+		v.stack_.AddValue(ins.OnNoneModifier)
 	default:
-		v.stack_.AddValue(ins.OnAny)
+		v.stack_.AddValue(ins.OnAnyModifier)
 	}
 }
 
@@ -207,13 +207,13 @@ func (v *inflator_) PostprocessDestination(
 	var modifier = destination.GetAny().(string)
 	switch modifier {
 	case "COMPONENT":
-		v.stack_.AddValue(ins.Component)
+		v.stack_.AddValue(ins.ComponentModifier)
 	case "COMPONENT WITH ARGUMENTS":
-		v.stack_.AddValue(ins.ComponentWithArguments)
+		v.stack_.AddValue(ins.ComponentWithArgumentsModifier)
 	case "DOCUMENT":
-		v.stack_.AddValue(ins.Document)
+		v.stack_.AddValue(ins.DocumentModifier)
 	case "DOCUMENT WITH ARGUMENTS":
-		v.stack_.AddValue(ins.DocumentWithArguments)
+		v.stack_.AddValue(ins.DocumentWithArgumentsModifier)
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected destination in a switch statement: %s",
@@ -405,13 +405,13 @@ func (v *inflator_) PostprocessValue(
 	var modifier = value.GetAny().(string)
 	switch modifier {
 	case "COMPONENT":
-		v.stack_.AddValue(ins.Component)
+		v.stack_.AddValue(ins.ComponentModifier)
 	case "RESULT":
-		v.stack_.AddValue(ins.Result)
+		v.stack_.AddValue(ins.ResultModifier)
 	case "EXCEPTION":
-		v.stack_.AddValue(ins.Exception)
+		v.stack_.AddValue(ins.ExceptionModifier)
 	case "HANDLER":
-		v.stack_.AddValue(ins.Handler)
+		v.stack_.AddValue(ins.HandlerModifier)
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected value in a switch statement: %s",

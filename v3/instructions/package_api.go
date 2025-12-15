@@ -41,16 +41,16 @@ Action is a constrained type representing the possible BVM operations.
 type Action uint8
 
 const (
-	Note Action = iota
-	Skip
-	Jump
-	Push
-	Pull
-	Load
-	Save
-	Drop
-	Call
-	Send
+	NoteAction Action = iota
+	SkipAction
+	JumpAction
+	PushAction
+	PullActionAction
+	LoadAction
+	SaveAction
+	DropAction
+	CallAction
+	SendAction
 )
 
 /*
@@ -59,27 +59,27 @@ Modifier is a constrained type representing the possible BVM modifiers.
 type Modifier uint16
 
 const (
-	OnAny Modifier = iota
-	OnEmpty
-	OnNone
-	OnFalse
-	Handler
-	Literal
-	Constant
-	Argument
-	Exception
-	Component
-	Result
-	Document
-	Draft
-	Message
-	Variable
-	With0Arguments
-	With1Argument
-	With2Arguments
-	With3Arguments
-	ComponentWithArguments
-	DocumentWithArguments
+	OnAnyModifier Modifier = iota
+	OnEmptyModifier
+	OnNoneModifier
+	OnFalseModifier
+	HandlerModifier
+	LiteralModifier
+	ConstantModifier
+	ArgumentModifier
+	ExceptionModifier
+	ComponentModifier
+	ResultModifier
+	DocumentModifier
+	DraftModifier
+	MessageModifier
+	VariableModifier
+	With0ArgumentsModifier
+	With1ArgumentModifier
+	With2ArgumentsModifier
+	With3ArgumentsModifier
+	ComponentWithArgumentsModifier
+	DocumentWithArgumentsModifier
 )
 
 // FUNCTIONAL DECLARATIONS

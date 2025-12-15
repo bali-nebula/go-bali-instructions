@@ -51,13 +51,13 @@ func (v *pull_) GetClass() PullClassLike {
 func (v *pull_) AsSource() string {
 	var source = "PULL "
 	switch v.value_ {
-	case Component:
+	case ComponentModifier:
 		source += "COMPONENT"
-	case Result:
+	case ResultModifier:
 		source += "RESULT"
-	case Exception:
+	case ExceptionModifier:
 		source += "EXCEPTION"
-	case Handler:
+	case HandlerModifier:
 		source += "HANDLER"
 	default:
 		var message = fmt.Sprintf(

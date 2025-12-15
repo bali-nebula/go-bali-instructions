@@ -56,13 +56,13 @@ func (v *send_) GetClass() SendClassLike {
 func (v *send_) AsSource() string {
 	var source = "SEND " + v.symbol_ + " TO "
 	switch v.destination_ {
-	case Component:
+	case ComponentModifier:
 		source += "COMPONENT"
-	case ComponentWithArguments:
+	case ComponentWithArgumentsModifier:
 		source += "COMPONENT WITH ARGUMENTS"
-	case Document:
+	case DocumentModifier:
 		source += "DOCUMENT"
-	case DocumentWithArguments:
+	case DocumentWithArgumentsModifier:
 		source += "DOCUMENT WITH ARGUMENTS"
 	default:
 		var message = fmt.Sprintf(

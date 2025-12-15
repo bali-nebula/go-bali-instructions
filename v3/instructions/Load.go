@@ -56,13 +56,13 @@ func (v *load_) GetClass() LoadClassLike {
 func (v *load_) AsSource() string {
 	var source = "LOAD "
 	switch v.component_ {
-	case Draft:
+	case DraftModifier:
 		source += "DRAFT"
-	case Document:
+	case DocumentModifier:
 		source += "DOCUMENT"
-	case Message:
+	case MessageModifier:
 		source += "MESSAGE"
-	case Variable:
+	case VariableModifier:
 		source += "VARIABLE"
 	default:
 		var message = fmt.Sprintf(

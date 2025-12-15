@@ -67,37 +67,37 @@ type (
 )
 
 const (
-	Note                   = ins.Note
-	Skip                   = ins.Skip
-	Jump                   = ins.Jump
-	Push                   = ins.Push
-	Pull                   = ins.Pull
-	Load                   = ins.Load
-	Save                   = ins.Save
-	Drop                   = ins.Drop
-	Call                   = ins.Call
-	Send                   = ins.Send
-	OnAny                  = ins.OnAny
-	OnEmpty                = ins.OnEmpty
-	OnNone                 = ins.OnNone
-	OnFalse                = ins.OnFalse
-	Handler                = ins.Handler
-	Literal                = ins.Literal
-	Constant               = ins.Constant
-	Argument               = ins.Argument
-	Exception              = ins.Exception
-	Component              = ins.Component
-	Result                 = ins.Result
-	Document               = ins.Document
-	Draft                  = ins.Draft
-	Message                = ins.Message
-	Variable               = ins.Variable
-	With0Arguments         = ins.With0Arguments
-	With1Argument          = ins.With1Argument
-	With2Arguments         = ins.With2Arguments
-	With3Arguments         = ins.With3Arguments
-	ComponentWithArguments = ins.ComponentWithArguments
-	DocumentWithArguments  = ins.DocumentWithArguments
+	NoteAction                     = ins.NoteAction
+	SkipAction                     = ins.SkipAction
+	JumpAction                     = ins.JumpAction
+	PushAction                     = ins.PushAction
+	PullActionAction               = ins.PullActionAction
+	LoadAction                     = ins.LoadAction
+	SaveAction                     = ins.SaveAction
+	DropAction                     = ins.DropAction
+	CallAction                     = ins.CallAction
+	SendAction                     = ins.SendAction
+	OnAnyModifier                  = ins.OnAnyModifier
+	OnEmptyModifier                = ins.OnEmptyModifier
+	OnNoneModifier                 = ins.OnNoneModifier
+	OnFalseModifier                = ins.OnFalseModifier
+	HandlerModifier                = ins.HandlerModifier
+	LiteralModifier                = ins.LiteralModifier
+	ConstantModifier               = ins.ConstantModifier
+	ArgumentModifier               = ins.ArgumentModifier
+	ExceptionModifier              = ins.ExceptionModifier
+	ComponentModifier              = ins.ComponentModifier
+	ResultModifier                 = ins.ResultModifier
+	DocumentModifier               = ins.DocumentModifier
+	DraftModifier                  = ins.DraftModifier
+	MessageModifier                = ins.MessageModifier
+	VariableModifier               = ins.VariableModifier
+	With0ArgumentsModifier         = ins.With0ArgumentsModifier
+	With1ArgumentModifier          = ins.With1ArgumentModifier
+	With2ArgumentsModifier         = ins.With2ArgumentsModifier
+	With3ArgumentsModifier         = ins.With3ArgumentsModifier
+	ComponentWithArgumentsModifier = ins.ComponentWithArgumentsModifier
+	DocumentWithArgumentsModifier  = ins.DocumentWithArgumentsModifier
 )
 
 type (

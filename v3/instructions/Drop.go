@@ -56,13 +56,13 @@ func (v *drop_) GetClass() DropClassLike {
 func (v *drop_) AsSource() string {
 	var source = "DROP "
 	switch v.component_ {
-	case Draft:
+	case DraftModifier:
 		source += "DRAFT"
-	case Document:
+	case DocumentModifier:
 		source += "DOCUMENT"
-	case Message:
+	case MessageModifier:
 		source += "MESSAGE"
-	case Variable:
+	case VariableModifier:
 		source += "VARIABLE"
 	default:
 		var message = fmt.Sprintf(

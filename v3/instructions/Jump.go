@@ -53,12 +53,12 @@ func (v *jump_) GetClass() JumpClassLike {
 func (v *jump_) AsSource() string {
 	var source = "JUMP TO " + v.label_
 	switch v.condition_ {
-	case OnAny:
-	case OnNone:
+	case OnAnyModifier:
+	case OnNoneModifier:
 		source += " ON NONE"
-	case OnFalse:
+	case OnFalseModifier:
 		source += " ON FALSE"
-	case OnEmpty:
+	case OnEmptyModifier:
 		source += " ON EMPTY"
 	default:
 		var message = fmt.Sprintf(
