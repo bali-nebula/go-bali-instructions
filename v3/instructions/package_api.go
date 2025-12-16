@@ -319,7 +319,7 @@ type AssemblyLike interface {
 	AddMessage(
 		message string,
 	)
-	AddAddress(
+	AddPrefix(
 		label string,
 		address uint16,
 	)
@@ -331,7 +331,7 @@ type AssemblyLike interface {
 	GetArguments() com.Accessible[string]
 	GetVariables() com.Accessible[string]
 	GetMessages() com.Accessible[string]
-	GetAddresses() com.Associative[string, uint16]
+	GetPrefixes() com.Associative[string, uint16]
 	GetInstructions() com.Sequential[InstructionLike]
 }
 

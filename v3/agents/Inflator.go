@@ -33,7 +33,8 @@ func InflatorClass() InflatorClassLike {
 func (c *inflatorClass_) Inflator() InflatorLike {
 	var instance = &inflator_{
 		// Initialize the instance attributes.
-		stack_: com.StackWithCapacity[any](256),
+		stack_:    com.StackWithCapacity[any](256),
+		assembly_: ins.AssemblyClass().Assembly(),
 
 		// Initialize the inherited aspects.
 		Methodical: lan.ProcessorClass().Processor(),
@@ -64,7 +65,7 @@ func (v *inflator_) InflateAssembly(
 		)
 		panic(message)
 	}
-	return v.stack_.RemoveLast().(ins.AssemblyLike)
+	return v.assembly_
 }
 
 // Attribute Methods
@@ -102,19 +103,6 @@ func (v *inflator_) PostprocessArgument(
 ) {
 	var symbol = v.stack_.RemoveLast().(string)
 	v.stack_.AddValue(ins.ArgumentClass().Argument(symbol))
-}
-
-func (v *inflator_) PostprocessAssembly(
-	assembly lan.AssemblyLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *inflator_) ProcessAssemblySlot(
-	assembly lan.AssemblyLike,
-	slot_ uint,
-) {
 }
 
 func (v *inflator_) PostprocessCall(
@@ -250,6 +238,7 @@ func (v *inflator_) PreprocessInstruction(
 	index_ uint,
 	count_ uint,
 ) {
+	v.address_++
 	var label string
 	var prefix = instruction.GetOptionalPrefix()
 	if uti.IsUndefined(prefix) {
@@ -263,6 +252,9 @@ func (v *inflator_) PostprocessInstruction(
 	index_ uint,
 	count_ uint,
 ) {
+	var label = v.stack_.RemoveLast().(string)
+	var action = v.stack_.RemoveLast()
+	v.assembly_.AddInstruction(ins.InstructionClass().Instruction(label, action))
 }
 
 func (v *inflator_) ProcessInstructionSlot(
@@ -304,6 +296,14 @@ func (v *inflator_) ProcessLoadSlot(
 	load lan.LoadLike,
 	slot_ uint,
 ) {
+}
+
+func (v *inflator_) PreprocessNote(
+	note lan.NoteLike,
+	index_ uint,
+	count_ uint,
+) {
+	v.address_-- // Notes don't generate any bytecode.
 }
 
 func (v *inflator_) PostprocessNote(
@@ -429,7 +429,9 @@ func (v *inflator_) PostprocessValue(
 
 type inflator_ struct {
 	// Declare the instance attributes.
-	stack_ com.StackLike[any]
+	stack_    com.StackLike[any]
+	address_  uint16
+	assembly_ ins.AssemblyLike
 
 	// Declare the inherited aspects.
 	lan.Methodical

@@ -34,7 +34,7 @@ func (c *assemblyClass_) Assembly() AssemblyLike {
 		arguments_:    com.Set[string](),
 		variables_:    com.Set[string](),
 		messages_:     com.Set[string](),
-		addresses_:    com.Catalog[string, uint16](),
+		prefixes_:     com.Catalog[string, uint16](),
 		instructions_: com.List[InstructionLike](),
 	}
 	return instance
@@ -68,8 +68,8 @@ func (v *assembly_) AddMessage(message string) {
 	v.messages_.AddValue(message)
 }
 
-func (v *assembly_) AddAddress(label string, address uint16) {
-	v.addresses_.SetValue(label, address)
+func (v *assembly_) AddPrefix(label string, address uint16) {
+	v.prefixes_.SetValue(label, address)
 }
 
 func (v *assembly_) AddInstruction(instruction InstructionLike) {
@@ -96,8 +96,8 @@ func (v *assembly_) GetMessages() com.Accessible[string] {
 	return v.messages_
 }
 
-func (v *assembly_) GetAddresses() com.Associative[string, uint16] {
-	return v.addresses_
+func (v *assembly_) GetPrefixes() com.Associative[string, uint16] {
+	return v.prefixes_
 }
 
 func (v *assembly_) GetInstructions() com.Sequential[InstructionLike] {
@@ -115,7 +115,7 @@ type assembly_ struct {
 	arguments_    com.SetLike[string]
 	variables_    com.SetLike[string]
 	messages_     com.SetLike[string]
-	addresses_    com.CatalogLike[string, uint16]
+	prefixes_     com.CatalogLike[string, uint16]
 	instructions_ com.ListLike[InstructionLike]
 }
 
