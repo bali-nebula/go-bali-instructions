@@ -111,13 +111,8 @@ func (v *inflator_) PostprocessAssembly(
 ) {
 	var instructions = com.List[ins.InstructionLike]()
 	var iterator = assembly.GetInstructions().GetIterator()
-	var index = 1
 	for iterator.HasNext() {
-		fmt.Println(index)
-		fmt.Println(v.stack_.GetLast())
-		index++
 		var instruction = v.stack_.RemoveLast().(ins.InstructionLike)
-		fmt.Println(instruction.AsSource())
 		instructions.AppendValue(instruction)
 		iterator.GetNext()
 	}
