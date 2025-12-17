@@ -111,8 +111,13 @@ func (v *inflator_) PostprocessAssembly(
 ) {
 	var instructions = com.List[ins.InstructionLike]()
 	var iterator = assembly.GetInstructions().GetIterator()
+	var index = 1
 	for iterator.HasNext() {
+		fmt.Println(index)
+		fmt.Println(v.stack_.GetLast())
+		index++
 		var instruction = v.stack_.RemoveLast().(ins.InstructionLike)
+		fmt.Println(instruction.AsSource())
 		instructions.AppendValue(instruction)
 		iterator.GetNext()
 	}
@@ -125,15 +130,12 @@ func (v *inflator_) PostprocessCall(
 	index_ uint,
 	count_ uint,
 ) {
+	var cardinality = ins.With0ArgumentsModifier
+	if uti.IsDefined(call.GetOptionalCardinality()) {
+		cardinality = v.stack_.RemoveLast().(ins.Modifier)
+	}
 	var symbol = v.stack_.RemoveLast().(string)
-	var cardinality = v.stack_.RemoveLast().(ins.Modifier)
 	v.stack_.AddValue(ins.CallClass().Call(symbol, cardinality))
-}
-
-func (v *inflator_) ProcessCallSlot(
-	call lan.CallLike,
-	slot_ uint,
-) {
 }
 
 func (v *inflator_) PostprocessCardinality(
@@ -234,12 +236,9 @@ func (v *inflator_) PostprocessDrop(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessDropSlot(
-	drop lan.DropLike,
-	slot_ uint,
-) {
+	var symbol = v.stack_.RemoveLast().(string)
+	var component = v.stack_.RemoveLast().(ins.Modifier)
+	v.stack_.AddValue(ins.DropClass().Drop(component, symbol))
 }
 
 func (v *inflator_) PostprocessHandler(
@@ -251,33 +250,17 @@ func (v *inflator_) PostprocessHandler(
 	v.stack_.AddValue(ins.HandlerClass().Handler(label))
 }
 
-func (v *inflator_) PreprocessInstruction(
-	instruction lan.InstructionLike,
-	index_ uint,
-	count_ uint,
-) {
-	var label string
-	var prefix = instruction.GetOptionalPrefix()
-	if uti.IsUndefined(prefix) {
-		// We only add it if it is not defined, otherwise ProcessLabel adds it.
-		v.stack_.AddValue(label)
-	}
-}
-
 func (v *inflator_) PostprocessInstruction(
 	instruction lan.InstructionLike,
 	index_ uint,
 	count_ uint,
 ) {
-	var label = v.stack_.RemoveLast().(string)
+	var prefix string
 	var action = v.stack_.RemoveLast()
-	v.stack_.AddValue(ins.InstructionClass().Instruction(label, action))
-}
-
-func (v *inflator_) ProcessInstructionSlot(
-	instruction lan.InstructionLike,
-	slot_ uint,
-) {
+	if uti.IsDefined(instruction.GetOptionalPrefix()) {
+		prefix = v.stack_.RemoveLast().(string)
+	}
+	v.stack_.AddValue(ins.InstructionClass().Instruction(prefix, action))
 }
 
 func (v *inflator_) PostprocessJump(
@@ -285,12 +268,12 @@ func (v *inflator_) PostprocessJump(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessJumpSlot(
-	jump lan.JumpLike,
-	slot_ uint,
-) {
+	var condition = ins.OnAnyModifier
+	if uti.IsDefined(jump.GetOptionalConditionally()) {
+		condition = v.stack_.RemoveLast().(ins.Modifier)
+	}
+	var label = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(ins.JumpClass().Jump(label, condition))
 }
 
 func (v *inflator_) PostprocessLiteral(
@@ -307,19 +290,9 @@ func (v *inflator_) PostprocessLoad(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessLoadSlot(
-	load lan.LoadLike,
-	slot_ uint,
-) {
-}
-
-func (v *inflator_) PreprocessNote(
-	note lan.NoteLike,
-	index_ uint,
-	count_ uint,
-) {
+	var symbol = v.stack_.RemoveLast().(string)
+	var component = v.stack_.RemoveLast().(ins.Modifier)
+	v.stack_.AddValue(ins.LoadClass().Load(component, symbol))
 }
 
 func (v *inflator_) PostprocessNote(
@@ -327,25 +300,8 @@ func (v *inflator_) PostprocessNote(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessNoteSlot(
-	note lan.NoteLike,
-	slot_ uint,
-) {
-}
-
-func (v *inflator_) PostprocessPrefix(
-	prefix lan.PrefixLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *inflator_) ProcessPrefixSlot(
-	prefix lan.PrefixLike,
-	slot_ uint,
-) {
+	var description = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(ins.NoteClass().Note(description))
 }
 
 func (v *inflator_) PostprocessPull(
@@ -353,12 +309,8 @@ func (v *inflator_) PostprocessPull(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessPullSlot(
-	pull lan.PullLike,
-	slot_ uint,
-) {
+	var value = v.stack_.RemoveLast().(ins.Modifier)
+	v.stack_.AddValue(ins.PullClass().Pull(value))
 }
 
 func (v *inflator_) PostprocessPush(
@@ -366,12 +318,8 @@ func (v *inflator_) PostprocessPush(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessPushSlot(
-	push lan.PushLike,
-	slot_ uint,
-) {
+	var source = v.stack_.RemoveLast()
+	v.stack_.AddValue(ins.PushClass().Push(source))
 }
 
 func (v *inflator_) PostprocessSave(
@@ -379,12 +327,9 @@ func (v *inflator_) PostprocessSave(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessSaveSlot(
-	save lan.SaveLike,
-	slot_ uint,
-) {
+	var symbol = v.stack_.RemoveLast().(string)
+	var component = v.stack_.RemoveLast().(ins.Modifier)
+	v.stack_.AddValue(ins.SaveClass().Save(component, symbol))
 }
 
 func (v *inflator_) PostprocessSend(
@@ -392,12 +337,9 @@ func (v *inflator_) PostprocessSend(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessSendSlot(
-	send lan.SendLike,
-	slot_ uint,
-) {
+	var destination = v.stack_.RemoveLast().(ins.Modifier)
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(ins.SendClass().Send(symbol, destination))
 }
 
 func (v *inflator_) PostprocessSkip(
@@ -405,12 +347,7 @@ func (v *inflator_) PostprocessSkip(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *inflator_) ProcessSkipSlot(
-	skip lan.SkipLike,
-	slot_ uint,
-) {
+	v.stack_.AddValue(ins.SkipClass().Skip())
 }
 
 func (v *inflator_) PostprocessValue(
