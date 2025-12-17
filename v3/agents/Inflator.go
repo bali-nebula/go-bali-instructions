@@ -33,8 +33,7 @@ func InflatorClass() InflatorClassLike {
 func (c *inflatorClass_) Inflator() InflatorLike {
 	var instance = &inflator_{
 		// Initialize the instance attributes.
-		stack_:    com.StackWithCapacity[any](256),
-		assembly_: ins.AssemblyClass().Assembly(),
+		stack_: com.StackWithCapacity[any](256),
 
 		// Initialize the inherited aspects.
 		Methodical: lan.ProcessorClass().Processor(),
@@ -65,7 +64,7 @@ func (v *inflator_) InflateAssembly(
 		)
 		panic(message)
 	}
-	return v.assembly_
+	return v.stack_.RemoveLast().(ins.AssemblyLike)
 }
 
 // Attribute Methods
@@ -105,11 +104,30 @@ func (v *inflator_) PostprocessArgument(
 	v.stack_.AddValue(ins.ArgumentClass().Argument(symbol))
 }
 
+func (v *inflator_) PostprocessAssembly(
+	assembly lan.AssemblyLike,
+	index_ uint,
+	count_ uint,
+) {
+	var instructions = com.List[ins.InstructionLike]()
+	var iterator = assembly.GetInstructions().GetIterator()
+	for iterator.HasNext() {
+		var instruction = v.stack_.RemoveLast().(ins.InstructionLike)
+		instructions.AppendValue(instruction)
+		iterator.GetNext()
+	}
+	instructions.ReverseValues() // They were pulled off the stack in reverse order.
+	v.stack_.AddValue(ins.AssemblyClass().Assembly(instructions))
+}
+
 func (v *inflator_) PostprocessCall(
 	call lan.CallLike,
 	index_ uint,
 	count_ uint,
 ) {
+	var symbol = v.stack_.RemoveLast().(string)
+	var cardinality = v.stack_.RemoveLast().(ins.Modifier)
+	v.stack_.AddValue(ins.CallClass().Call(symbol, cardinality))
 }
 
 func (v *inflator_) ProcessCallSlot(
@@ -238,7 +256,6 @@ func (v *inflator_) PreprocessInstruction(
 	index_ uint,
 	count_ uint,
 ) {
-	v.address_++
 	var label string
 	var prefix = instruction.GetOptionalPrefix()
 	if uti.IsUndefined(prefix) {
@@ -254,7 +271,7 @@ func (v *inflator_) PostprocessInstruction(
 ) {
 	var label = v.stack_.RemoveLast().(string)
 	var action = v.stack_.RemoveLast()
-	v.assembly_.AddInstruction(ins.InstructionClass().Instruction(label, action))
+	v.stack_.AddValue(ins.InstructionClass().Instruction(label, action))
 }
 
 func (v *inflator_) ProcessInstructionSlot(
@@ -303,7 +320,6 @@ func (v *inflator_) PreprocessNote(
 	index_ uint,
 	count_ uint,
 ) {
-	v.address_-- // Notes don't generate any bytecode.
 }
 
 func (v *inflator_) PostprocessNote(
@@ -429,9 +445,7 @@ func (v *inflator_) PostprocessValue(
 
 type inflator_ struct {
 	// Declare the instance attributes.
-	stack_    com.StackLike[any]
-	address_  uint16
-	assembly_ ins.AssemblyLike
+	stack_ com.StackLike[any]
 
 	// Declare the inherited aspects.
 	lan.Methodical

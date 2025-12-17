@@ -14,6 +14,7 @@ package instructions
 
 import (
 	com "github.com/craterdog/go-essential-composites/v8"
+	uti "github.com/craterdog/go-essential-utilities/v8"
 )
 
 // CLASS INTERFACE
@@ -26,16 +27,15 @@ func AssemblyClass() AssemblyClassLike {
 
 // Constructor Methods
 
-func (c *assemblyClass_) Assembly() AssemblyLike {
+func (c *assemblyClass_) Assembly(
+	instructions com.Sequential[InstructionLike],
+) AssemblyLike {
+	if uti.IsUndefined(instructions) {
+		panic("The \"instructions\" attribute is required by this class.")
+	}
 	var instance = &assembly_{
 		// Initialize the instance attributes.
-		literals_:     com.Set[string](),
-		constants_:    com.Set[string](),
-		arguments_:    com.Set[string](),
-		variables_:    com.Set[string](),
-		messages_:     com.Set[string](),
-		prefixes_:     com.Catalog[string, uint16](),
-		instructions_: com.List[InstructionLike](),
+		instructions_: instructions,
 	}
 	return instance
 }
@@ -48,58 +48,6 @@ func (v *assembly_) GetClass() AssemblyClassLike {
 	return assemblyClass()
 }
 
-func (v *assembly_) AddLiteral(literal string) {
-	v.literals_.AddValue(literal)
-}
-
-func (v *assembly_) AddConstant(constant string) {
-	v.constants_.AddValue(constant)
-}
-
-func (v *assembly_) AddArgument(argument string) {
-	v.arguments_.AddValue(argument)
-}
-
-func (v *assembly_) AddVariable(variable string) {
-	v.variables_.AddValue(variable)
-}
-
-func (v *assembly_) AddMessage(message string) {
-	v.messages_.AddValue(message)
-}
-
-func (v *assembly_) AddPrefix(label string, address uint16) {
-	v.prefixes_.SetValue(label, address)
-}
-
-func (v *assembly_) AddInstruction(instruction InstructionLike) {
-	v.instructions_.AppendValue(instruction)
-}
-
-func (v *assembly_) GetLiterals() com.Accessible[string] {
-	return v.literals_
-}
-
-func (v *assembly_) GetConstants() com.Accessible[string] {
-	return v.constants_
-}
-
-func (v *assembly_) GetArguments() com.Accessible[string] {
-	return v.arguments_
-}
-
-func (v *assembly_) GetVariables() com.Accessible[string] {
-	return v.variables_
-}
-
-func (v *assembly_) GetMessages() com.Accessible[string] {
-	return v.messages_
-}
-
-func (v *assembly_) GetPrefixes() com.Associative[string, uint16] {
-	return v.prefixes_
-}
-
 func (v *assembly_) GetInstructions() com.Sequential[InstructionLike] {
 	return v.instructions_
 }
@@ -110,13 +58,7 @@ func (v *assembly_) GetInstructions() com.Sequential[InstructionLike] {
 
 type assembly_ struct {
 	// Declare the instance attributes.
-	literals_     com.SetLike[string]
-	constants_    com.SetLike[string]
-	arguments_    com.SetLike[string]
-	variables_    com.SetLike[string]
-	messages_     com.SetLike[string]
-	prefixes_     com.CatalogLike[string, uint16]
-	instructions_ com.ListLike[InstructionLike]
+	instructions_ com.Sequential[InstructionLike]
 }
 
 // Class Structure

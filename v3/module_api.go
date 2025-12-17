@@ -34,6 +34,7 @@ import (
 	lan "github.com/bali-nebula/go-assembly-language/v3"
 	age "github.com/bali-nebula/go-bali-instructions/v3/agents"
 	ins "github.com/bali-nebula/go-bali-instructions/v3/instructions"
+	com "github.com/craterdog/go-essential-composites/v8"
 )
 
 // TYPE ALIASES
@@ -205,8 +206,12 @@ func AssemblyClass() AssemblyClassLike {
 	return ins.AssemblyClass()
 }
 
-func Assembly() AssemblyLike {
-	return AssemblyClass().Assembly()
+func Assembly(
+	instructions com.Sequential[ins.InstructionLike],
+) AssemblyLike {
+	return AssemblyClass().Assembly(
+		instructions,
+	)
 }
 
 func CallClass() CallClassLike {
