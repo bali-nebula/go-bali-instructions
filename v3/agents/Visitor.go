@@ -278,7 +278,17 @@ func (v *visitor_) visitInstruction(
 ) {
 	var optionalPrefix = instruction.GetOptionalPrefix()
 	if uti.IsDefined(optionalPrefix) {
-		v.processor_.ProcessPrefix(optionalPrefix)
+		v.processor_.PreprocessPrefix(
+			optionalPrefix,
+			0,
+			0,
+		)
+		v.visitPrefix(optionalPrefix)
+		v.processor_.PostprocessPrefix(
+			optionalPrefix,
+			0,
+			0,
+		)
 	}
 
 	// Visit slot 1 between terms.
@@ -351,6 +361,13 @@ func (v *visitor_) visitNote(
 ) {
 	var description = note.GetDescription()
 	v.processor_.ProcessDescription(description)
+}
+
+func (v *visitor_) visitPrefix(
+	prefix ins.PrefixLike,
+) {
+	var label = prefix.GetLabel()
+	v.processor_.ProcessLabel(label)
 }
 
 func (v *visitor_) visitPull(

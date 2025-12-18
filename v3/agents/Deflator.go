@@ -132,11 +132,13 @@ func (v *deflator_) ProcessPrefix(
 func (v *deflator_) ProcessQuoted(
 	quoted string,
 ) {
+	v.stack_.AddValue(quoted)
 }
 
 func (v *deflator_) ProcessSymbol(
 	symbol string,
 ) {
+	v.stack_.AddValue(symbol)
 }
 
 func (v *deflator_) PreprocessAction(

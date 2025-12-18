@@ -103,6 +103,7 @@ type (
 	LiteralClassLike     = ins.LiteralClassLike
 	LoadClassLike        = ins.LoadClassLike
 	NoteClassLike        = ins.NoteClassLike
+	PrefixClassLike      = ins.PrefixClassLike
 	PullClassLike        = ins.PullClassLike
 	PushClassLike        = ins.PushClassLike
 	SaveClassLike        = ins.SaveClassLike
@@ -122,6 +123,7 @@ type (
 	LiteralLike     = ins.LiteralLike
 	LoadLike        = ins.LoadLike
 	NoteLike        = ins.NoteLike
+	PrefixLike      = ins.PrefixLike
 	PullLike        = ins.PullLike
 	PushLike        = ins.PushLike
 	SaveLike        = ins.SaveLike
@@ -260,7 +262,7 @@ func InstructionClass() InstructionClassLike {
 }
 
 func Instruction(
-	optionalPrefix string,
+	optionalPrefix ins.PrefixLike,
 	action any,
 ) InstructionLike {
 	return InstructionClass().Instruction(
@@ -318,6 +320,18 @@ func Note(
 ) NoteLike {
 	return NoteClass().Note(
 		description,
+	)
+}
+
+func PrefixClass() PrefixClassLike {
+	return ins.PrefixClass()
+}
+
+func Prefix(
+	label string,
+) PrefixLike {
+	return PrefixClass().Prefix(
+		label,
 	)
 }
 

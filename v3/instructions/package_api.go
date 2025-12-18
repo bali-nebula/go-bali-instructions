@@ -150,7 +150,7 @@ concrete instruction-like class.
 type InstructionClassLike interface {
 	// Constructor Methods
 	Instruction(
-		optionalPrefix string,
+		optionalPrefix PrefixLike,
 		action any,
 	) InstructionLike
 }
@@ -203,6 +203,18 @@ type NoteClassLike interface {
 	Note(
 		description string,
 	) NoteLike
+}
+
+/*
+PrefixClassLike is a class interface that declares the complete set of class
+constructors, constants and functions that must be supported by each concrete
+prefix-like class.
+*/
+type PrefixClassLike interface {
+	// Constructor Methods
+	Prefix(
+		label string,
+	) PrefixLike
 }
 
 /*
@@ -358,7 +370,7 @@ type InstructionLike interface {
 	AsSource() string
 
 	// Attribute Methods
-	GetOptionalPrefix() string
+	GetOptionalPrefix() PrefixLike
 	GetAction() any
 }
 
@@ -417,6 +429,19 @@ type NoteLike interface {
 
 	// Attribute Methods
 	GetDescription() string
+}
+
+/*
+PrefixLike is an instance interface that declares the complete set of principal,
+attribute and aspect methods that must be supported by each instance of a
+concrete prefix-like class.
+*/
+type PrefixLike interface {
+	// Principal Methods
+	GetClass() PrefixClassLike
+
+	// Attribute Methods
+	GetLabel() string
 }
 
 /*

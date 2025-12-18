@@ -58,11 +58,6 @@ func (v *processor_) ProcessModifier(
 ) {
 }
 
-func (v *processor_) ProcessPrefix(
-	prefix string,
-) {
-}
-
 func (v *processor_) ProcessQuoted(
 	quoted string,
 ) {
@@ -309,6 +304,26 @@ func (v *processor_) PostprocessNote(
 
 func (v *processor_) ProcessNoteSlot(
 	note ins.NoteLike,
+	slot_ uint,
+) {
+}
+
+func (v *processor_) PreprocessPrefix(
+	prefix ins.PrefixLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) PostprocessPrefix(
+	prefix ins.PrefixLike,
+	index_ uint,
+	count_ uint,
+) {
+}
+
+func (v *processor_) ProcessPrefixSlot(
+	prefix ins.PrefixLike,
 	slot_ uint,
 ) {
 }

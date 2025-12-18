@@ -28,7 +28,7 @@ func InstructionClass() InstructionClassLike {
 // Constructor Methods
 
 func (c *instructionClass_) Instruction(
-	optionalPrefix string,
+	optionalPrefix PrefixLike,
 	action any,
 ) InstructionLike {
 	if uti.IsUndefined(action) {
@@ -53,7 +53,7 @@ func (v *instruction_) GetClass() InstructionClassLike {
 func (v *instruction_) AsSource() string {
 	var source string
 	if uti.IsDefined(v.optionalPrefix_) {
-		source += "\n" + v.optionalPrefix_ + "/n"
+		source += "\n" + v.optionalPrefix_.GetLabel() + "/n"
 	}
 	switch actual := v.action_.(type) {
 	case NoteLike:
@@ -89,7 +89,7 @@ func (v *instruction_) AsSource() string {
 
 // Attribute Methods
 
-func (v *instruction_) GetOptionalPrefix() string {
+func (v *instruction_) GetOptionalPrefix() PrefixLike {
 	return v.optionalPrefix_
 }
 
@@ -103,7 +103,7 @@ func (v *instruction_) GetAction() any {
 
 type instruction_ struct {
 	// Declare the instance attributes.
-	optionalPrefix_ string
+	optionalPrefix_ PrefixLike
 	action_         any
 }
 

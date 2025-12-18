@@ -67,12 +67,6 @@ func (v *validator_) ProcessModifier(
 	// TBD - Add the method implementation.
 }
 
-func (v *validator_) ProcessPrefix(
-	prefix string,
-) {
-	// TBD - Add the method implementation.
-}
-
 func (v *validator_) ProcessQuoted(
 	quoted string,
 ) {
@@ -356,6 +350,29 @@ func (v *validator_) PostprocessNote(
 
 func (v *validator_) ProcessNoteSlot(
 	note ins.NoteLike,
+	slot_ uint,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) PreprocessPrefix(
+	prefix ins.PrefixLike,
+	index_ uint,
+	count_ uint,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) PostprocessPrefix(
+	prefix ins.PrefixLike,
+	index_ uint,
+	count_ uint,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) ProcessPrefixSlot(
+	prefix ins.PrefixLike,
 	slot_ uint,
 ) {
 	// TBD - Add the method implementation.

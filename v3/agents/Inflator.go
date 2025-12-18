@@ -250,10 +250,10 @@ func (v *inflator_) PostprocessInstruction(
 	index_ uint,
 	count_ uint,
 ) {
-	var prefix string
+	var prefix ins.PrefixLike
 	var action = v.stack_.RemoveLast()
 	if uti.IsDefined(instruction.GetOptionalPrefix()) {
-		prefix = v.stack_.RemoveLast().(string)
+		prefix = v.stack_.RemoveLast().(ins.PrefixLike)
 	}
 	v.stack_.AddValue(ins.InstructionClass().Instruction(prefix, action))
 }

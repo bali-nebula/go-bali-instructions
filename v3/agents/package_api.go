@@ -179,9 +179,6 @@ type Methodical interface {
 	ProcessModifier(
 		modifier ins.Modifier,
 	)
-	ProcessPrefix(
-		prefix string,
-	)
 	ProcessQuoted(
 		quoted string,
 	)
@@ -354,6 +351,20 @@ type Methodical interface {
 	)
 	ProcessNoteSlot(
 		note ins.NoteLike,
+		slot_ uint,
+	)
+	PreprocessPrefix(
+		prefix ins.PrefixLike,
+		index_ uint,
+		count_ uint,
+	)
+	PostprocessPrefix(
+		prefix ins.PrefixLike,
+		index_ uint,
+		count_ uint,
+	)
+	ProcessPrefixSlot(
+		prefix ins.PrefixLike,
 		slot_ uint,
 	)
 	PreprocessPull(
