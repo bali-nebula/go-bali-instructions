@@ -56,13 +56,6 @@ func (v *deflator_) DeflateAssembly(
 	assembly ins.AssemblyLike,
 ) lan.AssemblyLike {
 	VisitorClass().Visitor(v).VisitAssembly(assembly)
-	if v.stack_.GetSize() != 1 {
-		var message = fmt.Sprintf(
-			"Internal Error: the deflator stack is corrupted: %v",
-			v.stack_,
-		)
-		panic(message)
-	}
 	return v.stack_.RemoveLast().(lan.AssemblyLike)
 }
 
@@ -73,16 +66,62 @@ func (v *deflator_) DeflateAssembly(
 func (v *deflator_) ProcessDescription(
 	description string,
 ) {
+	v.stack_.AddValue(description)
 }
 
 func (v *deflator_) ProcessLabel(
 	label string,
 ) {
+	v.stack_.AddValue(label)
 }
 
 func (v *deflator_) ProcessModifier(
 	modifier ins.Modifier,
 ) {
+	switch modifier {
+	case ins.OnAnyModifier:
+		v.stack_.AddValue("")
+	case ins.OnEmptyModifier:
+		v.stack_.AddValue("ON EMPTY")
+	case ins.OnNoneModifier:
+		v.stack_.AddValue("ON NONE")
+	case ins.OnFalseModifier:
+		v.stack_.AddValue("ON FALSE")
+	case ins.HandlerModifier:
+		v.stack_.AddValue("HANDLER")
+	case ins.LiteralModifier:
+		v.stack_.AddValue("LITERAL")
+	case ins.ConstantModifier:
+		v.stack_.AddValue("CONSTANT")
+	case ins.ArgumentModifier:
+		v.stack_.AddValue("ARGUMENT")
+	case ins.ExceptionModifier:
+		v.stack_.AddValue("EXCEPTION")
+	case ins.ComponentModifier:
+		v.stack_.AddValue("COMPONENT")
+	case ins.ResultModifier:
+		v.stack_.AddValue("RESULT")
+	case ins.DocumentModifier:
+		v.stack_.AddValue("DOCUMENT")
+	case ins.DraftModifier:
+		v.stack_.AddValue("DRAFT")
+	case ins.MessageModifier:
+		v.stack_.AddValue("MESSAGE")
+	case ins.VariableModifier:
+		v.stack_.AddValue("VARIABLE")
+	case ins.With0ArgumentsModifier:
+		v.stack_.AddValue("")
+	case ins.With1ArgumentModifier:
+		v.stack_.AddValue("WITH 1 ARGUMENT")
+	case ins.With2ArgumentsModifier:
+		v.stack_.AddValue("WITH 2 ARGUMENTS")
+	case ins.With3ArgumentsModifier:
+		v.stack_.AddValue("WITH 3 ARGUMENTS")
+	case ins.ComponentWithArgumentsModifier:
+		v.stack_.AddValue("COMPONENT WITH ARGUMENTS")
+	case ins.DocumentWithArgumentsModifier:
+		v.stack_.AddValue("DOCUMENT WITH ARGUMENTS")
+	}
 }
 
 func (v *deflator_) ProcessPrefix(
@@ -152,6 +191,13 @@ func (v *deflator_) PostprocessAssembly(
 	index_ uint,
 	count_ uint,
 ) {
+	if v.stack_.GetSize() != 1 {
+		var message = fmt.Sprintf(
+			"Internal Error: the deflator stack is corrupted: %v",
+			v.stack_,
+		)
+		panic(message)
+	}
 }
 
 func (v *deflator_) ProcessAssemblySlot(

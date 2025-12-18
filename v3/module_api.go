@@ -64,21 +64,10 @@ type (
 // Instructions
 
 type (
-	Action   = ins.Action
 	Modifier = ins.Modifier
 )
 
 const (
-	NoteAction                     = ins.NoteAction
-	SkipAction                     = ins.SkipAction
-	JumpAction                     = ins.JumpAction
-	PushAction                     = ins.PushAction
-	PullActionAction               = ins.PullActionAction
-	LoadAction                     = ins.LoadAction
-	SaveAction                     = ins.SaveAction
-	DropAction                     = ins.DropAction
-	CallAction                     = ins.CallAction
-	SendAction                     = ins.SendAction
 	OnAnyModifier                  = ins.OnAnyModifier
 	OnEmptyModifier                = ins.OnEmptyModifier
 	OnNoneModifier                 = ins.OnNoneModifier

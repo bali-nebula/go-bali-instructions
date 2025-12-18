@@ -57,13 +57,6 @@ func (v *inflator_) InflateAssembly(
 	assembly lan.AssemblyLike,
 ) ins.AssemblyLike {
 	lan.VisitorClass().Visitor(v).VisitAssembly(assembly)
-	if v.stack_.GetSize() != 1 {
-		var message = fmt.Sprintf(
-			"Internal Error: the inflator stack is corrupted: %v",
-			v.stack_,
-		)
-		panic(message)
-	}
 	return v.stack_.RemoveLast().(ins.AssemblyLike)
 }
 
@@ -118,6 +111,13 @@ func (v *inflator_) PostprocessAssembly(
 	}
 	instructions.ReverseValues() // They were pulled off the stack in reverse order.
 	v.stack_.AddValue(ins.AssemblyClass().Assembly(instructions))
+	if v.stack_.GetSize() != 1 {
+		var message = fmt.Sprintf(
+			"Internal Error: the inflator stack is corrupted: %v",
+			v.stack_,
+		)
+		panic(message)
+	}
 }
 
 func (v *inflator_) PostprocessCall(

@@ -36,24 +36,6 @@ import (
 // TYPE DECLARATIONS
 
 /*
-Action is a constrained type representing the possible BVM operations.
-*/
-type Action uint8
-
-const (
-	NoteAction Action = iota
-	SkipAction
-	JumpAction
-	PushAction
-	PullActionAction
-	LoadAction
-	SaveAction
-	DropAction
-	CallAction
-	SendAction
-)
-
-/*
 Modifier is a constrained type representing the possible BVM modifiers.
 */
 type Modifier uint16
