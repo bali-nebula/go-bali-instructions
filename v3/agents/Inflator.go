@@ -299,6 +299,15 @@ func (v *inflator_) PostprocessNote(
 	v.stack_.AddValue(ins.NoteClass().Note(description))
 }
 
+func (v *inflator_) PostprocessPrefix(
+	prefix lan.PrefixLike,
+	index_ uint,
+	count_ uint,
+) {
+	var label = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(ins.PrefixClass().Prefix(label))
+}
+
 func (v *inflator_) PostprocessPull(
 	pull lan.PullLike,
 	index_ uint,
