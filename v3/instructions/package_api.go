@@ -60,7 +60,7 @@ const (
 )
 
 /*
-Destination is a constrained type representing the possible target components.
+Destination is a constrained type representing the possible target destinations.
 */
 type Destination uint16
 
