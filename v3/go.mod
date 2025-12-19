@@ -3,7 +3,7 @@ module github.com/bali-nebula/go-bali-instructions/v3
 go 1.25
 
 require (
-	github.com/bali-nebula/go-assembly-language/v3 v3.31.0
+	github.com/bali-nebula/go-assembly-language/v3 v3.32.0
 	github.com/craterdog/go-essential-composites/v8 v8.4.0
 	github.com/craterdog/go-essential-utilities/v8 v8.3.0
 	github.com/stretchr/testify v1.11.1
