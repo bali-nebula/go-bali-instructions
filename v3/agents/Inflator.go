@@ -139,13 +139,22 @@ func (v *inflator_) PostprocessContext(
 	count_ uint,
 ) {
 	var argumentCount uint8
-	switch context.GetAny().(string) {
+	var delimiter = context.GetAny().(string)
+	switch delimiter {
+	case "":
+		argumentCount = 0
 	case "WITH 1 ARGUMENT":
 		argumentCount = 1
 	case "WITH 2 ARGUMENTS":
 		argumentCount = 2
 	case "WITH 3 ARGUMENTS":
 		argumentCount = 3
+	default:
+		var message = fmt.Sprintf(
+			"Found an unexpected argument count in a switch statement: %s",
+			delimiter,
+		)
+		panic(message)
 	}
 	v.stack_.AddValue(argumentCount)
 }
@@ -155,8 +164,8 @@ func (v *inflator_) PostprocessComponent(
 	index_ uint,
 	count_ uint,
 ) {
-	var modifier = component.GetAny().(string)
-	switch modifier {
+	var delimiter = component.GetAny().(string)
+	switch delimiter {
 	case "DRAFT":
 		v.stack_.AddValue(ins.DraftComponent)
 	case "DOCUMENT":
@@ -168,7 +177,7 @@ func (v *inflator_) PostprocessComponent(
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected component in a switch statement: %s",
-			modifier,
+			delimiter,
 		)
 		panic(message)
 	}
@@ -179,14 +188,22 @@ func (v *inflator_) PostprocessCondition(
 	index_ uint,
 	count_ uint,
 ) {
-	var modifier = condition.GetAny().(string)
-	switch modifier {
+	var delimiter = condition.GetAny().(string)
+	switch delimiter {
+	case "":
+		v.stack_.AddValue(ins.OnAnyCondition)
 	case "ON EMPTY":
 		v.stack_.AddValue(ins.OnEmptyCondition)
 	case "ON FALSE":
 		v.stack_.AddValue(ins.OnFalseCondition)
 	case "ON NONE":
 		v.stack_.AddValue(ins.OnNoneCondition)
+	default:
+		var message = fmt.Sprintf(
+			"Found an unexpected condition in a switch statement: %s",
+			delimiter,
+		)
+		panic(message)
 	}
 }
 
@@ -204,8 +221,8 @@ func (v *inflator_) PostprocessDestination(
 	index_ uint,
 	count_ uint,
 ) {
-	var modifier = destination.GetAny().(string)
-	switch modifier {
+	var delimiter = destination.GetAny().(string)
+	switch delimiter {
 	case "COMPONENT":
 		v.stack_.AddValue(ins.ComponentDestination)
 	case "COMPONENT WITH ARGUMENTS":
@@ -217,7 +234,7 @@ func (v *inflator_) PostprocessDestination(
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected destination in a switch statement: %s",
-			modifier,
+			delimiter,
 		)
 		panic(message)
 	}
@@ -260,7 +277,7 @@ func (v *inflator_) PostprocessJump(
 	index_ uint,
 	count_ uint,
 ) {
-	var condition = ins.OnAnyCondition
+	var condition ins.Condition
 	if uti.IsDefined(jump.GetOptionalCondition()) {
 		condition = v.stack_.RemoveLast().(ins.Condition)
 	}
@@ -356,8 +373,8 @@ func (v *inflator_) PostprocessValue(
 	index_ uint,
 	count_ uint,
 ) {
-	var modifier = value.GetAny().(string)
-	switch modifier {
+	var delimiter = value.GetAny().(string)
+	switch delimiter {
 	case "COMPONENT":
 		v.stack_.AddValue(ins.ComponentValue)
 	case "RESULT":
@@ -369,7 +386,7 @@ func (v *inflator_) PostprocessValue(
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected value in a switch statement: %s",
-			modifier,
+			delimiter,
 		)
 		panic(message)
 	}

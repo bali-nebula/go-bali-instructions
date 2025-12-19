@@ -13,6 +13,7 @@
 package agents
 
 import (
+	fmt "fmt"
 	ins "github.com/bali-nebula/go-bali-instructions/v3/instructions"
 	uti "github.com/craterdog/go-essential-utilities/v8"
 )
@@ -290,6 +291,12 @@ func (v *visitor_) visitInstruction(
 			0,
 			0,
 		)
+	default:
+		var message = fmt.Sprintf(
+			"An invalid action was found: %v",
+			actual,
+		)
+		panic(message)
 	}
 }
 
@@ -406,6 +413,12 @@ func (v *visitor_) visitPush(
 			0,
 			0,
 		)
+	default:
+		var message = fmt.Sprintf(
+			"An invalid source was found: %v",
+			actual,
+		)
+		panic(message)
 	}
 }
 

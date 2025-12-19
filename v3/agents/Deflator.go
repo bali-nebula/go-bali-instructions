@@ -67,33 +67,35 @@ func (v *deflator_) DeflateAssembly(
 func (v *deflator_) ProcessArgumentCount(
 	argumentCount uint8,
 ) {
-	var context lan.ContextLike
 	switch argumentCount {
+	case 0:
 	case 1:
-		context = lan.Context("WITH 1 ARGUMENT")
+		v.stack_.AddValue(lan.Context("WITH 1 ARGUMENT"))
 	case 2:
-		context = lan.Context("WITH 2 ARGUMENTS")
+		v.stack_.AddValue(lan.Context("WITH 2 ARGUMENTS"))
 	case 3:
-		context = lan.Context("WITH 3 ARGUMENTS")
-	}
-	if uti.IsDefined(context) {
-		v.stack_.AddValue(context)
+		v.stack_.AddValue(lan.Context("WITH 3 ARGUMENTS"))
+	default:
+		var message = fmt.Sprintf(
+			"An invalid argument count was found: %v",
+			argumentCount,
+		)
+		panic(message)
 	}
 }
 
 func (v *deflator_) ProcessComponent(
 	component ins.Component,
 ) {
-	var delimiter string
 	switch component {
 	case ins.VariableComponent:
-		delimiter = "VARIABLE"
+		v.stack_.AddValue("VARIABLE")
 	case ins.DraftComponent:
-		delimiter = "DRAFT"
+		v.stack_.AddValue("DRAFT")
 	case ins.DocumentComponent:
-		delimiter = "DOCUMENT"
+		v.stack_.AddValue("DOCUMENT")
 	case ins.MessageComponent:
-		delimiter = "MESSAGE"
+		v.stack_.AddValue("MESSAGE")
 	default:
 		var message = fmt.Sprintf(
 			"An invalid component type was found: %v",
@@ -101,30 +103,25 @@ func (v *deflator_) ProcessComponent(
 		)
 		panic(message)
 	}
-	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) ProcessCondition(
 	condition ins.Condition,
 ) {
-	var delimiter string
 	switch condition {
 	case ins.OnAnyCondition:
 	case ins.OnEmptyCondition:
-		delimiter = "ON EMPTY"
+		v.stack_.AddValue("ON EMPTY")
 	case ins.OnNoneCondition:
-		delimiter = "ON NONE"
+		v.stack_.AddValue("ON NONE")
 	case ins.OnFalseCondition:
-		delimiter = "ON FALSE"
+		v.stack_.AddValue("ON FALSE")
 	default:
 		var message = fmt.Sprintf(
 			"An invalid condition was found: %v",
 			condition,
 		)
 		panic(message)
-	}
-	if uti.IsDefined(delimiter) {
-		v.stack_.AddValue(delimiter)
 	}
 }
 
@@ -137,16 +134,15 @@ func (v *deflator_) ProcessDescription(
 func (v *deflator_) ProcessDestination(
 	destination ins.Destination,
 ) {
-	var delimiter string
 	switch destination {
 	case ins.ComponentDestination:
-		delimiter = "COMPONENT"
+		v.stack_.AddValue("COMPONENT")
 	case ins.ComponentWithArgumentsDestination:
-		delimiter = "COMPONENT WITH ARGUMENTS"
+		v.stack_.AddValue("COMPONENT WITH ARGUMENTS")
 	case ins.DocumentDestination:
-		delimiter = "DOCUMENT"
+		v.stack_.AddValue("DOCUMENT")
 	case ins.DocumentWithArgumentsDestination:
-		delimiter = "DOCUMENT WITH ARGUMENTS"
+		v.stack_.AddValue("DOCUMENT WITH ARGUMENTS")
 	default:
 		var message = fmt.Sprintf(
 			"An invalid destination was found: %v",
@@ -154,7 +150,6 @@ func (v *deflator_) ProcessDestination(
 		)
 		panic(message)
 	}
-	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) ProcessLabel(
@@ -172,16 +167,15 @@ func (v *deflator_) ProcessQuoted(
 func (v *deflator_) ProcessSource(
 	source ins.Source,
 ) {
-	var delimiter string
 	switch source {
 	case ins.LiteralSource:
-		delimiter = "LITERAL"
+		v.stack_.AddValue("LITERAL")
 	case ins.ConstantSource:
-		delimiter = "CONSTANT"
+		v.stack_.AddValue("CONSTANT")
 	case ins.ArgumentSource:
-		delimiter = "ARGUMENT"
+		v.stack_.AddValue("ARGUMENT")
 	case ins.HandlerSource:
-		delimiter = "HANDLER"
+		v.stack_.AddValue("HANDLER")
 	default:
 		var message = fmt.Sprintf(
 			"An invalid source was found: %v",
@@ -189,7 +183,6 @@ func (v *deflator_) ProcessSource(
 		)
 		panic(message)
 	}
-	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) ProcessSymbol(
@@ -201,16 +194,15 @@ func (v *deflator_) ProcessSymbol(
 func (v *deflator_) ProcessValue(
 	value ins.Value,
 ) {
-	var delimiter string
 	switch value {
 	case ins.ComponentValue:
-		delimiter = "COMPONENT"
+		v.stack_.AddValue("COMPONENT")
 	case ins.ResultValue:
-		delimiter = "RESULT"
+		v.stack_.AddValue("RESULT")
 	case ins.ExceptionValue:
-		delimiter = "EXCEPTION"
+		v.stack_.AddValue("EXCEPTION")
 	case ins.HandlerValue:
-		delimiter = "HANDLER"
+		v.stack_.AddValue("HANDLER")
 	default:
 		var message = fmt.Sprintf(
 			"An invalid value was found: %v",
@@ -218,7 +210,6 @@ func (v *deflator_) ProcessValue(
 		)
 		panic(message)
 	}
-	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) PostprocessArgument(
