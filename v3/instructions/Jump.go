@@ -29,7 +29,7 @@ func JumpClass() JumpClassLike {
 
 func (c *jumpClass_) Jump(
 	label string,
-	condition Modifier,
+	condition Condition,
 ) JumpLike {
 	if uti.IsUndefined(label) {
 		panic("The \"label\" attribute is required by this class.")
@@ -53,12 +53,12 @@ func (v *jump_) GetClass() JumpClassLike {
 func (v *jump_) AsSource() string {
 	var source = "JUMP TO " + v.label_
 	switch v.condition_ {
-	case OnAnyModifier:
-	case OnNoneModifier:
+	case OnAnyCondition:
+	case OnNoneCondition:
 		source += " ON NONE"
-	case OnFalseModifier:
+	case OnFalseCondition:
 		source += " ON FALSE"
-	case OnEmptyModifier:
+	case OnEmptyCondition:
 		source += " ON EMPTY"
 	default:
 		var message = fmt.Sprintf(
@@ -76,7 +76,7 @@ func (v *jump_) GetLabel() string {
 	return v.label_
 }
 
-func (v *jump_) GetCondition() Modifier {
+func (v *jump_) GetCondition() Condition {
 	return v.condition_
 }
 
@@ -87,7 +87,7 @@ func (v *jump_) GetCondition() Modifier {
 type jump_ struct {
 	// Declare the instance attributes.
 	label_     string
-	condition_ Modifier
+	condition_ Condition
 }
 
 // Class Structure

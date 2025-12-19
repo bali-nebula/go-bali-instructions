@@ -158,13 +158,13 @@ func (v *inflator_) PostprocessComponent(
 	var modifier = component.GetAny().(string)
 	switch modifier {
 	case "DRAFT":
-		v.stack_.AddValue(ins.DraftModifier)
+		v.stack_.AddValue(ins.DraftComponent)
 	case "DOCUMENT":
-		v.stack_.AddValue(ins.DocumentModifier)
+		v.stack_.AddValue(ins.DocumentComponent)
 	case "MESSAGE":
-		v.stack_.AddValue(ins.MessageModifier)
+		v.stack_.AddValue(ins.MessageComponent)
 	case "VARIABLE":
-		v.stack_.AddValue(ins.VariableModifier)
+		v.stack_.AddValue(ins.VariableComponent)
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected component in a switch statement: %s",
@@ -182,11 +182,11 @@ func (v *inflator_) PostprocessCondition(
 	var modifier = condition.GetAny().(string)
 	switch modifier {
 	case "ON EMPTY":
-		v.stack_.AddValue(ins.OnEmptyModifier)
+		v.stack_.AddValue(ins.OnEmptyCondition)
 	case "ON FALSE":
-		v.stack_.AddValue(ins.OnFalseModifier)
+		v.stack_.AddValue(ins.OnFalseCondition)
 	case "ON NONE":
-		v.stack_.AddValue(ins.OnNoneModifier)
+		v.stack_.AddValue(ins.OnNoneCondition)
 	}
 }
 
@@ -207,13 +207,13 @@ func (v *inflator_) PostprocessDestination(
 	var modifier = destination.GetAny().(string)
 	switch modifier {
 	case "COMPONENT":
-		v.stack_.AddValue(ins.ComponentModifier)
+		v.stack_.AddValue(ins.ComponentDestination)
 	case "COMPONENT WITH ARGUMENTS":
-		v.stack_.AddValue(ins.ComponentWithArgumentsModifier)
+		v.stack_.AddValue(ins.ComponentWithArgumentsDestination)
 	case "DOCUMENT":
-		v.stack_.AddValue(ins.DocumentModifier)
+		v.stack_.AddValue(ins.DocumentDestination)
 	case "DOCUMENT WITH ARGUMENTS":
-		v.stack_.AddValue(ins.DocumentWithArgumentsModifier)
+		v.stack_.AddValue(ins.DocumentWithArgumentsDestination)
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected destination in a switch statement: %s",
@@ -229,7 +229,7 @@ func (v *inflator_) PostprocessDrop(
 	count_ uint,
 ) {
 	var symbol = v.stack_.RemoveLast().(string)
-	var component = v.stack_.RemoveLast().(ins.Modifier)
+	var component = v.stack_.RemoveLast().(ins.Component)
 	v.stack_.AddValue(ins.DropClass().Drop(component, symbol))
 }
 
@@ -260,9 +260,9 @@ func (v *inflator_) PostprocessJump(
 	index_ uint,
 	count_ uint,
 ) {
-	var condition = ins.OnAnyModifier
+	var condition = ins.OnAnyCondition
 	if uti.IsDefined(jump.GetOptionalCondition()) {
-		condition = v.stack_.RemoveLast().(ins.Modifier)
+		condition = v.stack_.RemoveLast().(ins.Condition)
 	}
 	var label = v.stack_.RemoveLast().(string)
 	v.stack_.AddValue(ins.JumpClass().Jump(label, condition))
@@ -283,7 +283,7 @@ func (v *inflator_) PostprocessLoad(
 	count_ uint,
 ) {
 	var symbol = v.stack_.RemoveLast().(string)
-	var component = v.stack_.RemoveLast().(ins.Modifier)
+	var component = v.stack_.RemoveLast().(ins.Component)
 	v.stack_.AddValue(ins.LoadClass().Load(component, symbol))
 }
 
@@ -310,7 +310,7 @@ func (v *inflator_) PostprocessPull(
 	index_ uint,
 	count_ uint,
 ) {
-	var value = v.stack_.RemoveLast().(ins.Modifier)
+	var value = v.stack_.RemoveLast().(ins.Value)
 	v.stack_.AddValue(ins.PullClass().Pull(value))
 }
 
@@ -329,7 +329,7 @@ func (v *inflator_) PostprocessSave(
 	count_ uint,
 ) {
 	var symbol = v.stack_.RemoveLast().(string)
-	var component = v.stack_.RemoveLast().(ins.Modifier)
+	var component = v.stack_.RemoveLast().(ins.Component)
 	v.stack_.AddValue(ins.SaveClass().Save(component, symbol))
 }
 
@@ -338,7 +338,7 @@ func (v *inflator_) PostprocessSend(
 	index_ uint,
 	count_ uint,
 ) {
-	var destination = v.stack_.RemoveLast().(ins.Modifier)
+	var destination = v.stack_.RemoveLast().(ins.Destination)
 	var symbol = v.stack_.RemoveLast().(string)
 	v.stack_.AddValue(ins.SendClass().Send(symbol, destination))
 }
@@ -359,13 +359,13 @@ func (v *inflator_) PostprocessValue(
 	var modifier = value.GetAny().(string)
 	switch modifier {
 	case "COMPONENT":
-		v.stack_.AddValue(ins.ComponentModifier)
+		v.stack_.AddValue(ins.ComponentValue)
 	case "RESULT":
-		v.stack_.AddValue(ins.ResultModifier)
+		v.stack_.AddValue(ins.ResultValue)
 	case "EXCEPTION":
-		v.stack_.AddValue(ins.ExceptionModifier)
+		v.stack_.AddValue(ins.ExceptionValue)
 	case "HANDLER":
-		v.stack_.AddValue(ins.HandlerModifier)
+		v.stack_.AddValue(ins.HandlerValue)
 	default:
 		var message = fmt.Sprintf(
 			"Found an unexpected value in a switch statement: %s",

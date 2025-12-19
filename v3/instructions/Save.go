@@ -28,7 +28,7 @@ func SaveClass() SaveClassLike {
 // Constructor Methods
 
 func (c *saveClass_) Save(
-	component Modifier,
+	component Component,
 	symbol string,
 ) SaveLike {
 	if uti.IsUndefined(component) {
@@ -56,13 +56,13 @@ func (v *save_) GetClass() SaveClassLike {
 func (v *save_) AsSource() string {
 	var source = "SAVE "
 	switch v.component_ {
-	case DraftModifier:
+	case DraftComponent:
 		source += "DRAFT"
-	case DocumentModifier:
+	case DocumentComponent:
 		source += "DOCUMENT"
-	case MessageModifier:
+	case MessageComponent:
 		source += "MESSAGE"
-	case VariableModifier:
+	case VariableComponent:
 		source += "VARIABLE"
 	default:
 		var message = fmt.Sprintf(
@@ -76,7 +76,7 @@ func (v *save_) AsSource() string {
 
 // Attribute Methods
 
-func (v *save_) GetComponent() Modifier {
+func (v *save_) GetComponent() Component {
 	return v.component_
 }
 
@@ -90,7 +90,7 @@ func (v *save_) GetSymbol() string {
 
 type save_ struct {
 	// Declare the instance attributes.
-	component_ Modifier
+	component_ Component
 	symbol_    string
 }
 

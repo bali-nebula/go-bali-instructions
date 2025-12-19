@@ -28,7 +28,7 @@ func PullClass() PullClassLike {
 // Constructor Methods
 
 func (c *pullClass_) Pull(
-	value Modifier,
+	value Value,
 ) PullLike {
 	if uti.IsUndefined(value) {
 		panic("The \"value\" attribute is required by this class.")
@@ -51,13 +51,13 @@ func (v *pull_) GetClass() PullClassLike {
 func (v *pull_) AsSource() string {
 	var source = "PULL "
 	switch v.value_ {
-	case ComponentModifier:
+	case ComponentValue:
 		source += "COMPONENT"
-	case ResultModifier:
+	case ResultValue:
 		source += "RESULT"
-	case ExceptionModifier:
+	case ExceptionValue:
 		source += "EXCEPTION"
-	case HandlerModifier:
+	case HandlerValue:
 		source += "HANDLER"
 	default:
 		var message = fmt.Sprintf(
@@ -71,7 +71,7 @@ func (v *pull_) AsSource() string {
 
 // Attribute Methods
 
-func (v *pull_) GetValue() Modifier {
+func (v *pull_) GetValue() Value {
 	return v.value_
 }
 
@@ -81,7 +81,7 @@ func (v *pull_) GetValue() Modifier {
 
 type pull_ struct {
 	// Declare the instance attributes.
-	value_ Modifier
+	value_ Value
 }
 
 // Class Structure

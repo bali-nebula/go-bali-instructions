@@ -29,7 +29,7 @@ func SendClass() SendClassLike {
 
 func (c *sendClass_) Send(
 	symbol string,
-	destination Modifier,
+	destination Destination,
 ) SendLike {
 	if uti.IsUndefined(symbol) {
 		panic("The \"symbol\" attribute is required by this class.")
@@ -56,13 +56,13 @@ func (v *send_) GetClass() SendClassLike {
 func (v *send_) AsSource() string {
 	var source = "SEND " + v.symbol_ + " TO "
 	switch v.destination_ {
-	case ComponentModifier:
+	case ComponentDestination:
 		source += "COMPONENT"
-	case ComponentWithArgumentsModifier:
+	case ComponentWithArgumentsDestination:
 		source += "COMPONENT WITH ARGUMENTS"
-	case DocumentModifier:
+	case DocumentDestination:
 		source += "DOCUMENT"
-	case DocumentWithArgumentsModifier:
+	case DocumentWithArgumentsDestination:
 		source += "DOCUMENT WITH ARGUMENTS"
 	default:
 		var message = fmt.Sprintf(
@@ -80,7 +80,7 @@ func (v *send_) GetSymbol() string {
 	return v.symbol_
 }
 
-func (v *send_) GetDestination() Modifier {
+func (v *send_) GetDestination() Destination {
 	return v.destination_
 }
 
@@ -91,7 +91,7 @@ func (v *send_) GetDestination() Modifier {
 type send_ struct {
 	// Declare the instance attributes.
 	symbol_      string
-	destination_ Modifier
+	destination_ Destination
 }
 
 // Class Structure

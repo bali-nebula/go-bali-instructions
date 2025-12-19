@@ -36,28 +36,63 @@ import (
 // TYPE DECLARATIONS
 
 /*
-Modifier is a constrained type representing the possible BVM modifiers.
+Component is a constrained type representing the possible target components.
 */
-type Modifier uint16
+type Component uint16
 
 const (
-	OnAnyModifier Modifier = iota
-	OnEmptyModifier
-	OnNoneModifier
-	OnFalseModifier
-	HandlerModifier
-	LiteralModifier
-	ConstantModifier
-	VariableModifier
-	ArgumentModifier
-	MessageModifier
-	ResultModifier
-	ExceptionModifier
-	DraftModifier
-	ComponentModifier
-	ComponentWithArgumentsModifier
-	DocumentModifier
-	DocumentWithArgumentsModifier
+	VariableComponent Component = iota
+	DraftComponent
+	DocumentComponent
+	MessageComponent
+)
+
+/*
+Condition is a constrained type representing the possible jump conditions.
+*/
+type Condition uint16
+
+const (
+	OnAnyCondition Condition = iota
+	OnEmptyCondition
+	OnNoneCondition
+	OnFalseCondition
+)
+
+/*
+Destination is a constrained type representing the possible target components.
+*/
+type Destination uint16
+
+const (
+	ComponentDestination Destination = iota
+	ComponentWithArgumentsDestination
+	DocumentDestination
+	DocumentWithArgumentsDestination
+)
+
+/*
+Source is a constrained type representing the possible push sources.
+*/
+type Source uint16
+
+const (
+	LiteralSource Source = iota
+	ConstantSource
+	ArgumentSource
+	HandlerSource
+)
+
+/*
+Value is a constrained type representing the possible pull values.
+*/
+type Value uint16
+
+const (
+	ComponentValue Value = iota
+	ResultValue
+	ExceptionValue
+	HandlerValue
 )
 
 // FUNCTIONAL DECLARATIONS
@@ -121,7 +156,7 @@ drop-like class.
 type DropClassLike interface {
 	// Constructor Methods
 	Drop(
-		component Modifier,
+		component Component,
 		symbol string,
 	) DropLike
 }
@@ -160,7 +195,7 @@ type JumpClassLike interface {
 	// Constructor Methods
 	Jump(
 		label string,
-		condition Modifier,
+		condition Condition,
 	) JumpLike
 }
 
@@ -184,7 +219,7 @@ load-like class.
 type LoadClassLike interface {
 	// Constructor Methods
 	Load(
-		component Modifier,
+		component Component,
 		symbol string,
 	) LoadLike
 }
@@ -221,7 +256,7 @@ pull-like class.
 type PullClassLike interface {
 	// Constructor Methods
 	Pull(
-		value Modifier,
+		value Value,
 	) PullLike
 }
 
@@ -245,7 +280,7 @@ save-like class.
 type SaveClassLike interface {
 	// Constructor Methods
 	Save(
-		component Modifier,
+		component Component,
 		symbol string,
 	) SaveLike
 }
@@ -259,7 +294,7 @@ type SendClassLike interface {
 	// Constructor Methods
 	Send(
 		symbol string,
-		destination Modifier,
+		destination Destination,
 	) SendLike
 }
 
@@ -338,7 +373,7 @@ type DropLike interface {
 	AsSource() string
 
 	// Attribute Methods
-	GetComponent() Modifier
+	GetComponent() Component
 	GetSymbol() string
 }
 
@@ -382,7 +417,7 @@ type JumpLike interface {
 
 	// Attribute Methods
 	GetLabel() string
-	GetCondition() Modifier
+	GetCondition() Condition
 }
 
 /*
@@ -409,7 +444,7 @@ type LoadLike interface {
 	AsSource() string
 
 	// Attribute Methods
-	GetComponent() Modifier
+	GetComponent() Component
 	GetSymbol() string
 }
 
@@ -451,7 +486,7 @@ type PullLike interface {
 	AsSource() string
 
 	// Attribute Methods
-	GetValue() Modifier
+	GetValue() Value
 }
 
 /*
@@ -479,7 +514,7 @@ type SaveLike interface {
 	AsSource() string
 
 	// Attribute Methods
-	GetComponent() Modifier
+	GetComponent() Component
 	GetSymbol() string
 }
 
@@ -495,7 +530,7 @@ type SendLike interface {
 
 	// Attribute Methods
 	GetSymbol() string
-	GetDestination() Modifier
+	GetDestination() Destination
 }
 
 /*

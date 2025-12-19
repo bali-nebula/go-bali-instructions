@@ -67,7 +67,65 @@ func (v *deflator_) DeflateAssembly(
 func (v *deflator_) ProcessArgumentCount(
 	argumentCount uint8,
 ) {
-	v.stack_.AddValue(argumentCount)
+	var context lan.ContextLike
+	switch argumentCount {
+	case 1:
+		context = lan.Context("WITH 1 ARGUMENT")
+	case 2:
+		context = lan.Context("WITH 2 ARGUMENTS")
+	case 3:
+		context = lan.Context("WITH 3 ARGUMENTS")
+	}
+	if uti.IsDefined(context) {
+		v.stack_.AddValue(context)
+	}
+}
+
+func (v *deflator_) ProcessComponent(
+	component ins.Component,
+) {
+	var delimiter string
+	switch component {
+	case ins.VariableComponent:
+		delimiter = "VARIABLE"
+	case ins.DraftComponent:
+		delimiter = "DRAFT"
+	case ins.DocumentComponent:
+		delimiter = "DOCUMENT"
+	case ins.MessageComponent:
+		delimiter = "MESSAGE"
+	default:
+		var message = fmt.Sprintf(
+			"An invalid component type was found: %v",
+			component,
+		)
+		panic(message)
+	}
+	v.stack_.AddValue(delimiter)
+}
+
+func (v *deflator_) ProcessCondition(
+	condition ins.Condition,
+) {
+	var delimiter string
+	switch condition {
+	case ins.OnAnyCondition:
+	case ins.OnEmptyCondition:
+		delimiter = "ON EMPTY"
+	case ins.OnNoneCondition:
+		delimiter = "ON NONE"
+	case ins.OnFalseCondition:
+		delimiter = "ON FALSE"
+	default:
+		var message = fmt.Sprintf(
+			"An invalid condition was found: %v",
+			condition,
+		)
+		panic(message)
+	}
+	if uti.IsDefined(delimiter) {
+		v.stack_.AddValue(delimiter)
+	}
 }
 
 func (v *deflator_) ProcessDescription(
@@ -76,51 +134,33 @@ func (v *deflator_) ProcessDescription(
 	v.stack_.AddValue(description)
 }
 
+func (v *deflator_) ProcessDestination(
+	destination ins.Destination,
+) {
+	var delimiter string
+	switch destination {
+	case ins.ComponentDestination:
+		delimiter = "COMPONENT"
+	case ins.ComponentWithArgumentsDestination:
+		delimiter = "COMPONENT WITH ARGUMENTS"
+	case ins.DocumentDestination:
+		delimiter = "DOCUMENT"
+	case ins.DocumentWithArgumentsDestination:
+		delimiter = "DOCUMENT WITH ARGUMENTS"
+	default:
+		var message = fmt.Sprintf(
+			"An invalid destination was found: %v",
+			destination,
+		)
+		panic(message)
+	}
+	v.stack_.AddValue(delimiter)
+}
+
 func (v *deflator_) ProcessLabel(
 	label string,
 ) {
 	v.stack_.AddValue(label)
-}
-
-func (v *deflator_) ProcessModifier(
-	modifier ins.Modifier,
-) {
-	var delimiter string
-	switch modifier {
-	case ins.OnEmptyModifier:
-		delimiter = "ON EMPTY"
-	case ins.OnNoneModifier:
-		delimiter = "ON NONE"
-	case ins.OnFalseModifier:
-		delimiter = "ON FALSE"
-	case ins.HandlerModifier:
-		delimiter = "HANDLER"
-	case ins.LiteralModifier:
-		delimiter = "LITERAL"
-	case ins.ConstantModifier:
-		delimiter = "CONSTANT"
-	case ins.VariableModifier:
-		delimiter = "VARIABLE"
-	case ins.ArgumentModifier:
-		delimiter = "ARGUMENT"
-	case ins.MessageModifier:
-		delimiter = "MESSAGE"
-	case ins.ResultModifier:
-		delimiter = "RESULT"
-	case ins.ExceptionModifier:
-		delimiter = "EXCEPTION"
-	case ins.DraftModifier:
-		delimiter = "DRAFT"
-	case ins.ComponentModifier:
-		delimiter = "COMPONENT"
-	case ins.ComponentWithArgumentsModifier:
-		delimiter = "COMPONENT WITH ARGUMENTS"
-	case ins.DocumentModifier:
-		delimiter = "DOCUMENT"
-	case ins.DocumentWithArgumentsModifier:
-		delimiter = "DOCUMENT WITH ARGUMENTS"
-	}
-	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) ProcessQuoted(
@@ -129,10 +169,56 @@ func (v *deflator_) ProcessQuoted(
 	v.stack_.AddValue(quoted)
 }
 
+func (v *deflator_) ProcessSource(
+	source ins.Source,
+) {
+	var delimiter string
+	switch source {
+	case ins.LiteralSource:
+		delimiter = "LITERAL"
+	case ins.ConstantSource:
+		delimiter = "CONSTANT"
+	case ins.ArgumentSource:
+		delimiter = "ARGUMENT"
+	case ins.HandlerSource:
+		delimiter = "HANDLER"
+	default:
+		var message = fmt.Sprintf(
+			"An invalid source was found: %v",
+			source,
+		)
+		panic(message)
+	}
+	v.stack_.AddValue(delimiter)
+}
+
 func (v *deflator_) ProcessSymbol(
 	symbol string,
 ) {
 	v.stack_.AddValue(symbol)
+}
+
+func (v *deflator_) ProcessValue(
+	value ins.Value,
+) {
+	var delimiter string
+	switch value {
+	case ins.ComponentValue:
+		delimiter = "COMPONENT"
+	case ins.ResultValue:
+		delimiter = "RESULT"
+	case ins.ExceptionValue:
+		delimiter = "EXCEPTION"
+	case ins.HandlerValue:
+		delimiter = "HANDLER"
+	default:
+		var message = fmt.Sprintf(
+			"An invalid value was found: %v",
+			value,
+		)
+		panic(message)
+	}
+	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) PostprocessArgument(
@@ -149,7 +235,14 @@ func (v *deflator_) PostprocessAssembly(
 	index_ uint,
 	count_ uint,
 ) {
-	var instructions = v.stack_.RemoveLast().(com.Sequential[lan.InstructionLike])
+	var instructions = com.List[lan.InstructionLike]()
+	var iterator = assembly.GetInstructions().GetIterator()
+	for iterator.HasNext() {
+		var instruction = v.stack_.RemoveLast().(lan.InstructionLike)
+		instructions.AppendValue(instruction)
+		iterator.GetNext()
+	}
+	instructions.ReverseValues()
 	v.stack_.AddValue(lan.Assembly(instructions))
 	if v.stack_.GetSize() != 1 {
 		var message = fmt.Sprintf(
@@ -187,9 +280,9 @@ func (v *deflator_) PostprocessDrop(
 	index_ uint,
 	count_ uint,
 ) {
-	var component = v.stack_.RemoveLast().(lan.ComponentLike)
 	var symbol = v.stack_.RemoveLast().(string)
-	v.stack_.AddValue(lan.Drop("DROP", component, symbol))
+	var component = lan.Component(v.stack_.RemoveLast().(string))
+	v.stack_.AddValue(lan.Load("DROP", component, symbol))
 }
 
 func (v *deflator_) PostprocessHandler(
@@ -220,8 +313,8 @@ func (v *deflator_) PostprocessJump(
 	count_ uint,
 ) {
 	var condition lan.ConditionLike
-	if jump.GetCondition() != ins.OnAnyModifier {
-		condition = v.stack_.RemoveLast().(lan.ConditionLike)
+	if jump.GetCondition() != ins.OnAnyCondition {
+		condition = lan.Condition(v.stack_.RemoveLast().(string))
 	}
 	var label = v.stack_.RemoveLast().(string)
 	v.stack_.AddValue(lan.Jump("JUMP TO", label, condition))
@@ -241,8 +334,8 @@ func (v *deflator_) PostprocessLoad(
 	index_ uint,
 	count_ uint,
 ) {
-	var component = v.stack_.RemoveLast().(lan.ComponentLike)
 	var symbol = v.stack_.RemoveLast().(string)
+	var component = lan.Component(v.stack_.RemoveLast().(string))
 	v.stack_.AddValue(lan.Load("LOAD", component, symbol))
 }
 
@@ -269,7 +362,7 @@ func (v *deflator_) PostprocessPull(
 	index_ uint,
 	count_ uint,
 ) {
-	var value = v.stack_.RemoveLast().(lan.ValueLike)
+	var value = lan.Value(v.stack_.RemoveLast().(string))
 	v.stack_.AddValue(lan.Pull("PULL", value))
 }
 
@@ -278,7 +371,7 @@ func (v *deflator_) PostprocessPush(
 	index_ uint,
 	count_ uint,
 ) {
-	var source = v.stack_.RemoveLast().(lan.SourceLike)
+	var source = lan.Source(v.stack_.RemoveLast())
 	v.stack_.AddValue(lan.Push("PUSH", source))
 }
 
@@ -287,9 +380,9 @@ func (v *deflator_) PostprocessSave(
 	index_ uint,
 	count_ uint,
 ) {
-	var component = v.stack_.RemoveLast().(lan.ComponentLike)
 	var symbol = v.stack_.RemoveLast().(string)
-	v.stack_.AddValue(lan.Save("SAVE", component, symbol))
+	var component = lan.Component(v.stack_.RemoveLast().(string))
+	v.stack_.AddValue(lan.Load("SAVE", component, symbol))
 }
 
 func (v *deflator_) PostprocessSend(
@@ -297,7 +390,7 @@ func (v *deflator_) PostprocessSend(
 	index_ uint,
 	count_ uint,
 ) {
-	var destination = v.stack_.RemoveLast().(lan.DestinationLike)
+	var destination = lan.Destination(v.stack_.RemoveLast().(string))
 	var symbol = v.stack_.RemoveLast().(string)
 	v.stack_.AddValue(lan.Send("SEND", symbol, "TO", destination))
 }

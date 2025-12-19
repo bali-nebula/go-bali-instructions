@@ -28,7 +28,7 @@ func DropClass() DropClassLike {
 // Constructor Methods
 
 func (c *dropClass_) Drop(
-	component Modifier,
+	component Component,
 	symbol string,
 ) DropLike {
 	if uti.IsUndefined(component) {
@@ -56,13 +56,13 @@ func (v *drop_) GetClass() DropClassLike {
 func (v *drop_) AsSource() string {
 	var source = "DROP "
 	switch v.component_ {
-	case DraftModifier:
+	case DraftComponent:
 		source += "DRAFT"
-	case DocumentModifier:
+	case DocumentComponent:
 		source += "DOCUMENT"
-	case MessageModifier:
+	case MessageComponent:
 		source += "MESSAGE"
-	case VariableModifier:
+	case VariableComponent:
 		source += "VARIABLE"
 	default:
 		var message = fmt.Sprintf(
@@ -76,7 +76,7 @@ func (v *drop_) AsSource() string {
 
 // Attribute Methods
 
-func (v *drop_) GetComponent() Modifier {
+func (v *drop_) GetComponent() Component {
 	return v.component_
 }
 
@@ -90,7 +90,7 @@ func (v *drop_) GetSymbol() string {
 
 type drop_ struct {
 	// Declare the instance attributes.
-	component_ Modifier
+	component_ Component
 	symbol_    string
 }
 

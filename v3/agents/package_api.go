@@ -173,20 +173,32 @@ type Methodical interface {
 	ProcessArgumentCount(
 		argumentCount uint8,
 	)
+	ProcessComponent(
+		component ins.Component,
+	)
+	ProcessCondition(
+		condition ins.Condition,
+	)
 	ProcessDescription(
 		description string,
+	)
+	ProcessDestination(
+		destination ins.Destination,
 	)
 	ProcessLabel(
 		label string,
 	)
-	ProcessModifier(
-		modifier ins.Modifier,
-	)
 	ProcessQuoted(
 		quoted string,
 	)
+	ProcessSource(
+		source ins.Source,
+	)
 	ProcessSymbol(
 		symbol string,
+	)
+	ProcessValue(
+		value ins.Value,
 	)
 	PreprocessArgument(
 		argument ins.ArgumentLike,

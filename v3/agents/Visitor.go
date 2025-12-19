@@ -125,7 +125,7 @@ func (v *visitor_) visitDrop(
 	drop ins.DropLike,
 ) {
 	var component = drop.GetComponent()
-	v.processor_.ProcessModifier(component)
+	v.processor_.ProcessComponent(component)
 
 	// Visit slot 1 between terms.
 	v.processor_.ProcessDropSlot(
@@ -306,7 +306,7 @@ func (v *visitor_) visitJump(
 	)
 
 	var condition = jump.GetCondition()
-	v.processor_.ProcessModifier(condition)
+	v.processor_.ProcessCondition(condition)
 }
 
 func (v *visitor_) visitLiteral(
@@ -320,7 +320,7 @@ func (v *visitor_) visitLoad(
 	load ins.LoadLike,
 ) {
 	var component = load.GetComponent()
-	v.visitModifier(component)
+	v.processor_.ProcessComponent(component)
 
 	// Visit slot 1 between terms.
 	v.processor_.ProcessLoadSlot(
@@ -330,12 +330,6 @@ func (v *visitor_) visitLoad(
 
 	var symbol = load.GetSymbol()
 	v.processor_.ProcessSymbol(symbol)
-}
-
-func (v *visitor_) visitModifier(
-	modifier ins.Modifier,
-) {
-	// TBD - Add the method implementation.
 }
 
 func (v *visitor_) visitNote(
@@ -356,7 +350,7 @@ func (v *visitor_) visitPull(
 	pull ins.PullLike,
 ) {
 	var value = pull.GetValue()
-	v.processor_.ProcessModifier(value)
+	v.processor_.ProcessValue(value)
 }
 
 func (v *visitor_) visitPush(
@@ -419,7 +413,7 @@ func (v *visitor_) visitSave(
 	save ins.SaveLike,
 ) {
 	var component = save.GetComponent()
-	v.processor_.ProcessModifier(component)
+	v.processor_.ProcessComponent(component)
 
 	// Visit slot 1 between terms.
 	v.processor_.ProcessSaveSlot(
@@ -444,7 +438,7 @@ func (v *visitor_) visitSend(
 	)
 
 	var destination = send.GetDestination()
-	v.processor_.ProcessModifier(destination)
+	v.processor_.ProcessDestination(destination)
 }
 
 func (v *visitor_) visitSkip(

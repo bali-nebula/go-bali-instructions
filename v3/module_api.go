@@ -64,27 +64,34 @@ type (
 // Instructions
 
 type (
-	Modifier = ins.Modifier
+	Component   = ins.Component
+	Condition   = ins.Condition
+	Destination = ins.Destination
+	Source      = ins.Source
+	Value       = ins.Value
 )
 
 const (
-	OnAnyModifier                  = ins.OnAnyModifier
-	OnEmptyModifier                = ins.OnEmptyModifier
-	OnNoneModifier                 = ins.OnNoneModifier
-	OnFalseModifier                = ins.OnFalseModifier
-	HandlerModifier                = ins.HandlerModifier
-	LiteralModifier                = ins.LiteralModifier
-	ConstantModifier               = ins.ConstantModifier
-	VariableModifier               = ins.VariableModifier
-	ArgumentModifier               = ins.ArgumentModifier
-	MessageModifier                = ins.MessageModifier
-	ResultModifier                 = ins.ResultModifier
-	ExceptionModifier              = ins.ExceptionModifier
-	DraftModifier                  = ins.DraftModifier
-	ComponentModifier              = ins.ComponentModifier
-	ComponentWithArgumentsModifier = ins.ComponentWithArgumentsModifier
-	DocumentModifier               = ins.DocumentModifier
-	DocumentWithArgumentsModifier  = ins.DocumentWithArgumentsModifier
+	VariableComponent                 = ins.VariableComponent
+	DraftComponent                    = ins.DraftComponent
+	DocumentComponent                 = ins.DocumentComponent
+	MessageComponent                  = ins.MessageComponent
+	OnAnyCondition                    = ins.OnAnyCondition
+	OnEmptyCondition                  = ins.OnEmptyCondition
+	OnNoneCondition                   = ins.OnNoneCondition
+	OnFalseCondition                  = ins.OnFalseCondition
+	ComponentDestination              = ins.ComponentDestination
+	ComponentWithArgumentsDestination = ins.ComponentWithArgumentsDestination
+	DocumentDestination               = ins.DocumentDestination
+	DocumentWithArgumentsDestination  = ins.DocumentWithArgumentsDestination
+	LiteralSource                     = ins.LiteralSource
+	ConstantSource                    = ins.ConstantSource
+	ArgumentSource                    = ins.ArgumentSource
+	HandlerSource                     = ins.HandlerSource
+	ComponentValue                    = ins.ComponentValue
+	ResultValue                       = ins.ResultValue
+	ExceptionValue                    = ins.ExceptionValue
+	HandlerValue                      = ins.HandlerValue
 )
 
 type (
@@ -232,7 +239,7 @@ func DropClass() DropClassLike {
 }
 
 func Drop(
-	component ins.Modifier,
+	component ins.Component,
 	symbol string,
 ) DropLike {
 	return DropClass().Drop(
@@ -273,7 +280,7 @@ func JumpClass() JumpClassLike {
 
 func Jump(
 	label string,
-	condition ins.Modifier,
+	condition ins.Condition,
 ) JumpLike {
 	return JumpClass().Jump(
 		label,
@@ -298,7 +305,7 @@ func LoadClass() LoadClassLike {
 }
 
 func Load(
-	component ins.Modifier,
+	component ins.Component,
 	symbol string,
 ) LoadLike {
 	return LoadClass().Load(
@@ -336,7 +343,7 @@ func PullClass() PullClassLike {
 }
 
 func Pull(
-	value ins.Modifier,
+	value ins.Value,
 ) PullLike {
 	return PullClass().Pull(
 		value,
@@ -360,7 +367,7 @@ func SaveClass() SaveClassLike {
 }
 
 func Save(
-	component ins.Modifier,
+	component ins.Component,
 	symbol string,
 ) SaveLike {
 	return SaveClass().Save(
@@ -375,7 +382,7 @@ func SendClass() SendClassLike {
 
 func Send(
 	symbol string,
-	destination ins.Modifier,
+	destination ins.Destination,
 ) SendLike {
 	return SendClass().Send(
 		symbol,

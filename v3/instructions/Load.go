@@ -28,7 +28,7 @@ func LoadClass() LoadClassLike {
 // Constructor Methods
 
 func (c *loadClass_) Load(
-	component Modifier,
+	component Component,
 	symbol string,
 ) LoadLike {
 	if uti.IsUndefined(component) {
@@ -56,13 +56,13 @@ func (v *load_) GetClass() LoadClassLike {
 func (v *load_) AsSource() string {
 	var source = "LOAD "
 	switch v.component_ {
-	case DraftModifier:
+	case DraftComponent:
 		source += "DRAFT"
-	case DocumentModifier:
+	case DocumentComponent:
 		source += "DOCUMENT"
-	case MessageModifier:
+	case MessageComponent:
 		source += "MESSAGE"
-	case VariableModifier:
+	case VariableComponent:
 		source += "VARIABLE"
 	default:
 		var message = fmt.Sprintf(
@@ -76,7 +76,7 @@ func (v *load_) AsSource() string {
 
 // Attribute Methods
 
-func (v *load_) GetComponent() Modifier {
+func (v *load_) GetComponent() Component {
 	return v.component_
 }
 
@@ -90,7 +90,7 @@ func (v *load_) GetSymbol() string {
 
 type load_ struct {
 	// Declare the instance attributes.
-	component_ Modifier
+	component_ Component
 	symbol_    string
 }
 

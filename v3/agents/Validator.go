@@ -55,8 +55,26 @@ func (v *validator_) ProcessArgumentCount(
 	// TBD - Add the method implementation.
 }
 
+func (v *validator_) ProcessComponent(
+	component ins.Component,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) ProcessCondition(
+	condition ins.Condition,
+) {
+	// TBD - Add the method implementation.
+}
+
 func (v *validator_) ProcessDescription(
 	description string,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) ProcessDestination(
+	destination ins.Destination,
 ) {
 	// TBD - Add the method implementation.
 }
@@ -67,20 +85,26 @@ func (v *validator_) ProcessLabel(
 	// TBD - Add the method implementation.
 }
 
-func (v *validator_) ProcessModifier(
-	modifier ins.Modifier,
-) {
-	// TBD - Add the method implementation.
-}
-
 func (v *validator_) ProcessQuoted(
 	quoted string,
 ) {
 	// TBD - Add the method implementation.
 }
 
+func (v *validator_) ProcessSource(
+	source ins.Source,
+) {
+	// TBD - Add the method implementation.
+}
+
 func (v *validator_) ProcessSymbol(
 	symbol string,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) ProcessValue(
+	value ins.Value,
 ) {
 	// TBD - Add the method implementation.
 }

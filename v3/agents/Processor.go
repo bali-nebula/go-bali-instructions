@@ -48,8 +48,23 @@ func (v *processor_) ProcessArgumentCount(
 ) {
 }
 
+func (v *processor_) ProcessComponent(
+	component ins.Component,
+) {
+}
+
+func (v *processor_) ProcessCondition(
+	condition ins.Condition,
+) {
+}
+
 func (v *processor_) ProcessDescription(
 	description string,
+) {
+}
+
+func (v *processor_) ProcessDestination(
+	destination ins.Destination,
 ) {
 }
 
@@ -58,18 +73,23 @@ func (v *processor_) ProcessLabel(
 ) {
 }
 
-func (v *processor_) ProcessModifier(
-	modifier ins.Modifier,
-) {
-}
-
 func (v *processor_) ProcessQuoted(
 	quoted string,
 ) {
 }
 
+func (v *processor_) ProcessSource(
+	source ins.Source,
+) {
+}
+
 func (v *processor_) ProcessSymbol(
 	symbol string,
+) {
+}
+
+func (v *processor_) ProcessValue(
+	value ins.Value,
 ) {
 }
 
