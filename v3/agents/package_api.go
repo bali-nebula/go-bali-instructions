@@ -170,6 +170,9 @@ Methodical declares the set of method signatures that must be supported by
 all methodical processors.
 */
 type Methodical interface {
+	ProcessArgumentCount(
+		argumentCount uint8,
+	)
 	ProcessDescription(
 		description string,
 	)
@@ -184,20 +187,6 @@ type Methodical interface {
 	)
 	ProcessSymbol(
 		symbol string,
-	)
-	PreprocessAction(
-		action any,
-		index_ uint,
-		count_ uint,
-	)
-	PostprocessAction(
-		action any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessActionSlot(
-		action any,
-		slot_ uint,
 	)
 	PreprocessArgument(
 		argument ins.ArgumentLike,
@@ -435,20 +424,6 @@ type Methodical interface {
 	)
 	ProcessSkipSlot(
 		skip ins.SkipLike,
-		slot_ uint,
-	)
-	PreprocessSource(
-		source any,
-		index_ uint,
-		count_ uint,
-	)
-	PostprocessSource(
-		source any,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessSourceSlot(
-		source any,
 		slot_ uint,
 	)
 }

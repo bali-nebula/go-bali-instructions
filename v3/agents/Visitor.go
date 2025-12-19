@@ -68,9 +68,107 @@ func (v *visitor_) VisitAssembly(
 
 // Private Methods
 
-func (v *visitor_) visitAction(
-	action any,
+func (v *visitor_) visitArgument(
+	argument ins.ArgumentLike,
 ) {
+	var symbol = argument.GetSymbol()
+	v.processor_.ProcessSymbol(symbol)
+}
+
+func (v *visitor_) visitAssembly(
+	assembly ins.AssemblyLike,
+) {
+	var instructionsIndex uint
+	var instructions = assembly.GetInstructions().GetIterator()
+	var instructionsCount = uint(instructions.GetSize())
+	for instructions.HasNext() {
+		instructionsIndex++
+		var rule = instructions.GetNext()
+		v.processor_.PreprocessInstruction(
+			rule,
+			instructionsIndex,
+			instructionsCount,
+		)
+		v.visitInstruction(rule)
+		v.processor_.PostprocessInstruction(
+			rule,
+			instructionsIndex,
+			instructionsCount,
+		)
+	}
+}
+
+func (v *visitor_) visitCall(
+	call ins.CallLike,
+) {
+	var symbol = call.GetSymbol()
+	v.processor_.ProcessSymbol(symbol)
+
+	// Visit slot 1 between terms.
+	v.processor_.ProcessCallSlot(
+		call,
+		1,
+	)
+
+	var argumentCount = call.GetArgumentCount()
+	v.processor_.ProcessArgumentCount(argumentCount)
+}
+
+func (v *visitor_) visitConstant(
+	constant ins.ConstantLike,
+) {
+	var symbol = constant.GetSymbol()
+	v.processor_.ProcessSymbol(symbol)
+}
+
+func (v *visitor_) visitDrop(
+	drop ins.DropLike,
+) {
+	var component = drop.GetComponent()
+	v.processor_.ProcessModifier(component)
+
+	// Visit slot 1 between terms.
+	v.processor_.ProcessDropSlot(
+		drop,
+		1,
+	)
+
+	var symbol = drop.GetSymbol()
+	v.processor_.ProcessSymbol(symbol)
+}
+
+func (v *visitor_) visitHandler(
+	handler ins.HandlerLike,
+) {
+	var label = handler.GetLabel()
+	v.processor_.ProcessLabel(label)
+}
+
+func (v *visitor_) visitInstruction(
+	instruction ins.InstructionLike,
+) {
+	var optionalPrefix = instruction.GetOptionalPrefix()
+	if uti.IsDefined(optionalPrefix) {
+		v.processor_.PreprocessPrefix(
+			optionalPrefix,
+			0,
+			0,
+		)
+		v.visitPrefix(optionalPrefix)
+		v.processor_.PostprocessPrefix(
+			optionalPrefix,
+			0,
+			0,
+		)
+	}
+
+	// Visit slot 1 between terms.
+	v.processor_.ProcessInstructionSlot(
+		instruction,
+		1,
+	)
+
+	var action = instruction.GetAction()
 	switch actual := action.(type) {
 	case ins.NoteLike:
 		v.processor_.PreprocessNote(
@@ -195,122 +293,6 @@ func (v *visitor_) visitAction(
 	}
 }
 
-func (v *visitor_) visitArgument(
-	argument ins.ArgumentLike,
-) {
-	var symbol = argument.GetSymbol()
-	v.processor_.ProcessSymbol(symbol)
-}
-
-func (v *visitor_) visitAssembly(
-	assembly ins.AssemblyLike,
-) {
-	var instructionsIndex uint
-	var instructions = assembly.GetInstructions().GetIterator()
-	var instructionsCount = uint(instructions.GetSize())
-	for instructions.HasNext() {
-		instructionsIndex++
-		var rule = instructions.GetNext()
-		v.processor_.PreprocessInstruction(
-			rule,
-			instructionsIndex,
-			instructionsCount,
-		)
-		v.visitInstruction(rule)
-		v.processor_.PostprocessInstruction(
-			rule,
-			instructionsIndex,
-			instructionsCount,
-		)
-	}
-}
-
-func (v *visitor_) visitCall(
-	call ins.CallLike,
-) {
-	var symbol = call.GetSymbol()
-	v.processor_.ProcessSymbol(symbol)
-
-	// Visit slot 1 between terms.
-	v.processor_.ProcessCallSlot(
-		call,
-		1,
-	)
-
-	var cardinality = call.GetCardinality()
-	if uti.IsDefined(cardinality) {
-		v.processor_.ProcessModifier(cardinality)
-	}
-}
-
-func (v *visitor_) visitConstant(
-	constant ins.ConstantLike,
-) {
-	var symbol = constant.GetSymbol()
-	v.processor_.ProcessSymbol(symbol)
-}
-
-func (v *visitor_) visitDrop(
-	drop ins.DropLike,
-) {
-	var component = drop.GetComponent()
-	v.processor_.ProcessModifier(component)
-
-	// Visit slot 1 between terms.
-	v.processor_.ProcessDropSlot(
-		drop,
-		1,
-	)
-
-	var symbol = drop.GetSymbol()
-	v.processor_.ProcessSymbol(symbol)
-}
-
-func (v *visitor_) visitHandler(
-	handler ins.HandlerLike,
-) {
-	var label = handler.GetLabel()
-	v.processor_.ProcessLabel(label)
-}
-
-func (v *visitor_) visitInstruction(
-	instruction ins.InstructionLike,
-) {
-	var optionalPrefix = instruction.GetOptionalPrefix()
-	if uti.IsDefined(optionalPrefix) {
-		v.processor_.PreprocessPrefix(
-			optionalPrefix,
-			0,
-			0,
-		)
-		v.visitPrefix(optionalPrefix)
-		v.processor_.PostprocessPrefix(
-			optionalPrefix,
-			0,
-			0,
-		)
-	}
-
-	// Visit slot 1 between terms.
-	v.processor_.ProcessInstructionSlot(
-		instruction,
-		1,
-	)
-
-	var action = instruction.GetAction()
-	v.processor_.PreprocessAction(
-		action,
-		0,
-		0,
-	)
-	v.visitAction(action)
-	v.processor_.PostprocessAction(
-		action,
-		0,
-		0,
-	)
-}
-
 func (v *visitor_) visitJump(
 	jump ins.JumpLike,
 ) {
@@ -381,59 +363,6 @@ func (v *visitor_) visitPush(
 	push ins.PushLike,
 ) {
 	var source = push.GetSource()
-	v.processor_.PreprocessSource(
-		source,
-		0,
-		0,
-	)
-	v.visitSource(source)
-	v.processor_.PostprocessSource(
-		source,
-		0,
-		0,
-	)
-}
-
-func (v *visitor_) visitSave(
-	save ins.SaveLike,
-) {
-	var component = save.GetComponent()
-	v.processor_.ProcessModifier(component)
-
-	// Visit slot 1 between terms.
-	v.processor_.ProcessSaveSlot(
-		save,
-		1,
-	)
-
-	var symbol = save.GetSymbol()
-	v.processor_.ProcessSymbol(symbol)
-}
-
-func (v *visitor_) visitSend(
-	send ins.SendLike,
-) {
-	var symbol = send.GetSymbol()
-	v.processor_.ProcessSymbol(symbol)
-
-	// Visit slot 1 between terms.
-	v.processor_.ProcessSendSlot(
-		send,
-		1,
-	)
-
-	var destination = send.GetDestination()
-	v.processor_.ProcessModifier(destination)
-}
-
-func (v *visitor_) visitSkip(
-	skip ins.SkipLike,
-) {
-}
-
-func (v *visitor_) visitSource(
-	source any,
-) {
 	switch actual := source.(type) {
 	case ins.LiteralLike:
 		v.processor_.PreprocessLiteral(
@@ -484,6 +413,43 @@ func (v *visitor_) visitSource(
 			0,
 		)
 	}
+}
+
+func (v *visitor_) visitSave(
+	save ins.SaveLike,
+) {
+	var component = save.GetComponent()
+	v.processor_.ProcessModifier(component)
+
+	// Visit slot 1 between terms.
+	v.processor_.ProcessSaveSlot(
+		save,
+		1,
+	)
+
+	var symbol = save.GetSymbol()
+	v.processor_.ProcessSymbol(symbol)
+}
+
+func (v *visitor_) visitSend(
+	send ins.SendLike,
+) {
+	var symbol = send.GetSymbol()
+	v.processor_.ProcessSymbol(symbol)
+
+	// Visit slot 1 between terms.
+	v.processor_.ProcessSendSlot(
+		send,
+		1,
+	)
+
+	var destination = send.GetDestination()
+	v.processor_.ProcessModifier(destination)
+}
+
+func (v *visitor_) visitSkip(
+	skip ins.SkipLike,
+) {
 }
 
 // Instance Structure

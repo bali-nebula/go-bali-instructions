@@ -17,6 +17,7 @@ import (
 	lan "github.com/bali-nebula/go-assembly-language/v3"
 	ins "github.com/bali-nebula/go-bali-instructions/v3/instructions"
 	com "github.com/craterdog/go-essential-composites/v8"
+	uti "github.com/craterdog/go-essential-utilities/v8"
 )
 
 // CLASS INTERFACE
@@ -63,6 +64,12 @@ func (v *deflator_) DeflateAssembly(
 
 // Methodical Methods
 
+func (v *deflator_) ProcessArgumentCount(
+	argumentCount uint8,
+) {
+	v.stack_.AddValue(argumentCount)
+}
+
 func (v *deflator_) ProcessDescription(
 	description string,
 ) {
@@ -78,55 +85,42 @@ func (v *deflator_) ProcessLabel(
 func (v *deflator_) ProcessModifier(
 	modifier ins.Modifier,
 ) {
+	var delimiter string
 	switch modifier {
-	case ins.OnAnyModifier:
-		v.stack_.AddValue("")
 	case ins.OnEmptyModifier:
-		v.stack_.AddValue("ON EMPTY")
+		delimiter = "ON EMPTY"
 	case ins.OnNoneModifier:
-		v.stack_.AddValue("ON NONE")
+		delimiter = "ON NONE"
 	case ins.OnFalseModifier:
-		v.stack_.AddValue("ON FALSE")
+		delimiter = "ON FALSE"
 	case ins.HandlerModifier:
-		v.stack_.AddValue("HANDLER")
+		delimiter = "HANDLER"
 	case ins.LiteralModifier:
-		v.stack_.AddValue("LITERAL")
+		delimiter = "LITERAL"
 	case ins.ConstantModifier:
-		v.stack_.AddValue("CONSTANT")
-	case ins.ArgumentModifier:
-		v.stack_.AddValue("ARGUMENT")
-	case ins.ExceptionModifier:
-		v.stack_.AddValue("EXCEPTION")
-	case ins.ComponentModifier:
-		v.stack_.AddValue("COMPONENT")
-	case ins.ResultModifier:
-		v.stack_.AddValue("RESULT")
-	case ins.DocumentModifier:
-		v.stack_.AddValue("DOCUMENT")
-	case ins.DraftModifier:
-		v.stack_.AddValue("DRAFT")
-	case ins.MessageModifier:
-		v.stack_.AddValue("MESSAGE")
+		delimiter = "CONSTANT"
 	case ins.VariableModifier:
-		v.stack_.AddValue("VARIABLE")
-	case ins.With0ArgumentsModifier:
-		v.stack_.AddValue("")
-	case ins.With1ArgumentModifier:
-		v.stack_.AddValue("WITH 1 ARGUMENT")
-	case ins.With2ArgumentsModifier:
-		v.stack_.AddValue("WITH 2 ARGUMENTS")
-	case ins.With3ArgumentsModifier:
-		v.stack_.AddValue("WITH 3 ARGUMENTS")
+		delimiter = "VARIABLE"
+	case ins.ArgumentModifier:
+		delimiter = "ARGUMENT"
+	case ins.MessageModifier:
+		delimiter = "MESSAGE"
+	case ins.ResultModifier:
+		delimiter = "RESULT"
+	case ins.ExceptionModifier:
+		delimiter = "EXCEPTION"
+	case ins.DraftModifier:
+		delimiter = "DRAFT"
+	case ins.ComponentModifier:
+		delimiter = "COMPONENT"
 	case ins.ComponentWithArgumentsModifier:
-		v.stack_.AddValue("COMPONENT WITH ARGUMENTS")
+		delimiter = "COMPONENT WITH ARGUMENTS"
+	case ins.DocumentModifier:
+		delimiter = "DOCUMENT"
 	case ins.DocumentWithArgumentsModifier:
-		v.stack_.AddValue("DOCUMENT WITH ARGUMENTS")
+		delimiter = "DOCUMENT WITH ARGUMENTS"
 	}
-}
-
-func (v *deflator_) ProcessPrefix(
-	prefix string,
-) {
+	v.stack_.AddValue(delimiter)
 }
 
 func (v *deflator_) ProcessQuoted(
@@ -141,51 +135,13 @@ func (v *deflator_) ProcessSymbol(
 	v.stack_.AddValue(symbol)
 }
 
-func (v *deflator_) PreprocessAction(
-	action any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *deflator_) PostprocessAction(
-	action any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *deflator_) ProcessActionSlot(
-	action any,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessArgument(
-	argument ins.ArgumentLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
 func (v *deflator_) PostprocessArgument(
 	argument ins.ArgumentLike,
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessArgumentSlot(
-	argument ins.ArgumentLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessAssembly(
-	assembly ins.AssemblyLike,
-	index_ uint,
-	count_ uint,
-) {
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Argument("ARGUMENT", symbol))
 }
 
 func (v *deflator_) PostprocessAssembly(
@@ -193,6 +149,8 @@ func (v *deflator_) PostprocessAssembly(
 	index_ uint,
 	count_ uint,
 ) {
+	var instructions = v.stack_.RemoveLast().(com.Sequential[lan.InstructionLike])
+	v.stack_.AddValue(lan.Assembly(instructions))
 	if v.stack_.GetSize() != 1 {
 		var message = fmt.Sprintf(
 			"Internal Error: the deflator stack is corrupted: %v",
@@ -202,37 +160,17 @@ func (v *deflator_) PostprocessAssembly(
 	}
 }
 
-func (v *deflator_) ProcessAssemblySlot(
-	assembly ins.AssemblyLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessCall(
-	call ins.CallLike,
-	index_ uint,
-	count_ uint,
-) {
-}
-
 func (v *deflator_) PostprocessCall(
 	call ins.CallLike,
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessCallSlot(
-	call ins.CallLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessConstant(
-	constant ins.ConstantLike,
-	index_ uint,
-	count_ uint,
-) {
+	var context lan.ContextLike
+	if call.GetArgumentCount() > 0 {
+		context = v.stack_.RemoveLast().(lan.ContextLike)
+	}
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Call("CALL", symbol, context))
 }
 
 func (v *deflator_) PostprocessConstant(
@@ -240,19 +178,8 @@ func (v *deflator_) PostprocessConstant(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessConstantSlot(
-	constant ins.ConstantLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessDrop(
-	drop ins.DropLike,
-	index_ uint,
-	count_ uint,
-) {
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Constant("CONSTANT", symbol))
 }
 
 func (v *deflator_) PostprocessDrop(
@@ -260,19 +187,9 @@ func (v *deflator_) PostprocessDrop(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessDropSlot(
-	drop ins.DropLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessHandler(
-	handler ins.HandlerLike,
-	index_ uint,
-	count_ uint,
-) {
+	var component = v.stack_.RemoveLast().(lan.ComponentLike)
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Drop("DROP", component, symbol))
 }
 
 func (v *deflator_) PostprocessHandler(
@@ -280,19 +197,8 @@ func (v *deflator_) PostprocessHandler(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessHandlerSlot(
-	handler ins.HandlerLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessInstruction(
-	instruction ins.InstructionLike,
-	index_ uint,
-	count_ uint,
-) {
+	var label = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Handler("HANDLER", label))
 }
 
 func (v *deflator_) PostprocessInstruction(
@@ -300,19 +206,12 @@ func (v *deflator_) PostprocessInstruction(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessInstructionSlot(
-	instruction ins.InstructionLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessJump(
-	jump ins.JumpLike,
-	index_ uint,
-	count_ uint,
-) {
+	var action = lan.Action(v.stack_.RemoveLast())
+	var prefix lan.PrefixLike
+	if uti.IsDefined(instruction.GetOptionalPrefix()) {
+		prefix = v.stack_.RemoveLast().(lan.PrefixLike)
+	}
+	v.stack_.AddValue(lan.Instruction(prefix, action))
 }
 
 func (v *deflator_) PostprocessJump(
@@ -320,19 +219,12 @@ func (v *deflator_) PostprocessJump(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessJumpSlot(
-	jump ins.JumpLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessLiteral(
-	literal ins.LiteralLike,
-	index_ uint,
-	count_ uint,
-) {
+	var condition lan.ConditionLike
+	if jump.GetCondition() != ins.OnAnyModifier {
+		condition = v.stack_.RemoveLast().(lan.ConditionLike)
+	}
+	var label = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Jump("JUMP TO", label, condition))
 }
 
 func (v *deflator_) PostprocessLiteral(
@@ -340,19 +232,8 @@ func (v *deflator_) PostprocessLiteral(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessLiteralSlot(
-	literal ins.LiteralLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessLoad(
-	load ins.LoadLike,
-	index_ uint,
-	count_ uint,
-) {
+	var quoted = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Literal("LITERAL", quoted))
 }
 
 func (v *deflator_) PostprocessLoad(
@@ -360,19 +241,9 @@ func (v *deflator_) PostprocessLoad(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessLoadSlot(
-	load ins.LoadLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessNote(
-	note ins.NoteLike,
-	index_ uint,
-	count_ uint,
-) {
+	var component = v.stack_.RemoveLast().(lan.ComponentLike)
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Load("LOAD", component, symbol))
 }
 
 func (v *deflator_) PostprocessNote(
@@ -380,19 +251,17 @@ func (v *deflator_) PostprocessNote(
 	index_ uint,
 	count_ uint,
 ) {
+	var description = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Note("NOTE", description))
 }
 
-func (v *deflator_) ProcessNoteSlot(
-	note ins.NoteLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessPull(
-	pull ins.PullLike,
+func (v *deflator_) PostprocessPrefix(
+	prefix ins.PrefixLike,
 	index_ uint,
 	count_ uint,
 ) {
+	var label = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Prefix(label, ":"))
 }
 
 func (v *deflator_) PostprocessPull(
@@ -400,19 +269,8 @@ func (v *deflator_) PostprocessPull(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessPullSlot(
-	pull ins.PullLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessPush(
-	push ins.PushLike,
-	index_ uint,
-	count_ uint,
-) {
+	var value = v.stack_.RemoveLast().(lan.ValueLike)
+	v.stack_.AddValue(lan.Pull("PULL", value))
 }
 
 func (v *deflator_) PostprocessPush(
@@ -420,19 +278,8 @@ func (v *deflator_) PostprocessPush(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessPushSlot(
-	push ins.PushLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessSave(
-	save ins.SaveLike,
-	index_ uint,
-	count_ uint,
-) {
+	var source = v.stack_.RemoveLast().(lan.SourceLike)
+	v.stack_.AddValue(lan.Push("PUSH", source))
 }
 
 func (v *deflator_) PostprocessSave(
@@ -440,19 +287,9 @@ func (v *deflator_) PostprocessSave(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessSaveSlot(
-	save ins.SaveLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessSend(
-	send ins.SendLike,
-	index_ uint,
-	count_ uint,
-) {
+	var component = v.stack_.RemoveLast().(lan.ComponentLike)
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Save("SAVE", component, symbol))
 }
 
 func (v *deflator_) PostprocessSend(
@@ -460,19 +297,9 @@ func (v *deflator_) PostprocessSend(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessSendSlot(
-	send ins.SendLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessSkip(
-	skip ins.SkipLike,
-	index_ uint,
-	count_ uint,
-) {
+	var destination = v.stack_.RemoveLast().(lan.DestinationLike)
+	var symbol = v.stack_.RemoveLast().(string)
+	v.stack_.AddValue(lan.Send("SEND", symbol, "TO", destination))
 }
 
 func (v *deflator_) PostprocessSkip(
@@ -480,32 +307,7 @@ func (v *deflator_) PostprocessSkip(
 	index_ uint,
 	count_ uint,
 ) {
-}
-
-func (v *deflator_) ProcessSkipSlot(
-	skip ins.SkipLike,
-	slot_ uint,
-) {
-}
-
-func (v *deflator_) PreprocessSource(
-	source any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *deflator_) PostprocessSource(
-	source any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *deflator_) ProcessSourceSlot(
-	source any,
-	slot_ uint,
-) {
+	v.stack_.AddValue(lan.Skip("SKIP"))
 }
 
 // PROTECTED INTERFACE

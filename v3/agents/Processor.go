@@ -43,6 +43,11 @@ func (v *processor_) GetClass() ProcessorClassLike {
 
 // Methodical Methods
 
+func (v *processor_) ProcessArgumentCount(
+	argumentCount uint8,
+) {
+}
+
 func (v *processor_) ProcessDescription(
 	description string,
 ) {
@@ -65,26 +70,6 @@ func (v *processor_) ProcessQuoted(
 
 func (v *processor_) ProcessSymbol(
 	symbol string,
-) {
-}
-
-func (v *processor_) PreprocessAction(
-	action any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PostprocessAction(
-	action any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessActionSlot(
-	action any,
-	slot_ uint,
 ) {
 }
 
@@ -424,26 +409,6 @@ func (v *processor_) PostprocessSkip(
 
 func (v *processor_) ProcessSkipSlot(
 	skip ins.SkipLike,
-	slot_ uint,
-) {
-}
-
-func (v *processor_) PreprocessSource(
-	source any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) PostprocessSource(
-	source any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *processor_) ProcessSourceSlot(
-	source any,
 	slot_ uint,
 ) {
 }

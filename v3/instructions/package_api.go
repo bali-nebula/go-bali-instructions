@@ -48,19 +48,15 @@ const (
 	HandlerModifier
 	LiteralModifier
 	ConstantModifier
-	ArgumentModifier
-	ExceptionModifier
-	ComponentModifier
-	ResultModifier
-	DocumentModifier
-	DraftModifier
-	MessageModifier
 	VariableModifier
-	With0ArgumentsModifier
-	With1ArgumentModifier
-	With2ArgumentsModifier
-	With3ArgumentsModifier
+	ArgumentModifier
+	MessageModifier
+	ResultModifier
+	ExceptionModifier
+	DraftModifier
+	ComponentModifier
 	ComponentWithArgumentsModifier
+	DocumentModifier
 	DocumentWithArgumentsModifier
 )
 
@@ -101,7 +97,7 @@ type CallClassLike interface {
 	// Constructor Methods
 	Call(
 		symbol string,
-		cardinality Modifier,
+		cardinality uint8,
 	) CallLike
 }
 
@@ -315,7 +311,7 @@ type CallLike interface {
 
 	// Attribute Methods
 	GetSymbol() string
-	GetCardinality() Modifier
+	GetArgumentCount() uint8
 }
 
 /*

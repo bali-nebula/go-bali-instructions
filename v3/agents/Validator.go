@@ -49,6 +49,12 @@ func (v *validator_) ValidateAssembly(
 
 // Methodical Methods
 
+func (v *validator_) ProcessArgumentCount(
+	argumentCount uint8,
+) {
+	// TBD - Add the method implementation.
+}
+
 func (v *validator_) ProcessDescription(
 	description string,
 ) {
@@ -75,29 +81,6 @@ func (v *validator_) ProcessQuoted(
 
 func (v *validator_) ProcessSymbol(
 	symbol string,
-) {
-	// TBD - Add the method implementation.
-}
-
-func (v *validator_) PreprocessAction(
-	action any,
-	index_ uint,
-	count_ uint,
-) {
-	// TBD - Add the method implementation.
-}
-
-func (v *validator_) PostprocessAction(
-	action any,
-	index_ uint,
-	count_ uint,
-) {
-	// TBD - Add the method implementation.
-}
-
-func (v *validator_) ProcessActionSlot(
-	action any,
-	slot_ uint,
 ) {
 	// TBD - Add the method implementation.
 }
@@ -491,26 +474,6 @@ func (v *validator_) ProcessSkipSlot(
 	slot_ uint,
 ) {
 	// TBD - Add the method implementation.
-}
-
-func (v *validator_) PreprocessSource(
-	source any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *validator_) PostprocessSource(
-	source any,
-	index_ uint,
-	count_ uint,
-) {
-}
-
-func (v *validator_) ProcessSourceSlot(
-	source any,
-	slot_ uint,
-) {
 }
 
 // PROTECTED INTERFACE

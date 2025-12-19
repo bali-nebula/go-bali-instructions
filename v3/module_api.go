@@ -75,19 +75,15 @@ const (
 	HandlerModifier                = ins.HandlerModifier
 	LiteralModifier                = ins.LiteralModifier
 	ConstantModifier               = ins.ConstantModifier
-	ArgumentModifier               = ins.ArgumentModifier
-	ExceptionModifier              = ins.ExceptionModifier
-	ComponentModifier              = ins.ComponentModifier
-	ResultModifier                 = ins.ResultModifier
-	DocumentModifier               = ins.DocumentModifier
-	DraftModifier                  = ins.DraftModifier
-	MessageModifier                = ins.MessageModifier
 	VariableModifier               = ins.VariableModifier
-	With0ArgumentsModifier         = ins.With0ArgumentsModifier
-	With1ArgumentModifier          = ins.With1ArgumentModifier
-	With2ArgumentsModifier         = ins.With2ArgumentsModifier
-	With3ArgumentsModifier         = ins.With3ArgumentsModifier
+	ArgumentModifier               = ins.ArgumentModifier
+	MessageModifier                = ins.MessageModifier
+	ResultModifier                 = ins.ResultModifier
+	ExceptionModifier              = ins.ExceptionModifier
+	DraftModifier                  = ins.DraftModifier
+	ComponentModifier              = ins.ComponentModifier
 	ComponentWithArgumentsModifier = ins.ComponentWithArgumentsModifier
+	DocumentModifier               = ins.DocumentModifier
 	DocumentWithArgumentsModifier  = ins.DocumentWithArgumentsModifier
 )
 
@@ -211,7 +207,7 @@ func CallClass() CallClassLike {
 
 func Call(
 	symbol string,
-	cardinality ins.Modifier,
+	cardinality uint8,
 ) CallLike {
 	return CallClass().Call(
 		symbol,

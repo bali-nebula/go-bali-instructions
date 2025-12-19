@@ -125,30 +125,29 @@ func (v *inflator_) PostprocessCall(
 	index_ uint,
 	count_ uint,
 ) {
-	var cardinality = ins.With0ArgumentsModifier
-	if uti.IsDefined(call.GetOptionalCardinality()) {
-		cardinality = v.stack_.RemoveLast().(ins.Modifier)
+	var argumentCount uint8
+	if uti.IsDefined(call.GetOptionalContext()) {
+		argumentCount = v.stack_.RemoveLast().(uint8)
 	}
 	var symbol = v.stack_.RemoveLast().(string)
-	v.stack_.AddValue(ins.CallClass().Call(symbol, cardinality))
+	v.stack_.AddValue(ins.CallClass().Call(symbol, argumentCount))
 }
 
-func (v *inflator_) PostprocessCardinality(
-	cardinality lan.CardinalityLike,
+func (v *inflator_) PostprocessContext(
+	context lan.ContextLike,
 	index_ uint,
 	count_ uint,
 ) {
-	var modifier = cardinality.GetAny().(string)
-	switch modifier {
-	case "WITH 3 ARGUMENTS":
-		v.stack_.AddValue(ins.With3ArgumentsModifier)
-	case "WITH 2 ARGUMENTS":
-		v.stack_.AddValue(ins.With2ArgumentsModifier)
+	var argumentCount uint8
+	switch context.GetAny().(string) {
 	case "WITH 1 ARGUMENT":
-		v.stack_.AddValue(ins.With1ArgumentModifier)
-	default:
-		v.stack_.AddValue(ins.With0ArgumentsModifier)
+		argumentCount = 1
+	case "WITH 2 ARGUMENTS":
+		argumentCount = 2
+	case "WITH 3 ARGUMENTS":
+		argumentCount = 3
 	}
+	v.stack_.AddValue(argumentCount)
 }
 
 func (v *inflator_) PostprocessComponent(
@@ -175,12 +174,12 @@ func (v *inflator_) PostprocessComponent(
 	}
 }
 
-func (v *inflator_) PostprocessConditionally(
-	conditionally lan.ConditionallyLike,
+func (v *inflator_) PostprocessCondition(
+	condition lan.ConditionLike,
 	index_ uint,
 	count_ uint,
 ) {
-	var modifier = conditionally.GetAny().(string)
+	var modifier = condition.GetAny().(string)
 	switch modifier {
 	case "ON EMPTY":
 		v.stack_.AddValue(ins.OnEmptyModifier)
@@ -188,8 +187,6 @@ func (v *inflator_) PostprocessConditionally(
 		v.stack_.AddValue(ins.OnFalseModifier)
 	case "ON NONE":
 		v.stack_.AddValue(ins.OnNoneModifier)
-	default:
-		v.stack_.AddValue(ins.OnAnyModifier)
 	}
 }
 
@@ -264,7 +261,7 @@ func (v *inflator_) PostprocessJump(
 	count_ uint,
 ) {
 	var condition = ins.OnAnyModifier
-	if uti.IsDefined(jump.GetOptionalConditionally()) {
+	if uti.IsDefined(jump.GetOptionalCondition()) {
 		condition = v.stack_.RemoveLast().(ins.Modifier)
 	}
 	var label = v.stack_.RemoveLast().(string)
