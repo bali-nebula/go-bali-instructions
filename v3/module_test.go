@@ -31,8 +31,8 @@ func TestParsingRoundtrips(t *tes.T) {
 			filename = testDirectory + filename
 			fmt.Println(filename)
 			var source = uti.ReadFile(filename)
-			var assembly = doc.ParseAssembly(source)
-			var formatted = doc.FormatAssembly(assembly)
+			var method = doc.ParseMethod(source)
+			var formatted = doc.FormatMethod(method)
 			ass.Equal(t, source, formatted)
 		}
 	}

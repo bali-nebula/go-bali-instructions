@@ -97,9 +97,9 @@ instance of a concrete deflator-like class.
 type DeflatorLike interface {
 	// Principal Methods
 	GetClass() DeflatorClassLike
-	DeflateAssembly(
-		assembly ins.AssemblyLike,
-	) lan.AssemblyLike
+	DeflateMethod(
+		method ins.MethodLike,
+	) lan.MethodLike
 
 	// Aspect Interfaces
 	Methodical
@@ -113,9 +113,9 @@ instance of a concrete inflator-like class.
 type InflatorLike interface {
 	// Principal Methods
 	GetClass() InflatorClassLike
-	InflateAssembly(
-		assembly lan.AssemblyLike,
-	) ins.AssemblyLike
+	InflateMethod(
+		method lan.MethodLike,
+	) ins.MethodLike
 
 	// Aspect Interfaces
 	lan.Methodical
@@ -142,8 +142,8 @@ instance of a concrete validator-like class.
 type ValidatorLike interface {
 	// Principal Methods
 	GetClass() ValidatorClassLike
-	ValidateAssembly(
-		assembly ins.AssemblyLike,
+	ValidateMethod(
+		method ins.MethodLike,
 	)
 
 	// Aspect Interfaces
@@ -158,8 +158,8 @@ instance of a concrete visitor-like class.
 type VisitorLike interface {
 	// Principal Methods
 	GetClass() VisitorClassLike
-	VisitAssembly(
-		assembly ins.AssemblyLike,
+	VisitMethod(
+		method ins.MethodLike,
 	)
 }
 
@@ -212,20 +212,6 @@ type Methodical interface {
 	)
 	ProcessArgumentSlot(
 		argument ins.ArgumentLike,
-		slot_ uint,
-	)
-	PreprocessAssembly(
-		assembly ins.AssemblyLike,
-		index_ uint,
-		count_ uint,
-	)
-	PostprocessAssembly(
-		assembly ins.AssemblyLike,
-		index_ uint,
-		count_ uint,
-	)
-	ProcessAssemblySlot(
-		assembly ins.AssemblyLike,
 		slot_ uint,
 	)
 	PreprocessCall(
@@ -338,6 +324,20 @@ type Methodical interface {
 	)
 	ProcessLoadSlot(
 		load ins.LoadLike,
+		slot_ uint,
+	)
+	PreprocessMethod(
+		method ins.MethodLike,
+		index_ uint,
+		count_ uint,
+	)
+	PostprocessMethod(
+		method ins.MethodLike,
+		index_ uint,
+		count_ uint,
+	)
+	ProcessMethodSlot(
+		method ins.MethodLike,
 		slot_ uint,
 	)
 	PreprocessNote(

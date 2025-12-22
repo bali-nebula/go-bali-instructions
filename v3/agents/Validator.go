@@ -41,10 +41,10 @@ func (v *validator_) GetClass() ValidatorClassLike {
 	return validatorClass()
 }
 
-func (v *validator_) ValidateAssembly(
-	assembly ins.AssemblyLike,
+func (v *validator_) ValidateMethod(
+	method ins.MethodLike,
 ) {
-	VisitorClass().Visitor(v).VisitAssembly(assembly)
+	VisitorClass().Visitor(v).VisitMethod(method)
 }
 
 // Methodical Methods
@@ -127,29 +127,6 @@ func (v *validator_) PostprocessArgument(
 
 func (v *validator_) ProcessArgumentSlot(
 	argument ins.ArgumentLike,
-	slot_ uint,
-) {
-	// TBD - Add the method implementation.
-}
-
-func (v *validator_) PreprocessAssembly(
-	assembly ins.AssemblyLike,
-	index_ uint,
-	count_ uint,
-) {
-	// TBD - Add the method implementation.
-}
-
-func (v *validator_) PostprocessAssembly(
-	assembly ins.AssemblyLike,
-	index_ uint,
-	count_ uint,
-) {
-	// TBD - Add the method implementation.
-}
-
-func (v *validator_) ProcessAssemblySlot(
-	assembly ins.AssemblyLike,
 	slot_ uint,
 ) {
 	// TBD - Add the method implementation.
@@ -334,6 +311,29 @@ func (v *validator_) PostprocessLoad(
 
 func (v *validator_) ProcessLoadSlot(
 	load ins.LoadLike,
+	slot_ uint,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) PreprocessMethod(
+	method ins.MethodLike,
+	index_ uint,
+	count_ uint,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) PostprocessMethod(
+	method ins.MethodLike,
+	index_ uint,
+	count_ uint,
+) {
+	// TBD - Add the method implementation.
+}
+
+func (v *validator_) ProcessMethodSlot(
+	method ins.MethodLike,
 	slot_ uint,
 ) {
 	// TBD - Add the method implementation.

@@ -96,7 +96,6 @@ const (
 
 type (
 	ArgumentClassLike    = ins.ArgumentClassLike
-	AssemblyClassLike    = ins.AssemblyClassLike
 	CallClassLike        = ins.CallClassLike
 	ConstantClassLike    = ins.ConstantClassLike
 	DropClassLike        = ins.DropClassLike
@@ -105,6 +104,7 @@ type (
 	JumpClassLike        = ins.JumpClassLike
 	LiteralClassLike     = ins.LiteralClassLike
 	LoadClassLike        = ins.LoadClassLike
+	MethodClassLike      = ins.MethodClassLike
 	NoteClassLike        = ins.NoteClassLike
 	PrefixClassLike      = ins.PrefixClassLike
 	PullClassLike        = ins.PullClassLike
@@ -116,7 +116,6 @@ type (
 
 type (
 	ArgumentLike    = ins.ArgumentLike
-	AssemblyLike    = ins.AssemblyLike
 	CallLike        = ins.CallLike
 	ConstantLike    = ins.ConstantLike
 	DropLike        = ins.DropLike
@@ -125,6 +124,7 @@ type (
 	JumpLike        = ins.JumpLike
 	LiteralLike     = ins.LiteralLike
 	LoadLike        = ins.LoadLike
+	MethodLike      = ins.MethodLike
 	NoteLike        = ins.NoteLike
 	PrefixLike      = ins.PrefixLike
 	PullLike        = ins.PullLike
@@ -193,18 +193,6 @@ func Argument(
 ) ArgumentLike {
 	return ArgumentClass().Argument(
 		symbol,
-	)
-}
-
-func AssemblyClass() AssemblyClassLike {
-	return ins.AssemblyClass()
-}
-
-func Assembly(
-	instructions com.Sequential[ins.InstructionLike],
-) AssemblyLike {
-	return AssemblyClass().Assembly(
-		instructions,
 	)
 }
 
@@ -314,6 +302,18 @@ func Load(
 	)
 }
 
+func MethodClass() MethodClassLike {
+	return ins.MethodClass()
+}
+
+func Method(
+	instructions com.Sequential[ins.InstructionLike],
+) MethodLike {
+	return MethodClass().Method(
+		instructions,
+	)
+}
+
 func NoteClass() NoteClassLike {
 	return ins.NoteClass()
 }
@@ -402,21 +402,21 @@ func Skip() SkipLike {
 
 // Instructions
 
-func ParseAssembly(
+func ParseMethod(
 	source string,
-) AssemblyLike {
+) MethodLike {
 	var inflator = Inflator()
 	var parser = lan.Parser()
-	var assembly = inflator.InflateAssembly(parser.ParseSource(source))
-	return assembly
+	var method = inflator.InflateMethod(parser.ParseSource(source))
+	return method
 }
 
-func FormatAssembly(
-	assembly AssemblyLike,
+func FormatMethod(
+	method MethodLike,
 ) string {
 	var deflator = Deflator()
 	var formatter = lan.Formatter()
-	var source = formatter.FormatAssembly(deflator.DeflateAssembly(assembly))
+	var source = formatter.FormatMethod(deflator.DeflateMethod(method))
 	return source
 }
 

@@ -53,11 +53,11 @@ func (v *inflator_) GetClass() InflatorClassLike {
 	return inflatorClass()
 }
 
-func (v *inflator_) InflateAssembly(
-	assembly lan.AssemblyLike,
-) ins.AssemblyLike {
-	lan.VisitorClass().Visitor(v).VisitAssembly(assembly)
-	return v.stack_.RemoveLast().(ins.AssemblyLike)
+func (v *inflator_) InflateMethod(
+	method lan.MethodLike,
+) ins.MethodLike {
+	lan.VisitorClass().Visitor(v).VisitMethod(method)
+	return v.stack_.RemoveLast().(ins.MethodLike)
 }
 
 // Attribute Methods
@@ -95,29 +95,6 @@ func (v *inflator_) PostprocessArgument(
 ) {
 	var symbol = v.stack_.RemoveLast().(string)
 	v.stack_.AddValue(ins.ArgumentClass().Argument(symbol))
-}
-
-func (v *inflator_) PostprocessAssembly(
-	assembly lan.AssemblyLike,
-	index_ uint,
-	count_ uint,
-) {
-	var instructions = com.List[ins.InstructionLike]()
-	var iterator = assembly.GetInstructions().GetIterator()
-	for iterator.HasNext() {
-		var instruction = v.stack_.RemoveLast().(ins.InstructionLike)
-		instructions.AppendValue(instruction)
-		iterator.GetNext()
-	}
-	instructions.ReverseValues() // They were pulled off the stack in reverse order.
-	v.stack_.AddValue(ins.AssemblyClass().Assembly(instructions))
-	if v.stack_.GetSize() != 1 {
-		var message = fmt.Sprintf(
-			"Internal Error: the inflator stack is corrupted: %v",
-			v.stack_,
-		)
-		panic(message)
-	}
 }
 
 func (v *inflator_) PostprocessCall(
@@ -302,6 +279,29 @@ func (v *inflator_) PostprocessLoad(
 	var symbol = v.stack_.RemoveLast().(string)
 	var component = v.stack_.RemoveLast().(ins.Component)
 	v.stack_.AddValue(ins.LoadClass().Load(component, symbol))
+}
+
+func (v *inflator_) PostprocessMethod(
+	method lan.MethodLike,
+	index_ uint,
+	count_ uint,
+) {
+	var instructions = com.List[ins.InstructionLike]()
+	var iterator = method.GetInstructions().GetIterator()
+	for iterator.HasNext() {
+		var instruction = v.stack_.RemoveLast().(ins.InstructionLike)
+		instructions.AppendValue(instruction)
+		iterator.GetNext()
+	}
+	instructions.ReverseValues() // They were pulled off the stack in reverse order.
+	v.stack_.AddValue(ins.MethodClass().Method(instructions))
+	if v.stack_.GetSize() != 1 {
+		var message = fmt.Sprintf(
+			"Internal Error: the inflator stack is corrupted: %v",
+			v.stack_,
+		)
+		panic(message)
+	}
 }
 
 func (v *inflator_) PostprocessNote(

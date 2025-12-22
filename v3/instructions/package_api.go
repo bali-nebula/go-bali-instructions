@@ -112,18 +112,6 @@ type ArgumentClassLike interface {
 }
 
 /*
-AssemblyClassLike is a class interface that declares the complete set of class
-constructors, constants and functions that must be supported by each concrete
-assembly-like class.
-*/
-type AssemblyClassLike interface {
-	// Constructor Methods
-	Assembly(
-		instructions com.Sequential[InstructionLike],
-	) AssemblyLike
-}
-
-/*
 CallClassLike is a class interface that declares the complete set of class
 constructors, constants and functions that must be supported by each concrete
 call-like class.
@@ -225,6 +213,18 @@ type LoadClassLike interface {
 }
 
 /*
+MethodClassLike is a class interface that declares the complete set of class
+constructors, constants and functions that must be supported by each concrete
+method-like class.
+*/
+type MethodClassLike interface {
+	// Constructor Methods
+	Method(
+		instructions com.Sequential[InstructionLike],
+	) MethodLike
+}
+
+/*
 NoteClassLike is a class interface that declares the complete set of class
 constructors, constants and functions that must be supported by each concrete
 note-like class.
@@ -321,17 +321,6 @@ type ArgumentLike interface {
 
 	// Attribute Methods
 	GetSymbol() string
-}
-
-/*
-AssemblyLike is an instance interface that declares the complete set of
-principal, attribute and aspect methods that must be supported by each instance
-of a concrete assembly-like class.
-*/
-type AssemblyLike interface {
-	// Principal Methods
-	GetClass() AssemblyClassLike
-	GetInstructions() com.Sequential[InstructionLike]
 }
 
 /*
@@ -446,6 +435,17 @@ type LoadLike interface {
 	// Attribute Methods
 	GetComponent() Component
 	GetSymbol() string
+}
+
+/*
+MethodLike is an instance interface that declares the complete set of
+principal, attribute and aspect methods that must be supported by each instance
+of a concrete method-like class.
+*/
+type MethodLike interface {
+	// Principal Methods
+	GetClass() MethodClassLike
+	GetInstructions() com.Sequential[InstructionLike]
 }
 
 /*

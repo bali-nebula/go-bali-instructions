@@ -53,11 +53,11 @@ func (v *deflator_) GetClass() DeflatorClassLike {
 	return deflatorClass()
 }
 
-func (v *deflator_) DeflateAssembly(
-	assembly ins.AssemblyLike,
-) lan.AssemblyLike {
-	VisitorClass().Visitor(v).VisitAssembly(assembly)
-	return v.stack_.RemoveLast().(lan.AssemblyLike)
+func (v *deflator_) DeflateMethod(
+	method ins.MethodLike,
+) lan.MethodLike {
+	VisitorClass().Visitor(v).VisitMethod(method)
+	return v.stack_.RemoveLast().(lan.MethodLike)
 }
 
 // Attribute Methods
@@ -221,29 +221,6 @@ func (v *deflator_) PostprocessArgument(
 	v.stack_.AddValue(lan.Argument("ARGUMENT", symbol))
 }
 
-func (v *deflator_) PostprocessAssembly(
-	assembly ins.AssemblyLike,
-	index_ uint,
-	count_ uint,
-) {
-	var instructions = com.List[lan.InstructionLike]()
-	var iterator = assembly.GetInstructions().GetIterator()
-	for iterator.HasNext() {
-		var instruction = v.stack_.RemoveLast().(lan.InstructionLike)
-		instructions.AppendValue(instruction)
-		iterator.GetNext()
-	}
-	instructions.ReverseValues()
-	v.stack_.AddValue(lan.Assembly(instructions))
-	if v.stack_.GetSize() != 1 {
-		var message = fmt.Sprintf(
-			"Internal Error: the deflator stack is corrupted: %v",
-			v.stack_,
-		)
-		panic(message)
-	}
-}
-
 func (v *deflator_) PostprocessCall(
 	call ins.CallLike,
 	index_ uint,
@@ -328,6 +305,29 @@ func (v *deflator_) PostprocessLoad(
 	var symbol = v.stack_.RemoveLast().(string)
 	var component = lan.Component(v.stack_.RemoveLast().(string))
 	v.stack_.AddValue(lan.Load("LOAD", component, symbol))
+}
+
+func (v *deflator_) PostprocessMethod(
+	method ins.MethodLike,
+	index_ uint,
+	count_ uint,
+) {
+	var instructions = com.List[lan.InstructionLike]()
+	var iterator = method.GetInstructions().GetIterator()
+	for iterator.HasNext() {
+		var instruction = v.stack_.RemoveLast().(lan.InstructionLike)
+		instructions.AppendValue(instruction)
+		iterator.GetNext()
+	}
+	instructions.ReverseValues()
+	v.stack_.AddValue(lan.Method(instructions))
+	if v.stack_.GetSize() != 1 {
+		var message = fmt.Sprintf(
+			"Internal Error: the deflator stack is corrupted: %v",
+			v.stack_,
+		)
+		panic(message)
+	}
 }
 
 func (v *deflator_) PostprocessNote(
