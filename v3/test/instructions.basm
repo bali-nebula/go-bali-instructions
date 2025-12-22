@@ -4,13 +4,12 @@ SKIP
 1.Jump:
 NOTE ! Jumps to a new address (conditionally or unconditionally).
 JUMP TO 2.Push
-JUMP TO 3.Pull ON NONE
-JUMP TO 4.Load ON FALSE
-JUMP TO 5.Save ON EMPTY
+JUMP TO 3.Pull ON EMPTY
+JUMP TO 4.Load ON NONE
+JUMP TO 5.Save ON FALSE
 
 2.Push:
 NOTE ! Pushes a value onto a stack.
-PUSH LITERAL `none`
 PUSH LITERAL `
     ">
         This is a literal text string
@@ -24,6 +23,7 @@ PUSH LITERAL `
         $baz := foo
     }($bar: 5)
 `
+PUSH LITERAL `none`
 PUSH CONSTANT $constant
 PUSH ARGUMENT $argument
 PUSH HANDLER 6.Drop
