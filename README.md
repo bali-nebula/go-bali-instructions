@@ -27,4 +27,4 @@ changes create a subsequent
 questions and comments can be sent to
 [craterdog@gmail.com](mailto:craterdog@gmail.com).
 
-<H5 align="center"> Copyright © 2009 - 2025  Crater Dog Technologies™. All rights reserved. </H5>
+<H5 align="center"> Copyright © 2009-2026. Crater Dog Technologies™. All rights reserved. </H5>
